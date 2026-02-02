@@ -42,7 +42,7 @@ targets:
       - CMAKE_EXECUTABLE_SUFFIX=.js
     defines[platform:macos]:
       - CMAKE_OSX_ARCHITECTURES=arm64;x86_64
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
 
   libpng:
     kind: cmakeProject
@@ -77,7 +77,7 @@ targets:
       # - ZLIB_ROOT=${externalBuild:zlib}/install
       # - ZLIB_ROOT=${externalBuild:zlib}
     defines[platform:macos]:
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
       - CMAKE_OSX_ARCHITECTURES=arm64;x86_64
     defines[:web]:
       # - ZLIB_LIBRARY=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install/lib

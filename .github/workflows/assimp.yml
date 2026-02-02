@@ -5,6 +5,7 @@ on:
     paths:
       - .github/workflows/assimp.yml
       - assimp/**
+  workflow_dispatch:
 
 jobs:
   ci:

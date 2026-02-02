@@ -561,16 +561,31 @@ if [ ${FORCE_SSLV3} == 'yes' ]; then
 fi
 
 echo -e "${bold}Building Mac libraries${dim}"
-buildMac "x86_64"
-buildMac "arm64"
+if [[ -n "$MACOS_X86_64_VERSION" && "$MACOS_X86_64_VERSION" != "-1" ]]; then
+	buildMac "x86_64"
+fi
+if [[ -n "$MACOS_ARM64_VERSION" && "$MACOS_ARM64_VERSION" != "-1" ]]; then
+	buildMac "arm64"
+fi
 
 echo -e "  ${dim}Copying headers"
 cp /tmp/${CURL_VERSION}-x86_64/include/curl/* include/curl/
 
-lipo \
-	"/tmp/${CURL_VERSION}-x86_64/lib/libcurl.a" \
-	"/tmp/${CURL_VERSION}-arm64/lib/libcurl.a" \
-	-create -output lib/libcurl.a
+if [[ "$MACOS_ARM64_VERSION" == "-1" || "$MACOS_X86_64_VERSION" == "-1" ]]; then
+	# Note: either 1 or the other, otherwise arm get overwritten by intel
+	if [[ "$MACOS_ARM64_VERSION" != "-1" ]]; then
+		cp "/tmp/${CURL_VERSION}-arm64/lib/libcurl.a" lib/libcurl.a
+	fi
+	if [[ "$MACOS_X86_64_VERSION" != "-1" ]]; then
+		cp "/tmp/${CURL_VERSION}-x86_64/lib/libcurl.a" lib/libcurl.a
+	fi
+else
+	lipo \
+		"/tmp/${CURL_VERSION}-x86_64/lib/libcurl.a" \
+		"/tmp/${CURL_VERSION}-arm64/lib/libcurl.a" \
+		-create -output lib/libcurl.a
+fi
+
 
 # if [ $catalyst == "1" ]; then
 # echo -e "${bold}Building Catalyst libraries${dim}"

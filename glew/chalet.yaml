@@ -23,7 +23,7 @@ targets:
       # - CMAKE_ARCHIVE_OUTPUT_DIRECTORY=lib
 
     defines[platform:macos]:
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
     # FIXME: remove - only a test to see if it works as a parameter
     # defines[toolchain:aarch64-linux-gnu-gcc]:

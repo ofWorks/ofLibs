@@ -82,7 +82,7 @@ targets:
     # - ZLIB_INCLUDE_DIRS=${external:zlib}
     # - ZLIB_INCLUDE_DIR=${external:zlib}
     defines[platform:macos]:
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
 
 distribution:

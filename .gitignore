@@ -8,3 +8,10 @@ dist/**
 **/build/**
 **/chalet_external/**
 **/dist/**
+
+openssl-curl/Build-OpenSSL-cURL/curl/*/**
+openssl-curl/Build-OpenSSL-cURL/openssl/*/**
+openssl-curl/curl/**
+openssl-curl/*.zip
+mango/*/**
+mango2/*/**

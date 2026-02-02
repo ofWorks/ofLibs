@@ -37,7 +37,7 @@ targets:
       - GLM_ENABLE_SIMD_AVX2=OFF
       - CMAKE_CXX_FLAGS="-msimd128"
     defines[platform:macos]:
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
 
     defines[architecture:arm]:

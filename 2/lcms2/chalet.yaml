@@ -22,8 +22,8 @@ targets:
       # - prefix=${cwd}/${externalBuild:${name}}/install
 
     defines[platform:macos]:
-      - c_args=-mmacos-version-min=11.6
-      - cpp_args=-mmacos-version-min=11.6
+      - c_args=-mmacos-version-min=10.15
+      - cpp_args=-mmacos-version-min=10.15
 
     defines[toolchain:msvc]:
       - b_vscrt=static_from_buildtype

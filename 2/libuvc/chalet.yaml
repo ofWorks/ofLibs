@@ -41,7 +41,7 @@ targets:
   #     # - CMAKE_INSTALL_FULL_LIBDIR=lib
   #   defines[platform:macos]:
   #     - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
-  #     - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+  #     - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
   libuvc:
     kind: cmakeProject
     location: ${external:${name}}
@@ -85,7 +85,7 @@ targets:
       - LibUSB_FOUND=TRUE
     defines[platform:macos]:
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
 
 distribution:
   libuvc:

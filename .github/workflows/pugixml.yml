@@ -6,7 +6,8 @@ on:
     paths:
       - pugixml/**
       - .github/workflows/pugixml.yml
-
+  workflow_dispatch:
+    
 jobs:
   ci:
     permissions:

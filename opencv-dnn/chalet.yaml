@@ -118,7 +118,7 @@ targets:
 
     defines[platform:macos]:
       - APPLE_FRAMEWORK=ON
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
       # Fixme: build separate archs then lipo them together
       # - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
       - CMAKE_OSX_ARCHITECTURES=arm64

@@ -84,7 +84,7 @@ targets:
       - CMAKE_EXECUTABLE_SUFFIX=.js
     defines[platform:macos]:
       - CMAKE_OSX_ARCHITECTURES=arm64;x86_64
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
 
   # fmt:
   #   kind: chaletProject
@@ -107,7 +107,7 @@ targets:
       # - CMAKE_INSTALL_LIBDIR=lib
       # - CMAKE_INSTALL_LIBDIR=lib
     defines[platform:macos]:
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
 
   zstd:
@@ -129,7 +129,7 @@ targets:
       # - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 
     defines[platform:macos]:
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
 
     defines[toolchain:msvc]:
@@ -151,7 +151,7 @@ targets:
       - LZ4_BUILD_CLI=OFF
 
     defines[platform:macos]:
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
 
   bzip2:
@@ -175,7 +175,7 @@ targets:
       - CMAKE_INSTALL_LIBDIR=lib
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
     defines[platform:macos]:
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
 
   deflate:
@@ -199,7 +199,7 @@ targets:
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 
     defines[platform:macos]:
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
 
   lcms2:
@@ -216,8 +216,8 @@ targets:
       # - prefix=${cwd}/${externalBuild:${name}}/install
 
     defines[platform:macos]:
-      - c_args=-mmacos-version-min=11.6
-      - cpp_args=-mmacos-version-min=11.6
+      - c_args=-mmacos-version-min=10.15
+      - cpp_args=-mmacos-version-min=10.15
 
     defines[toolchain:msvc]:
       - b_vscrt=static_from_buildtype
@@ -299,7 +299,7 @@ targets:
     defines[platform:macos]:
       # - CMAKE_PREFIX_PATH=${cwd}/${externalBuild:lcms2}/install/opt/homebrew;${cwd}/${externalBuild:deflate}/install;${cwd}/${externalBuild:fmt}/ext.fmt/install;${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install;${cwd}/${externalBuild:zstd}/install;${cwd}/${externalBuild:lz4}/install;${cwd}/${externalBuild:bzip2}/install
 
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
       # - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
     defines[toolchain:msvc]:
       # temporary, only to have a verbose output.

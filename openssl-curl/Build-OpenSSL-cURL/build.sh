@@ -403,9 +403,39 @@ echo
 # create universal Mac binaries and run test
 echo -e "${bold}Archiving Mac binaries for curl and openssl...${dim}"
 echo "  See $ARCHIVE/bin"
-lipo -create -output $ARCHIVE/bin/curl /tmp/curl-x86_64 /tmp/curl-arm64
+
+echo -e "${bold}Building Mac libraries${dim}"
+if [[ -n "$MACOS_X86_64_VERSION" && "$MACOS_X86_64_VERSION" != "-1" ]]; then
+	buildMac "x86_64"
+fi
+if [[ -n "$MACOS_ARM64_VERSION" && "$MACOS_ARM64_VERSION" != "-1" ]]; then
+	buildMac "arm64"
+fi
+if [[ "$MACOS_ARM64_VERSION" == "-1" || "$MACOS_X86_64_VERSION" == "-1" ]]; then
+	# Note: either 1 or the other, otherwise arm get overwritten by intel
+	if [[ "$MACOS_ARM64_VERSION" != "-1" ]]; then
+		cp "/tmp/curl-arm64" Mac/lib/libcrypto.a
+	fi
+	if [[ "$MACOS_X86_64_VERSION" != "-1" ]]; then
+		cp "/tmp/curl-x86_64" Mac/lib/libcrypto.a
+	fi
+	# lipo -create -output $ARCHIVE/bin/curl /tmp/curl-x86_64
+else
+	lipo -create -output $ARCHIVE/bin/curl /tmp/curl-x86_64 /tmp/curl-arm64
+fi
 mv /tmp/curl-* $ARCHIVE/bin
-lipo -create -output $ARCHIVE/bin/openssl /tmp/openssl-x86_64 /tmp/openssl-arm64
+
+if [[ "$MACOS_ARM64_VERSION" == "-1" || "$MACOS_X86_64_VERSION" == "-1" ]]; then
+	# Note: either 1 or the other, otherwise arm get overwritten by intel
+	if [[ "$MACOS_ARM64_VERSION" != "-1" ]]; then
+		cp "$ARCHIVE/bin/openssl" /tmp/openssl-arm64
+	fi
+	if [[ "$MACOS_X86_64_VERSION" != "-1" ]]; then
+		cp "$ARCHIVE/bin/openssl" /tmp/openssl-x86_64
+	fi
+else
+	lipo -create -output $ARCHIVE/bin/openssl /tmp/openssl-x86_64 /tmp/openssl-arm64
+fi
 mv /tmp/openssl-* $ARCHIVE/bin
 echo
 echo -e "${bold}Testing Universal Mac binaries for ${BUILD_MACHINE}...${dim}"

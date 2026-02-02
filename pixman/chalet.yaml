@@ -22,8 +22,8 @@ targets:
       - mmx=disabled
       - sse2=disabled
     defines[platform:macos]:
-      - c_args=-mmacos-version-min=11.6
-      - cpp_args=-mmacos-version-min=11.6
+      - c_args=-mmacos-version-min=10.15
+      - cpp_args=-mmacos-version-min=10.15
 
     # FIXME: Remove when this is closed https://github.com/chalet-org/chalet/issues/425
     # defines[toolchain:{aarch64-linux-gnu-gcc,arm-linux-gnueabihf-gcc}]:

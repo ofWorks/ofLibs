@@ -32,7 +32,10 @@ You are welcome to jump in and help building and testing more libraries.<br>
 | opencv | ✓ | ✓ | ✓ | ✓ | ✓ | ofxOpenCv |
 | pixman | ✓ | ✓ | ✓ | ✓ | ✓ | ofxCairo |
 
-
+## Building
+The github workflow actions automatically build the libraries individually when changes are made. You can grab them from the releases.
+You can build the all libraries locally by running `./compile.sh`.
+Or proceed manually by `cd libFolder` and or `./lib.sh`.
 
 ## ofCore
 ![title](https://github.com/dimitre/ofLibs/actions/workflows/freetype.yml/badge.svg)

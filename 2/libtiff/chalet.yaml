@@ -32,7 +32,7 @@ targets:
 
     defines[platform:macos]:
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
 
     defines[toolchain:msvc]:
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
@@ -93,7 +93,7 @@ targets:
 
     defines[platform:macos]:
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
       - CMAKE_C_VISIBILITY_PRESET=hidden
       - CMAKE_CXX_VISIBILITY_PRESET=hidden
       - CMAKE_VISIBILITY_INLINES_HIDDEN=ON

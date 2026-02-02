@@ -488,21 +488,47 @@ fi
 
 ## Mac
 echo -e "${bold}Building Mac libraries${dim}"
-buildMac "x86_64"
-buildMac "arm64"
+if [[ -n "$MACOS_X86_64_VERSION" && "$MACOS_X86_64_VERSION" != "-1" ]]; then
+	buildMac "x86_64"
+fi
+if [[ -n "$MACOS_ARM64_VERSION" && "$MACOS_ARM64_VERSION" != "-1" ]]; then
+	buildMac "arm64"
+fi
 
 echo -e "  ${dim}Copying headers and libraries"
 cp /tmp/${OPENSSL_VERSION}-x86_64/include/openssl/* Mac/include/openssl/
 
-lipo \
-	"/tmp/${OPENSSL_VERSION}-x86_64/lib/libcrypto.a" \
-	"/tmp/${OPENSSL_VERSION}-arm64/lib/libcrypto.a" \
-	-create -output Mac/lib/libcrypto.a
+if [[ "$MACOS_ARM64_VERSION" == "-1" || "$MACOS_X86_64_VERSION" == "-1" ]]; then
+	# Note: either 1 or the other, otherwise arm get overwritten by intel
+	if [[ "$MACOS_ARM64_VERSION" != "-1" ]]; then
+		cp "/tmp/${OPENSSL_VERSION}-arm64/lib/libcrypto.a" Mac/lib/libcrypto.a
+	fi
+	if [[ "$MACOS_X86_64_VERSION" != "-1" ]]; then
+		cp "/tmp/${OPENSSL_VERSION}-x86_64/lib/libcrypto.a" Mac/lib/libcrypto.a
+	fi
+else
+	lipo \
+		"/tmp/${OPENSSL_VERSION}-x86_64/lib/libcrypto.a" \
+		"/tmp/${OPENSSL_VERSION}-arm64/lib/libcrypto.a" \
+		-create -output Mac/lib/libcrypto.a
+fi
 
-lipo \
-	"/tmp/${OPENSSL_VERSION}-x86_64/lib/libssl.a" \
-	"/tmp/${OPENSSL_VERSION}-arm64/lib/libssl.a" \
-	-create -output Mac/lib/libssl.a
+if [[ "$MACOS_ARM64_VERSION" == "-1" || "$MACOS_X86_64_VERSION" == "-1" ]]; then
+	# Note: either 1 or the other, otherwise arm get overwritten by intel
+	if [[ "$MACOS_ARM64_VERSION" != "-1" ]]; then
+		cp "/tmp/${OPENSSL_VERSION}-arm64/lib/libssl.a" Mac/lib/libssl.a
+	fi
+	if [[ "$MACOS_X86_64_VERSION" != "-1" ]]; then
+		cp "/tmp/${OPENSSL_VERSION}-x86_64/lib/libssl.a" Mac/lib/libssl.a
+	fi
+else
+	lipo \
+		"/tmp/${OPENSSL_VERSION}-x86_64/lib/libssl.a" \
+		"/tmp/${OPENSSL_VERSION}-arm64/lib/libssl.a" \
+		-create -output Mac/lib/libssl.a
+fi
+
+
 
 ## Catalyst
 # if [ $catalyst == "1" ]; then

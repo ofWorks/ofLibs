@@ -60,8 +60,8 @@ targets:
 
     defines[platform:macos]:
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
-      - DEPLOYMENT_TARGET=11.6
+      - CMAKE_OSX_DEPLOYMENT_TARGET=10.15
+      - DEPLOYMENT_TARGET=10.15
 
     # defines[toolchain:{aarch64-linux-gnu-gcc,arm-linux-gnueabihf-gcc}]:
     # defines[toolchain:arm-linux-gnueabihf-gcc]:

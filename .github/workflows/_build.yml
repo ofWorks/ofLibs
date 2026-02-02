@@ -1,8 +1,26 @@
 name: Build ofLibs
 
 on:
+  # push:
+  #   branches: ["osx10-15-intel"]
+  # workflow_dispatch:
+
   workflow_call:
     inputs:
+      lib: { required: true, type: string }
+      version: { required: true, type: string }
+      multistrap: { required: false, type: boolean }
+      linux_apt: { required: false, type: string }
+      brew: { required: false, type: string }
+      meson: { required: false, type: boolean }
+
+  workflow_dispatch:
+    inputs:
+      # chosen-os:
+      #   required: true
+      #   type: choice
+      #   options:
+      #     - macOS
       lib: { required: true, type: string }
       version: { required: true, type: string }
       multistrap: { required: false, type: boolean }
@@ -20,17 +38,18 @@ jobs:
       matrix:
         include:
           # - { platform: linux64, os: ubuntu-latest, toolchain: llvm }
-          - { platform: linux64, os: ubuntu-22.04, toolchain: llvm }
-          - { platform: macos, os: macos-26, toolchain: apple-llvm }
-          - { platform: vs, os: windows-latest, toolchain: vs-stable }
-          - {
-              platform: rpi-aarch64,
-              os: ubuntu-22.04-arm,
-              prefix: aarch64-linux-gnu,
-              toolchain: aarch64-linux-gnu-gcc-12,
-            }
+          # - { platform: linux64, os: ubuntu-22.04, toolchain: llvm }
+          - { platform: macos, os: macos-latest, toolchain: apple-llvm }
+          # - { platform: macos, os: macos-13, toolchain: apple-llvm }
+          # - { platform: vs, os: windows-latest, toolchain: vs-stable }
+          # - {
+          #     platform: rpi-aarch64,
+          #     os: ubuntu-22.04-arm,
+          #     prefix: aarch64-linux-gnu,
+          #     toolchain: aarch64-linux-gnu-gcc-12,
+          #   }
 
-          - { platform: emscripten, os: ubuntu-latest, toolchain: emscripten }
+          # - { platform: emscripten, os: ubuntu-latest, toolchain: emscripten }
 
           # - {
           #     platform: rpi-armv6l,
@@ -55,7 +74,9 @@ jobs:
           #     # shell: msys2 -c 'source $GITHUB_ENV; export $(cut -d= -f1 $GITHUB_ENV); {0}'
           #   }
 
-    runs-on: ${{ matrix.os }}
+    # runs-on: ${{ matrix.os }}
+    # runs-on: [ ${{ matrix.os }}, self-hosted, ${{ inputs.chosen-os }}"]
+    runs-on: self-hosted
 
     defaults:
       run:
@@ -76,11 +97,11 @@ jobs:
       #     key: ${{ inputs.lib }}-${{ runner.os }}-${{ matrix.platform }}-ccache
       #
       #
-      - name: Windows Setup MSVC
-        if: matrix.platform == 'vs'
-        uses: TheMrMilchmann/setup-msvc-dev@v4
-        with:
-          arch: x64
+      # - name: Windows Setup MSVC
+      #   if: matrix.platform == 'vs'
+      #   uses: TheMrMilchmann/setup-msvc-dev@v4
+      #   with:
+      #     arch: x64
       #
       - name: Install Meson
         if: inputs.meson
@@ -93,12 +114,12 @@ jobs:
       #     packages: ${{ inputs.linux_apt }}
       #     version: 1.0
 
-      - name: Linux Apt Packages
-        if: runner.os == 'Linux' && inputs.linux_apt != ''
-        # if: matrix.platform == 'linux64' && inputs.linux_apt != ''
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y ${{ inputs.linux_apt }}
+      # - name: Linux Apt Packages
+      #   if: runner.os == 'Linux' && inputs.linux_apt != ''
+      #   # if: matrix.platform == 'linux64' && inputs.linux_apt != ''
+      #   run: |
+      #     sudo apt-get update -qq
+      #     sudo apt-get install -y ${{ inputs.linux_apt }}
 
       - name: macOS Brew Packages
         if: runner.os == 'macOS' && inputs.brew != ''
@@ -116,12 +137,12 @@ jobs:
       #     whereis cmake
       #     cmake --version
 
-      - name: Emscripten Install
-        if: matrix.platform == 'emscripten'
-        uses: mymindstorm/setup-emsdk@v14
-        with:
-          version: 4.0.21
-          actions-cache-folder: "emsdk-cache"
+      # - name: Emscripten Install
+      #   if: matrix.platform == 'emscripten'
+      #   uses: mymindstorm/setup-emsdk@v14
+      #   with:
+      #     version: 4.0.21
+      #     actions-cache-folder: "emsdk-cache"
 
       # - name: Verify emsdk
       #   if: matrix.platform == 'emscripten'
@@ -132,10 +153,10 @@ jobs:
       #     emsdk activate latest
       #     emcc -v
 
-      - name: MSYS2 Apt Cross Compile
-        if: matrix.platform == 'msys2' && runner.os == 'Linux'
-        run: |
-          sudo apt install gcc-${{ matrix.prefix }} g++-${{ matrix.prefix }} binutils-${{ matrix.prefix }}
+      # - name: MSYS2 Apt Cross Compile
+      #   if: matrix.platform == 'msys2' && runner.os == 'Linux'
+      #   run: |
+      #     sudo apt install gcc-${{ matrix.prefix }} g++-${{ matrix.prefix }} binutils-${{ matrix.prefix }}
 
       # - name: MSYS2 Windows
       #   if: matrix.platform == 'msys2' && runner.os == 'Windows'
@@ -153,10 +174,10 @@ jobs:
       #     export PATH=$PATH:/c/hostedtoolcache/windows/chalet-org/chalet/latest/windows-x64
       #     chalet --version
 
-      - name: RPI - Compiler
-        if: matrix.platform == 'msys2' && runner.os == 'Linux'
-        run: |
-          sudo apt install gcc g++ binutils
+      # - name: RPI - Compiler
+      #   if: matrix.platform == 'msys2' && runner.os == 'Linux'
+      #   run: |
+      #     sudo apt install gcc g++ binutils
 
       # - name: RPI - Apt Cache Cross Compile (No Multistrap)
       #   if: matrix.platform == 'rpi-aarch64' || matrix.platform == 'rpi-armv6l'
@@ -222,17 +243,17 @@ jobs:
         run: |
           otool -l **/*.a | grep minos
 
-      - name: RPI Verify Library Compatibility
-        if: matrix.platform == 'rpi-aarch64'
-        run: |
-          aarch64-linux-gnu-readelf -d **/*.a 2>/dev/null | grep -E "GLIBC|CXXABI" || true
-          # Should show versions like GLIBC_2.36, NOT 2.38+
+      # - name: RPI Verify Library Compatibility
+      #   if: matrix.platform == 'rpi-aarch64'
+      #   run: |
+      #     aarch64-linux-gnu-readelf -d **/*.a 2>/dev/null | grep -E "GLIBC|CXXABI" || true
+      #     # Should show versions like GLIBC_2.36, NOT 2.38+
 
-      - name: Rename and Publish Release
-        env:
-          # GITHUB_TOKEN: ${{ github.TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mv dist/${{ inputs.lib }}.zip ofLibs_${{ inputs.lib }}_${{ matrix.platform }}.zip
-          ls -alF *.zip
-          gh release upload ${{ inputs.version }} *.zip --clobber
+      # - name: Rename and Publish Release
+      #   env:
+      #     # GITHUB_TOKEN: ${{ github.TOKEN }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     mv dist/${{ inputs.lib }}.zip ofLibs_${{ inputs.lib }}_${{ matrix.platform }}.zip
+      #     ls -alF *.zip
+      #     gh release upload ${{ inputs.version }} *.zip --clobber
