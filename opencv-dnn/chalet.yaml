@@ -3,8 +3,8 @@ version: 0.1.7
 externalDependencies:
   opencv:
     repository: https://github.com/opencv/opencv
-    commit: a085652
-    # tag: 4.12.0
+    commit: 227b751
+    # tag: 4.13.0
     kind: git
 
 targets:
@@ -88,8 +88,19 @@ targets:
       # - BUILD_opencv_imgcodecs=ON # CopperTag cv::imwrite
       # - BUILD_opencv_videoio=ON # videoio needs imsgcodecs enabled.
 
+      - BUILD_opencv_videoio=OFF
+      - BUILD_opencv_imgcodecs=OFF
+
+      # test for ofxOpenCvDnnObjectDetection
+      # - BUILD_opencv_dnn=ON
+      # - OPENCV_DNN_OPENCL=OFF
+      - BUILD_opencv_dnn=OFF
+
       - BUILD_ZLIB=OFF
       - ZLIB_ROOT=${externalBuild:zlib-ng-external}/ext.zlib-ng/install
+
+      - BUILD_opencv_dnn=ON
+      - OPENCV_DNN_OPENCL=OFF
 
       # - ZLIB_ROOT=${externalBuild:zlib}
       # - ZLIB_LIBRARY=${externalBuild:zlib}
@@ -98,14 +109,6 @@ targets:
       # - WITH_OPENCLAMDBLAS=OFF
       # - WITH_OPENCLAMDFFT=OFF
       #
-      #
-      - BUILD_opencv_videoio=OFF
-      - BUILD_opencv_imgcodecs=OFF
-      # - BUILD_opencv_dnn=OFF
-
-      # test for ofxOpenCvDnnObjectDetection
-      - BUILD_opencv_dnn=ON
-      - OPENCV_DNN_OPENCL=OFF
       #
 
     defines[platform:web]:
@@ -145,7 +148,7 @@ targets:
     # defines[arch:x86]:
 
 distribution:
-  opencv-dnn:
+  opencv:
     kind: archive
     format: zip
     include:
