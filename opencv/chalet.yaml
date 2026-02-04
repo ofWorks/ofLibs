@@ -108,8 +108,6 @@ targets:
       # - CV_DISABLE_OPTIMIZATION=ON
       # - WITH_OPENCLAMDBLAS=OFF
       # - WITH_OPENCLAMDFFT=OFF
-      #
-      #
 
     defines[platform:web]:
       - WITH_ITT=OFF
