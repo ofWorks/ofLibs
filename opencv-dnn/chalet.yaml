@@ -1,7 +1,7 @@
-name: opencv
+name: opencv-dnn
 version: 0.1.7
 externalDependencies:
-  opencv:
+  opencv-dnn:
     repository: https://github.com/opencv/opencv
     commit: 227b751
     # tag: 4.13.0
@@ -12,7 +12,7 @@ targets:
     kind: chaletProject
     location: ../zlib-ng
     # rebuild: false
-  opencv:
+  opencv-dnn:
     kind: cmakeProject
     location: ${external:${name}}
     recheck: false
@@ -148,7 +148,7 @@ targets:
     # defines[arch:x86]:
 
 distribution:
-  opencv:
+  opencv-dnn:
     kind: archive
     format: zip
     include:

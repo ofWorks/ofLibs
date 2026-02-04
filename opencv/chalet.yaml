@@ -1,11 +1,11 @@
 name: opencv
-version: 0.1.7
+version: 4.13.0
 externalDependencies:
   opencv:
     repository: https://github.com/opencv/opencv
     commit: 227b751
-    # tag: 4.13.0
     kind: git
+    # tag: 4.13.0
 
 targets:
   zlib-ng-external:
