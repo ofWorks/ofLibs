@@ -233,6 +233,7 @@ jobs:
           # GITHUB_TOKEN: ${{ github.TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mv dist/${{ inputs.lib }}.zip ofLibs_${{ inputs.lib }}_${{ matrix.platform }}.zip
+          mv dist/*.zip ofLibs_${{ inputs.lib }}_${{ matrix.platform }}.zip
           ls -alF *.zip
           gh release upload ${{ inputs.version }} *.zip --clobber
+        # mv dist/${{ inputs.lib }}.zip ofLibs_${{ inputs.lib }}_${{ matrix.platform }}.zip
