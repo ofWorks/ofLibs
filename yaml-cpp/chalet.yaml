@@ -1,9 +1,9 @@
 name: oflibs
-version: "1.3"
+version: 0.9.0
 externalDependencies:
   yaml-cpp:
     repository: https://github.com/jbeder/yaml-cpp/
-    commit: 89ff142
+    commit: 56e3bb5
     kind: git
 targets:
   yaml-cpp:
