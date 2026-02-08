@@ -33,36 +33,34 @@ You are welcome to jump in and help building and testing more libraries.<br>
 | pixman | ✓ | ✓ | ✓ | ✓ | ✓ | ofxCairo |
 
 
-
 ## ofCore
-![title](https://github.com/ofworks/ofLibs/actions/workflows/freetype.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/glew.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/glfw.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/glm.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/json.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/kissfft.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/libusb.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/pugixml.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/rtAudio.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/tess2.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/uriparser.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/utfcpp.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/videoInput.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/zlib-ng.yml/badge.svg)
+[![freetype](https://github.com/ofWorks/ofLibs/actions/workflows/freetype.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/freetype.yml )
+[![glew](https://github.com/ofWorks/ofLibs/actions/workflows/glew.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/glew.yml )
+[![glfw](https://github.com/ofWorks/ofLibs/actions/workflows/glfw.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/glfw.yml )
+[![glm](https://github.com/ofWorks/ofLibs/actions/workflows/glm.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/glm.yml )
+[![json](https://github.com/ofWorks/ofLibs/actions/workflows/json.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/json.yml )
+[![kissfft](https://github.com/ofWorks/ofLibs/actions/workflows/kissfft.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/kissfft.yml )
+[![libusb](https://github.com/ofWorks/ofLibs/actions/workflows/libusb.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/libusb.yml )
+[![pugixml](https://github.com/ofWorks/ofLibs/actions/workflows/pugixml.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/pugixml.yml )
+[![rtAudio](https://github.com/ofWorks/ofLibs/actions/workflows/rtAudio.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/rtAudio.yml )
+[![tess2](https://github.com/ofWorks/ofLibs/actions/workflows/tess2.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/tess2.yml )
+[![uriparser](https://github.com/ofWorks/ofLibs/actions/workflows/uriparser.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/uriparser.yml )
+[![utfcpp](https://github.com/ofWorks/ofLibs/actions/workflows/utfcpp.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/utfcpp.yml )
+[![videoInput](https://github.com/ofWorks/ofLibs/actions/workflows/videoInput.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/videoInput.yml )
+[![zlib-ng](https://github.com/ofWorks/ofLibs/actions/workflows/zlib-ng.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/zlib-ng.yml )
 
 ## ofCore ofWorks
-![title](https://github.com/ofworks/ofLibs/actions/workflows/fmt.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/yaml-cpp.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/mango.yml/badge.svg)
+[![fmt](https://github.com/ofWorks/ofLibs/actions/workflows/fmt.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/fmt.yml )
+[![yaml-cpp](https://github.com/ofWorks/ofLibs/actions/workflows/yaml-cpp.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/yaml-cpp.yml )
+[![mango](https://github.com/ofWorks/ofLibs/actions/workflows/mango.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/mango.yml )
 
 ## Addons Modern
-![title](https://github.com/ofworks/ofLibs/actions/workflows/blend2d.yml/badge.svg)
+[![blend2d](https://github.com/ofWorks/ofLibs/actions/workflows/blend2d.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/blend2d.yml )
 
 ## Addons
-![title](https://github.com/ofworks/ofLibs/actions/workflows/assimp.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/cairo.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/opencv.yml/badge.svg)
-![title](https://github.com/ofworks/ofLibs/actions/workflows/pixman.yml/badge.svg)
+[![assimp](https://github.com/ofWorks/ofLibs/actions/workflows/assimp.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/assimp.yml )
+[![cairo](https://github.com/ofWorks/ofLibs/actions/workflows/cairo.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/cairo.yml )
+[![opencv](https://github.com/ofWorks/ofLibs/actions/workflows/opencv.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/opencv.yml )
 <br><br>
 Still missing ofxURL related libs, openssl, libcrypto
 
