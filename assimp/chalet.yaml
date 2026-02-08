@@ -1,16 +1,12 @@
 name: oflibs
-version: "1.0"
+version: 6.0.4
 externalDependencies:
   assimp:
     repository: https://github.com/assimp/assimp
-    # tag: v6.0.2
+    # tag: v6.0.4
     # This fixes Anisor bug https://github.com/assimp/assimp/issues/5635#
     # commit: 0996221
-<<<<<<< Updated upstream
-    commit: 18798f1
-=======
     commit: 36c3a19
->>>>>>> Stashed changes
     kind: git
 
 targets:
