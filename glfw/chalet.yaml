@@ -1,5 +1,6 @@
 name: ofLibs GLFW
 version: 3.4
+
 externalDependencies:
   glfw:
     repository: https://github.com/glfw/glfw

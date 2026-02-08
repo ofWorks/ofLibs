@@ -1,5 +1,6 @@
 name: oflibs
 version: 12.1.0
+
 externalDependencies:
   fmt:
     repository: https://github.com/fmtlib/fmt
