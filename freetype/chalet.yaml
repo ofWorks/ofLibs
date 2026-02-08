@@ -1,5 +1,6 @@
 name: ofLibs freetype
 version: 2.14.1
+
 externalDependencies:
   freetype:
     repository: https://gitlab.freedesktop.org/freetype/freetype
