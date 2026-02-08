@@ -5,11 +5,11 @@ version: "1.3"
 externalDependencies:
   # zlib-ng-archive:
   #   kind: archive
-  #   url: https://github.com/dimitre/ofLibs/releases/download/v0.12.3/ofLibs_zlib-ng_macos.zip
+  #   url: https://github.com/ofworks/ofLibs/releases/download/v0.12.3/ofLibs_zlib-ng_macos.zip
 
   # fmt-archive:
   #   kind: archive
-  #   url: https://github.com/dimitre/ofLibs/releases/download/v0.12.3/ofLibs_fmt_macos.zip
+  #   url: https://github.com/ofworks/ofLibs/releases/download/v0.12.3/ofLibs_fmt_macos.zip
   fmt:
     repository: https://github.com/fmtlib/fmt
     commit: 0e078f6
