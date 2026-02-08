@@ -1,5 +1,5 @@
-name: oflibs
-version: "1.0"
+name: ofLibs brotli
+version: 1.2.0
 externalDependencies:
   brotli:
     repository: https://github.com/google/brotli

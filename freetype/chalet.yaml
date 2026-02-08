@@ -1,14 +1,10 @@
-name: oflibs
-version: "1.0"
+name: ofLibs freetype
+version: 2.14.1
 externalDependencies:
   freetype:
     repository: https://gitlab.freedesktop.org/freetype/freetype
     # tag: VER-2-14-1
-<<<<<<< Updated upstream
-    commit: b91f75bd02db43b06d634591eb286d3eb0ce3b65
-=======
     commit: 85c8efe0
->>>>>>> Stashed changes
     kind: git
 targets:
   # libjpeg:

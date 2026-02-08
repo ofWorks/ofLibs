@@ -3,12 +3,8 @@ version: 12.1.0
 externalDependencies:
   fmt:
     repository: https://github.com/fmtlib/fmt
-<<<<<<< Updated upstream
-    commit: 0e078f6
-=======
     commit: 2d7dc92
     # tag: 12.1.0
->>>>>>> Stashed changes
     kind: git
 
 targets:

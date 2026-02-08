@@ -1,14 +1,10 @@
-name: OF altpothecary GLFW
-version: "0.0.4"
+name: ofLibs GLFW
+version: 3.4
 externalDependencies:
   glfw:
     repository: https://github.com/glfw/glfw
-<<<<<<< Updated upstream
-    commit: 9352d8f
-=======
     # tag: "3.4"
     commit: 232164f
->>>>>>> Stashed changes
     kind: git
 
 targets:

@@ -3,13 +3,8 @@ version: 1.0.3
 externalDependencies:
   glm:
     repository: https://github.com/g-truc/glm
-<<<<<<< Updated upstream
-    # tag: "1.0.2"
-    commit: b1fed40
-=======
     # tag: "1.0.3"
     commit: e7970a8
->>>>>>> Stashed changes
     kind: git
 targets:
   glm:
