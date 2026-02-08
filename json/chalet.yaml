@@ -4,7 +4,11 @@ externalDependencies:
   json:
     repository: https://github.com/nlohmann/json
     # tag: v3.12.0
+<<<<<<< Updated upstream
     commit: 515d994
+=======
+    commit: f8eee1b
+>>>>>>> Stashed changes
     kind: git
 
 targets:

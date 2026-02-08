@@ -3,7 +3,13 @@ version: "1.0"
 externalDependencies:
   glew:
     repository: https://github.com/Perlmint/glew-cmake
+<<<<<<< Updated upstream
     commit: 65091a8
+=======
+    # commit: d06782b910213d675925e6e51a69ad0fd1fe1f23
+    commit: 65091a8
+    #e399b15
+>>>>>>> Stashed changes
     kind: git
 targets:
   glew:

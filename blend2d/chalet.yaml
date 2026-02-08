@@ -7,7 +7,7 @@ externalDependencies:
     kind: git
   blend2d:
     repository: https://github.com/blend2d/blend2d
-    # commit: d6bdb69
+    commit: 6dbc2ce
     # tag: 12.1.0
     commit: 6dbc2ce
     kind: git

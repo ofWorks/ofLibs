@@ -6,7 +6,11 @@ externalDependencies:
     # tag: v6.0.2
     # This fixes Anisor bug https://github.com/assimp/assimp/issues/5635#
     # commit: 0996221
+<<<<<<< Updated upstream
     commit: 18798f1
+=======
+    commit: 36c3a19
+>>>>>>> Stashed changes
     kind: git
 
 targets:
