@@ -34,6 +34,8 @@ targets:
       - fontconfig=disabled
       - freetype=disabled
 
+      #- trace=disabled ## doesnt work, not trace or dtrace
+
       # Disable GObject introspection and bindings
       - glib=disabled
 
@@ -70,6 +72,11 @@ distribution:
     kind: archive
     format: zip
     include:
+      # - *
       - ${external:${name}}/COPYING*
       - ${externalBuild:${name}}/install/include
       - ${externalBuild:${name}}/install/lib
+
+    # - !${externalBuild:${name}}/install/lib/cairo
+    # exclude:
+    # - ${externalBuild:${name}}/install/lib/cairo
