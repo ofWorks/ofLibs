@@ -14,6 +14,7 @@ targets:
     install: true
     defines:
       # - CMAKE_ARCHIVE_OUTPUT_DIRECTORY=lib
+      - CMAKE_POSITION_INDEPENDENT_CODE=ON
       - glew-cmake_BUILD_SHARED=OFF
       - ONLY_LIBS=ON
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
@@ -22,8 +23,8 @@ targets:
       - GLEW_BUILD_STATIC=ON
 
       # - CMAKE_ARCHIVE_OUTPUT_DIRECTORY=lib
-    defines[:linux]:
-      - GLEW_EGL=ON # Use EGL instead of GLX
+    # defines[:linux]:
+    # - GLEW_EGL=ON # Use EGL instead of GLX
     defines[platform:macos]:
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
