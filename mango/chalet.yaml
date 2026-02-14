@@ -17,7 +17,7 @@ externalDependencies:
 
   zlib-ng:
     repository: https://github.com/zlib-ng/zlib-ng
-    commit: 3f81a5cb47e2
+    commit: ec2f43e910be013720da5d699669bd6b7298efac
     kind: git
 
   zstd:
