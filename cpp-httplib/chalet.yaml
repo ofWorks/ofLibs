@@ -3,7 +3,7 @@ version: "1.0"
 externalDependencies:
   cpp-httplib:
     repository: https://github.com/yhirose/cpp-httplib
-    commit: 8b41463
+    commit: d4180e923f84
     # tag: v0.30.2
     kind: git
 

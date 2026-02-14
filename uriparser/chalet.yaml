@@ -4,7 +4,7 @@ externalDependencies:
   uriparser:
     repository: https://github.com/uriparser/uriparser
     # tag: uriparser-0.9.9
-    commit: a1b72d6
+    commit: 84ad1bc4a826
     kind: git
 targets:
   uriparser:

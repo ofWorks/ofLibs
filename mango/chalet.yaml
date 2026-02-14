@@ -12,19 +12,18 @@ externalDependencies:
   #   url: https://github.com/ofworks/ofLibs/releases/download/v0.12.3/ofLibs_fmt_macos.zip
   fmt:
     repository: https://github.com/fmtlib/fmt
-    commit: 0e078f6
+    commit: b35de87ad919
     kind: git
 
   zlib-ng:
     repository: https://github.com/zlib-ng/zlib-ng
-    commit: 6bb27e3
+    commit: 3f81a5cb47e2
     kind: git
 
   zstd:
     # repository: https://github.com/facebook/zstd/
-    # commit: f94a01d
     repository: https://github.com/ofworks/zstd/
-    # commit: cfb7fdc
+    commit: cfb7fdcd8428
     kind: git
 
   bzip2:
@@ -36,24 +35,23 @@ externalDependencies:
   lz4:
     repository: https://github.com/lz4/lz4
     kind: git
-    commit: a018abc
+    commit: 446a35fb6561
 
   lcms2:
     # repository: https://github.com/mm2/Little-CMS
-    # commit: 8888d84
     repository: https://github.com/ofworks/Little-CMS
-    # commit: e2cfc4b
+    commit: b6204a0f2057
     kind: git
 
   deflate:
     repository: https://github.com/ebiggers/libdeflate
-    # commit: 095bcab
-    tag: v1.25
+    commit: 22f6e0235ff5
+    # tag: v1.25
     kind: git
 
   mango:
     repository: https://github.com/t0rakka/mango
-    commit: 5c74f54
+    commit: 16bcbc458ef6
     kind: git
 
 targets:

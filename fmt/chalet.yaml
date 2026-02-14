@@ -4,7 +4,7 @@ version: 12.1.0
 externalDependencies:
   fmt:
     repository: https://github.com/fmtlib/fmt
-    commit: 2d7dc92
+    commit: b35de87ad919
     # tag: 12.1.0
     kind: git
 
