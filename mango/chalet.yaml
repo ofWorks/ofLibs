@@ -10,10 +10,11 @@ externalDependencies:
   # fmt-archive:
   #   kind: archive
   #   url: https://github.com/ofworks/ofLibs/releases/download/v0.12.3/ofLibs_fmt_macos.zip
-  fmt:
-    repository: https://github.com/fmtlib/fmt
-    commit: b35de87ad919
-    kind: git
+
+  # fmt:
+  #   repository: https://github.com/fmtlib/fmt
+  #   commit: b35de87ad919
+  #   kind: git
 
   zlib-ng:
     repository: https://github.com/zlib-ng/zlib-ng
@@ -39,6 +40,7 @@ externalDependencies:
 
   lcms2:
     # repository: https://github.com/mm2/Little-CMS
+    # commit: e8b6135
     repository: https://github.com/ofworks/Little-CMS
     commit: b6204a0f2057
     kind: git
@@ -63,6 +65,28 @@ targets:
   #   location: ../zlib-ng
   #   rebuild: false
   #   clean: false
+  # fmt:
+  #   kind: cmakeProject
+  #   location: ${external:${name}}
+  #   recheck: false
+  #   rebuild: false
+  #   install: true
+  #   defines:
+  #     - BUILD_SHARED_LIBS=OFF
+  #     - CMAKE_BUILD_TYPE=Release
+  #     - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+  #     # - FMT_MASTER_PROJECT=OFF
+  #     # - CMAKE_INSTALL_PREFIX=install
+  #     # - CMAKE_INSTALL_INCLUDEDIR=include
+  #     # - CMAKE_INSTALL_LIBDIR=lib
+  #     # - CMAKE_INSTALL_LIBDIR=lib
+  #   defines[platform:macos]:
+  #     - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
+  #     - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+  fmt:
+    kind: chaletProject
+    location: ../fmt
+    rebuild: false
   zlib-ng:
     kind: cmakeProject
     location: ${external:${name}}
@@ -92,24 +116,6 @@ targets:
   #   location: ../fmt/
   #   rebuild: false
   #   clean: false
-  fmt:
-    kind: cmakeProject
-    location: ${external:${name}}
-    recheck: false
-    rebuild: false
-    install: true
-    defines:
-      - BUILD_SHARED_LIBS=OFF
-      - CMAKE_BUILD_TYPE=Release
-      - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
-      # - FMT_MASTER_PROJECT=OFF
-      # - CMAKE_INSTALL_PREFIX=install
-      # - CMAKE_INSTALL_INCLUDEDIR=include
-      # - CMAKE_INSTALL_LIBDIR=lib
-      # - CMAKE_INSTALL_LIBDIR=lib
-    defines[platform:macos]:
-      - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
-      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
 
   zstd:
     kind: cmakeProject
@@ -384,8 +390,10 @@ distribution:
       - ${externalBuild:lz4}/install/include
       - ${externalBuild:deflate}/install/lib
       - ${externalBuild:deflate}/install/include
-      - ${externalBuild:fmt}/install/lib
-      - ${externalBuild:fmt}/install/include
+      # - ${externalBuild:fmt}/install/lib
+      # - ${externalBuild:fmt}/install/include
+      - ${externalBuild:fmt}/ext.fmt/install/lib
+      - ${externalBuild:fmt}/ext.fmt/install/include
 
       - ${externalBuild:${name}}/install/lib
       - ${externalBuild:${name}}/install/include

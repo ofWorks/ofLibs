@@ -1,11 +1,10 @@
 name: oflibs
-version: 12.1.0
+version: 0.11.0
 
 externalDependencies:
   fmt:
     repository: https://github.com/fmtlib/fmt
-    commit: b35de87ad919
-    # tag: 12.1.0
+    commit: 1dc644e021b1
     kind: git
 
 targets:
