@@ -313,7 +313,7 @@ targets:
       - ZLIB_ROOT=${cwd}/${externalBuild:zlib-ng}/install
 
     defines[platform:web]:
-      - zlib_ROOT=${cwd}/${externalBuild:zlib-ng}/install
+      - zlib_ROOT=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install
       - fmt_DIR=${cwd}/${externalBuild:fmt}/ext.fmt/install/lib/cmake/fmt
       - CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES=${cwd}/${externalBuild:zlib-ng}/install/include;${cwd}/${externalBuild:zstd}/install/include;${cwd}/${externalBuild:lz4}/install/include;${cwd}/${externalBuild:bzip2}/install/include;${cwd}/${externalBuild:deflate}/install/include
         # - CMAKE_CXX_FLAGS="-I${cwd}/${externalBuild:zlib-ng}/install/include -I${cwd}/${externalBuild:zstd}/install/include -I${cwd}/${externalBuild:lz4}/install/include -I${cwd}/${externalBuild:bzip2}/install/include -I${cwd}/${externalBuild:deflate}/install/include"
