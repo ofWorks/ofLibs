@@ -265,7 +265,7 @@ targets:
       - PKG_CONFIG_PATH=${cwd}/${externalBuild:lcms2}/install/lib/pkgconfig
       - CMAKE_LIBRARY_PATH=${cwd}/${externalBuild:lcms2}/install/lib
       - CMAKE_INCLUDE_PATH=${cwd}/${externalBuild:lcms2}/install/include
-      - CMAKE_PREFIX_PATH=${cwd}/${externalBuild:fmt}/ext.fmt/install;${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install;${cwd}/${externalBuild:lcms2}/install;${cwd}/${externalBuild:deflate}/install;${cwd}/${externalBuild:zstd}/install;${cwd}/${externalBuild:lz4}/install;${cwd}/${externalBuild:bzip2}/install
+      - CMAKE_PREFIX_PATH=${cwd}/${externalBuild:fmt}/ext.fmt/install;${cwd}/${externalBuild:zlib-ng}/install;${cwd}/${externalBuild:lcms2}/install;${cwd}/${externalBuild:deflate}/install;${cwd}/${externalBuild:zstd}/install;${cwd}/${externalBuild:lz4}/install;${cwd}/${externalBuild:bzip2}/install
 
       # - LCMS2_ROOT=${cwd}/${externalBuild:lcms2}/install/opt/homebrew/
       # - LCMS2_INCLUDE_DIRS=${cwd}/${externalBuild:lcms2}/install/include
@@ -311,8 +311,8 @@ targets:
       - ZLIB_ROOT=${cwd}/${externalBuild:zlib-ng}/install
 
     defines[platform:web]:
-      - ZLIB_ROOT=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install
-      - zlib_ROOT=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install
+      # - ZLIB_ROOT=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install
+      - zlib_ROOT=${cwd}/${externalBuild:zlib-ng}/install
       - fmt_DIR=${cwd}/${externalBuild:fmt}/ext.fmt/install/lib/cmake/fmt
       - CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES=${cwd}/${externalBuild:zlib-ng}/install/include;${cwd}/${externalBuild:zstd}/install/include;${cwd}/${externalBuild:lz4}/install/include;${cwd}/${externalBuild:bzip2}/install/include;${cwd}/${externalBuild:deflate}/install/include
         # - CMAKE_CXX_FLAGS="-I${cwd}/${externalBuild:zlib-ng}/install/include -I${cwd}/${externalBuild:zstd}/install/include -I${cwd}/${externalBuild:lz4}/install/include -I${cwd}/${externalBuild:bzip2}/install/include -I${cwd}/${externalBuild:deflate}/install/include"
