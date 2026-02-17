@@ -18,13 +18,13 @@ externalDependencies:
 
   zlib-ng:
     repository: https://github.com/zlib-ng/zlib-ng
-    commit: ec2f43e910be013720da5d699669bd6b7298efac
+    commit: ec2f43e910be013720da5d699669bd6b7298efac # pinned
     kind: git
 
   zstd:
     # repository: https://github.com/facebook/zstd/
     repository: https://github.com/ofworks/zstd/
-    commit: cfb7fdcd8428
+    commit: dfdbc30b693d
     kind: git
 
   bzip2:

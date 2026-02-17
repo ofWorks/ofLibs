@@ -87,6 +87,7 @@ def check_dependency(folder: str, name: str, info: dict) -> dict:
     current_tag = info.get("tag")
     if current_tag is not None:
         current_tag = str(current_tag)
+    is_pinned = info.get("is_pinned", False)
 
     result = {
         "folder": folder,
@@ -100,6 +101,7 @@ def check_dependency(folder: str, name: str, info: dict) -> dict:
         "latest_tag_commit": None,
         "is_up_to_date": False,
         "has_commit": current_commit is not None,
+        "is_pinned": is_pinned,
         "error": None,
     }
 
@@ -122,6 +124,11 @@ def check_dependency(folder: str, name: str, info: dict) -> dict:
     latest_tag, latest_tag_commit = get_latest_tag(repo_url)
     result["latest_tag"] = latest_tag
     result["latest_tag_commit"] = latest_tag_commit
+
+    # Pinned dependencies are always considered up-to-date
+    if is_pinned:
+        result["is_up_to_date"] = True
+        return result
 
     if current_commit:
         result["is_up_to_date"] = (
@@ -151,11 +158,37 @@ def parse_chalet_yaml(filepath: Path) -> list[dict]:
     if not data or "externalDependencies" not in data:
         return []
 
+    # Read raw content to detect comments (like # pinned)
+    try:
+        with open(filepath, "r") as f:
+            raw_content = f.read()
+    except Exception as e:
+        print(f"Warning: Failed to read {filepath}: {e}", file=sys.stderr)
+        raw_content = ""
+
     folder = filepath.parent.name
     deps = []
 
     for dep_name, dep_info in data["externalDependencies"].items():
         if isinstance(dep_info, dict) and dep_info.get("kind") == "git":
+            # Check if commit line has # pinned comment
+            is_pinned = False
+            if dep_info.get("commit") and raw_content:
+                # Look for the commit line in the raw content
+                commit_value = str(dep_info.get("commit"))
+
+                # Pattern 1: Inline comment - commit: <value> # pinned
+                # Matches: # pinned, #pinned, # pinned some comment, etc.
+                inline_pattern = rf"^\s*commit:\s*{re.escape(commit_value)}.*#\s*pinned\b"
+                if re.search(inline_pattern, raw_content, re.MULTILINE | re.IGNORECASE):
+                    is_pinned = True
+                else:
+                    # Pattern 2: Comment on previous line - # pinned...\n  commit: <value>
+                    # Matches: # pinned, # pinned some comment, # Pinned to version X, etc.
+                    prev_line_pattern = rf"#\s*pinned\b.*$\s*^\s*commit:\s*{re.escape(commit_value)}"
+                    if re.search(prev_line_pattern, raw_content, re.MULTILINE | re.IGNORECASE):
+                        is_pinned = True
+
             deps.append(
                 {
                     "folder": folder,
@@ -163,19 +196,25 @@ def parse_chalet_yaml(filepath: Path) -> list[dict]:
                     "repository": dep_info.get("repository"),
                     "commit": dep_info.get("commit"),
                     "tag": dep_info.get("tag"),
+                    "is_pinned": is_pinned,
                 }
             )
 
     return deps
 
 
-def update_yaml_file(filepath: Path, dep_name: str, latest_commit: str, current_tag: str | None, has_commit: bool) -> bool:
+def update_yaml_file(filepath: Path, dep_name: str, latest_commit: str, current_tag: str | None, has_commit: bool, is_pinned: bool = False) -> bool:
     """
     Update a chalet.yaml file with the latest commit.
     - If tag exists and is uncommented, comment it out and add/update commit
     - If no commit exists, add it after the repository line
     - If commit exists, update it
+    - If commit is pinned, skip updating it
     """
+    # Skip update if this dependency is pinned
+    if is_pinned:
+        return True
+
     try:
         with open(filepath, "r") as f:
             content = f.read()
@@ -229,10 +268,17 @@ def update_yaml_file(filepath: Path, dep_name: str, latest_commit: str, current_
             new_dep_lines.append(line)
             continue
 
-        # Check for commit line - update it
+        # Check for commit line - update it (but preserve any inline comments except # pinned)
         if stripped.startswith("commit:"):
             indent_str = " " * current_indent
-            new_dep_lines.append(f"{indent_str}commit: {latest_commit[:12]}")
+            # Check if there's an inline comment (other than # pinned)
+            comment_match = re.search(r"\s+#(?!\s*pinned\s*$)(.+)$", line, re.IGNORECASE)
+            if comment_match:
+                # Preserve the inline comment
+                comment = comment_match.group(1).strip()
+                new_dep_lines.append(f"{indent_str}commit: {latest_commit[:12]} # {comment}")
+            else:
+                new_dep_lines.append(f"{indent_str}commit: {latest_commit[:12]}")
             commit_updated = True
             continue
 
@@ -284,6 +330,7 @@ def print_results(results: list[dict], quiet: bool = False):
     outdated = [r for r in results if not r["is_up_to_date"] and not r["error"]]
     errors = [r for r in results if r["error"] and "Missing both commit and tag" not in r["error"]]
     using_tags = [r for r in results if r["error"] and "Missing both commit and tag" in r["error"]]
+    pinned = [r for r in results if r.get("is_pinned", False)]
 
     for result in results:
         folder = result["folder"]
@@ -293,6 +340,7 @@ def print_results(results: list[dict], quiet: bool = False):
         branch = result["default_branch"] or "?"
         current_tag = result["current_tag"]
         latest_tag = result["latest_tag"]
+        is_pinned = result.get("is_pinned", False)
 
         if quiet and result["is_up_to_date"] and not result["error"]:
             continue
@@ -303,6 +351,10 @@ def print_results(results: list[dict], quiet: bool = False):
                 status = f"⚠️  USING TAG: {tag_str}\n   Latest:  {latest_commit} ({branch})"
             else:
                 status = f"❌ ERROR: {result['error']}"
+        elif is_pinned:
+            status = f"📌 PINNED ({branch})\n   Commit: {current_commit}"
+            if latest_commit and latest_commit.lower() != current_commit.lower():
+                status += f"\n   Latest: {latest_commit} (update available)"
         elif result["is_up_to_date"]:
             if current_tag and not result["has_commit"]:
                 status = f"✅ Up-to-date via tag: {current_tag} ({branch})"
@@ -323,7 +375,8 @@ def print_results(results: list[dict], quiet: bool = False):
         print("SUMMARY")
         print("=" * 80)
         print(f"Total:      {len(results)}")
-        print(f"Up-to-date: {len(results) - len(outdated) - len(errors) - len(using_tags)}")
+        print(f"Up-to-date: {len(results) - len(outdated) - len(errors) - len(using_tags) - len(pinned)}")
+        print(f"Pinned:     {len(pinned)}")
         print(f"Outdated:   {len(outdated)}")
         print(f"Tag-only:   {len(using_tags)}")
         print(f"Errors:     {len(errors)}")
@@ -457,8 +510,11 @@ def main():
     results.sort(key=lambda x: (x["folder"], x["name"]))
 
     # Update YAML files if requested
+    # Skip pinned dependencies from updates
     if args.update or args.dry_run:
-        to_update = [r for r in results if (not r["is_up_to_date"] or not r["has_commit"]) and not r["error"]]
+        to_update = [r for r in results if (not r["is_up_to_date"] or not r["has_commit"]) and not r["error"] and not r.get("is_pinned", False)]
+
+        pinned = [r for r in results if r.get("is_pinned", False)]
 
         if args.dry_run:
             print("\n" + "=" * 80)
@@ -476,6 +532,7 @@ def main():
             latest = r["latest_commit"]
             current_tag = r["current_tag"]
             has_commit = r["has_commit"]
+            is_pinned = r.get("is_pinned", False)
 
             action = "Would update" if args.dry_run else "Updating"
             print(f"\n{action} {filepath} - {name}:")
@@ -489,10 +546,18 @@ def main():
                 print(f"  - Add commit: {latest[:12]}")
 
             if args.update and not args.dry_run:
-                if update_yaml_file(filepath, name, latest, current_tag, has_commit):
+                if update_yaml_file(filepath, name, latest, current_tag, has_commit, is_pinned):
                     print(f"  ✓ Updated successfully")
                 else:
                     print(f"  ✗ Update failed")
+
+        # Show pinned dependencies
+        if pinned:
+            print("\n" + "-" * 80)
+            print("PINNED DEPENDENCIES (skipped):")
+            print("-" * 80)
+            for r in pinned:
+                print(f"  {r['folder']}/{r['name']}: {r['current_commit'][:12]} # pinned")
 
     # Output results
     if args.json:
