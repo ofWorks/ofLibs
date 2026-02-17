@@ -57,14 +57,17 @@ externalDependencies:
     kind: git
 
 targets:
-  #
-  #   location: ../zlib-ng
-  #   rebuild: false
-  # zlib-ng:
-  #   kind: chaletProject
-  #   location: ../zlib-ng
-  #   rebuild: false
-  #   clean: false
+  fmt:
+    kind: chaletProject
+    location: ../fmt
+    recheck: false
+    rebuild: false
+
+  zlib-ng:
+    kind: chaletProject
+    location: ../zlib-ng
+    recheck: false
+    rebuild: false
   # fmt:
   #   kind: cmakeProject
   #   location: ${external:${name}}
@@ -83,14 +86,7 @@ targets:
   #   defines[platform:macos]:
   #     - CMAKE_OSX_DEPLOYMENT_TARGET=11.6
   #     - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
-  fmt:
-    kind: chaletProject
-    location: ../fmt
-    rebuild: false
-  zlib-ng:
-    kind: chaletProject
-    location: ../zlib-ng
-    rebuild: false
+
   # zlib-ng:
   #   kind: cmakeProject
   #   location: ${external:${name}}
@@ -210,6 +206,8 @@ targets:
   lcms2:
     kind: cmakeProject
     location: ${external:${name}}
+    recheck: false
+    rebuild: false
     install: true
     defines:
       - CMAKE_BUILD_TYPE=Release
@@ -267,7 +265,7 @@ targets:
       - PKG_CONFIG_PATH=${cwd}/${externalBuild:lcms2}/install/lib/pkgconfig
       - CMAKE_LIBRARY_PATH=${cwd}/${externalBuild:lcms2}/install/lib
       - CMAKE_INCLUDE_PATH=${cwd}/${externalBuild:lcms2}/install/include
-      - CMAKE_PREFIX_PATH=${cwd}/${externalBuild:fmt}/ext.fmt/install;${cwd}/${externalBuild:zlib-ng}/install;${cwd}/${externalBuild:lcms2}/install;${cwd}/${externalBuild:deflate}/install;${cwd}/${externalBuild:zstd}/install;${cwd}/${externalBuild:lz4}/install;${cwd}/${externalBuild:bzip2}/install
+      - CMAKE_PREFIX_PATH=${cwd}/${externalBuild:fmt}/ext.fmt/install;${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install;${cwd}/${externalBuild:lcms2}/install;${cwd}/${externalBuild:deflate}/install;${cwd}/${externalBuild:zstd}/install;${cwd}/${externalBuild:lz4}/install;${cwd}/${externalBuild:bzip2}/install
 
       # - LCMS2_ROOT=${cwd}/${externalBuild:lcms2}/install/opt/homebrew/
       # - LCMS2_INCLUDE_DIRS=${cwd}/${externalBuild:lcms2}/install/include
@@ -313,6 +311,7 @@ targets:
       - ZLIB_ROOT=${cwd}/${externalBuild:zlib-ng}/install
 
     defines[platform:web]:
+      - ZLIB_ROOT=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install
       - zlib_ROOT=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install
       - fmt_DIR=${cwd}/${externalBuild:fmt}/ext.fmt/install/lib/cmake/fmt
       - CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES=${cwd}/${externalBuild:zlib-ng}/install/include;${cwd}/${externalBuild:zstd}/install/include;${cwd}/${externalBuild:lz4}/install/include;${cwd}/${externalBuild:bzip2}/install/include;${cwd}/${externalBuild:deflate}/install/include
