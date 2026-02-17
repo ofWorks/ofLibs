@@ -396,13 +396,24 @@ distribution:
       # - ${externalBuild:fmt}/install/include
       - ${externalBuild:lcms2}/install/lib
       - ${externalBuild:lcms2}/install/include
-      - ${externalBuild:fmt}/ext.fmt/install/lib
-      - ${externalBuild:fmt}/ext.fmt/install/include
 
-      # today zlib is packaged as outside library as other libs depend on it.
+      # today FMT and zlib-ng are packaged as outside library as other libs depend on it.
+      # - ${externalBuild:fmt}/ext.fmt/install/lib
+      # - ${externalBuild:fmt}/ext.fmt/install/include
+
       # - ${externalBuild:zlib-ng}/ext.zlib-ng/install/lib
       # - ${externalBuild:zlib-ng}/ext.zlib-ng/install/include
 
       - ${externalBuild:${name}}/install/lib
       - ${externalBuild:${name}}/install/include
       - ${external:${name}}/license
+
+      # Note: `mango`'s license was already included (`${external:${name}}/license`), and `fmt`/`zlib-ng` are external projects (not in `chalet_external/`) so their licenses would need to be added separately if needed.
+
+    # FIXME: making a script that grabs each license
+    # License files for each library
+    # - ${external:bzip2}/COPYING
+    # - ${external:deflate}/COPYING
+    # - ${external:lcms2}/LICENSE
+    # - ${external:lz4}/LICENSE
+    # - ${external:zstd}/LICENSE
