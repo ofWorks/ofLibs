@@ -37,7 +37,7 @@ You are welcome to jump in and help building and testing more libraries.<br>
 [![opencv](https://github.com/ofWorks/ofLibs/actions/workflows/opencv.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/opencv.yml )
 <br><br>
 Still missing ofxURL related libs, openssl, libcrypto
-[![openssl-curl](https://github.com/ofWorks/ofLibs/actions/workflows/openssl-curl.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/openssl-curl.yml )
+<!--[![openssl-curl](https://github.com/ofWorks/ofLibs/actions/workflows/openssl-curl.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/openssl-curl.yml )-->
 
 ## Additional / Test (published with tag add)
 [![blend2d](https://github.com/ofWorks/ofLibs/actions/workflows/blend2d.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/blend2d.yml )
