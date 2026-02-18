@@ -62,10 +62,11 @@ targets:
 
     defines[:web]:
       # ADD THIS SECTION FOR EMSCRIPTEN
-      - c_args=-sPTHREAD_POOL_SIZE=4
-      - cpp_args=-sPTHREAD_POOL_SIZE=4
-      - c_link_args=-sUSE_PTHREADS=1 -sWASM=1 -sATOMICS=1 -sBULK_MEMORY=1 -sERROR_ON_UNDEFINED_SYMBOLS=1
-      - cpp_link_args=-sUSE_PTHREADS=1 -sWASM=1 -sATOMICS=1 -sBULK_MEMORY=1 -sERROR_ON_UNDEFINED_SYMBOLS=1
+      # Disable mutex/threading - Cairo's mutex implementation doesn't work with Emscripten
+      - c_args=-DCAIRO_NO_MUTEX=1 -D_REENTRANT
+      - cpp_args=-DCAIRO_NO_MUTEX=1 -D_REENTRANT
+      - c_link_args=-sWASM=1 -sERROR_ON_UNDEFINED_SYMBOLS=1
+      - cpp_link_args=-sWASM=1 -sERROR_ON_UNDEFINED_SYMBOLS=1
 
 distribution:
   cairo:
