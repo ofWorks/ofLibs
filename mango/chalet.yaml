@@ -265,7 +265,7 @@ targets:
       - PKG_CONFIG_PATH=${cwd}/${externalBuild:lcms2}/install/lib/pkgconfig
       - CMAKE_LIBRARY_PATH=${cwd}/${externalBuild:lcms2}/install/lib
       - CMAKE_INCLUDE_PATH=${cwd}/${externalBuild:lcms2}/install/include
-      - CMAKE_PREFIX_PATH=${cwd}/${externalBuild:fmt}/ext.fmt/install;${cwd}/${externalBuild:zlib-ng}/install;${cwd}/${externalBuild:lcms2}/install;${cwd}/${externalBuild:deflate}/install;${cwd}/${externalBuild:zstd}/install;${cwd}/${externalBuild:lz4}/install;${cwd}/${externalBuild:bzip2}/install
+      - CMAKE_PREFIX_PATH=${cwd}/${externalBuild:fmt}/ext.fmt/install;${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install;${cwd}/${externalBuild:lcms2}/install;${cwd}/${externalBuild:deflate}/install;${cwd}/${externalBuild:zstd}/install;${cwd}/${externalBuild:lz4}/install;${cwd}/${externalBuild:bzip2}/install
 
       # - LCMS2_ROOT=${cwd}/${externalBuild:lcms2}/install/opt/homebrew/
       # - LCMS2_INCLUDE_DIRS=${cwd}/${externalBuild:lcms2}/install/include
