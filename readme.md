@@ -43,7 +43,7 @@ Still missing ofxURL related libs, openssl, libcrypto
 [![blend2d](https://github.com/ofWorks/ofLibs/actions/workflows/blend2d.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/blend2d.yml )
 [![poco](https://github.com/ofWorks/ofLibs/actions/workflows/poco.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/poco.yml )
 [![libremidi](https://github.com/ofWorks/ofLibs/actions/workflows/libremidi.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/libremidi.yml )
-[![pixman](https://github.com/ofWorks/ofLibs/actions/workflows/pixman.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/pixman.yml )
+<!--[![pixman](https://github.com/ofWorks/ofLibs/actions/workflows/pixman.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/pixman.yml )-->
 [![opencv-dnn](https://github.com/ofWorks/ofLibs/actions/workflows/opencv-dnn.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/opencv-dnn.yml )
 
 <!--[![OpenImageIO](https://github.com/ofWorks/ofLibs/actions/workflows/OpenImageIO.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/OpenImageIO.yml )-->
