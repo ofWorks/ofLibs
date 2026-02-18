@@ -63,8 +63,9 @@ targets:
     defines[:web]:
       # ADD THIS SECTION FOR EMSCRIPTEN
       # Disable mutex/threading - Cairo's mutex implementation doesn't work with Emscripten
-      - c_args=-DCAIRO_NO_MUTEX=1 -D_REENTRANT
-      - cpp_args=-DCAIRO_NO_MUTEX=1 -D_REENTRANT
+      # Force GCC legacy atomics - C11 atomics have incompatible pointer types with pixman
+      - c_args=-DCAIRO_NO_MUTEX=1 -D_REENTRANT -DHAVE_GCC_LEGACY_ATOMICS=1 -UHAVE_C11_ATOMIC_PRIMITIVES
+      - cpp_args=-DCAIRO_NO_MUTEX=1 -D_REENTRANT -DHAVE_GCC_LEGACY_ATOMICS=1 -UHAVE_C11_ATOMIC_PRIMITIVES
       - c_link_args=-sWASM=1 -sERROR_ON_UNDEFINED_SYMBOLS=1
       - cpp_link_args=-sWASM=1 -sERROR_ON_UNDEFINED_SYMBOLS=1
 
