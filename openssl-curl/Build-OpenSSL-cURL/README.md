@@ -34,8 +34,8 @@ The build script accepts several arguments to adjust versions and toggle feature
          -3             Compile with SSLv3
          -s <version>   iOS min target version (default 8.0)
          -t <version>   tvOS min target version (default 9.0)
-         -i <version>   macOS 86_64 min target version (default 11.6.6)
-         -a <version>   macOS arm64 min target version (default 11.6.6)
+         -i <version>   macOS 86_64 min target version (default 11.0.6)
+         -a <version>   macOS arm64 min target version (default 11.0.6)
          -x             No color output
          -h             Show usage
 ```

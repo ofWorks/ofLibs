@@ -8,7 +8,7 @@ fi
 cd "$(dirname "$0")"
 cd Build-OpenSSL-cURL
 # ./build.sh -o 3.0.15 -c 8.14.1 -d -i 11.0 -a 11.0
-./build.sh -o 3.5.2 -c 8.15.0 -d -i 11.6 -a 11.6
+./build.sh -o 3.5.2 -c 8.15.0 -d -i 11.0 -a 11.0
 
 # mkdir dist
 
