@@ -43,7 +43,7 @@ externalDependencies:
   lz4:
     repository: https://github.com/lz4/lz4
     kind: git
-    commit: 1519f46a3a11
+    commit: 130f457aea83
 
   deflate:
     repository: https://github.com/ebiggers/libdeflate
