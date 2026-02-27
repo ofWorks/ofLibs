@@ -276,9 +276,9 @@ def update_yaml_file(filepath: Path, dep_name: str, latest_commit: str, current_
             if comment_match:
                 # Preserve the inline comment
                 comment = comment_match.group(1).strip()
-                new_dep_lines.append(f"{indent_str}commit: {latest_commit[:12]} # {comment}")
+                new_dep_lines.append(f'{indent_str}commit: "{latest_commit[:12]}" # {comment}')
             else:
-                new_dep_lines.append(f"{indent_str}commit: {latest_commit[:12]}")
+                new_dep_lines.append(f'{indent_str}commit: "{latest_commit[:12]}"')
             commit_updated = True
             continue
 
@@ -303,7 +303,7 @@ def update_yaml_file(filepath: Path, dep_name: str, latest_commit: str, current_
 
         if insert_idx > 0:
             indent_str = " " * (dep_indent + 2)
-            new_dep_lines.insert(insert_idx, f"{indent_str}commit: {latest_commit[:12]}")
+            new_dep_lines.insert(insert_idx, f'{indent_str}commit: "{latest_commit[:12]}"')
 
     # Reconstruct the file
     new_lines = lines[:dep_start] + new_dep_lines + lines[dep_end:]
