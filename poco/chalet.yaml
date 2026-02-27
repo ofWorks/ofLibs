@@ -50,8 +50,7 @@ targets:
       - ENABLE_PROMETHEUS=OFF
 
     defines[platform:web]:
-      - POCO_NO_INOTIFY=ON
-      - POCO_NO_EPOLL=ON
+      - CMAKE_CXX_FLAGS="-DPOCO_NO_INOTIFY -DPOCO_NO_EPOLL"
 
       # - CMAKE_INSTALL_INCLUDEDIR=include
       # - CMAKE_INSTALL_FULL_LIBDIR=lib
