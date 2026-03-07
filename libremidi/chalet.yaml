@@ -3,7 +3,7 @@ version: "1.0"
 externalDependencies:
   libremidi:
     repository: https://github.com/celtera/libremidi
-    commit: 1c446daa7121
+    commit: "3f93260b61e2"
     kind: git
 
 targets:
