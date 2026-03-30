@@ -70,6 +70,7 @@ targets:
 
       - FT_REQUIRE_PNG=OFF
       - FT_DISABLE_PNG=ON
+      - FT_DISABLE_HVF=ON
       # - PNG_ROOT=${cwd}/${externalBuild:libpng}/ext.libpng/install
       # - PNG_LIBRARY=${cwd}/${externalBuild:libpng}/ext.libpng/install/lib
       # - PNG_PNG_INCLUDE_DIR=${cwd}/${externalBuild:libpng}/ext.libpng/install/include
