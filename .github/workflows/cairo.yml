@@ -153,7 +153,7 @@ jobs:
           # ls -alfR raspbian/usr/lib
 
       - name: Install Chalet
-        uses: jaxxstorm/action-install-gh-release@v2.1.0
+        uses: jaxxstorm/action-install-gh-release@v3.0.0
         with:
           repo: chalet-org/chalet
           cache: enable
