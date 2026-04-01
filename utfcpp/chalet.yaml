@@ -4,7 +4,7 @@ externalDependencies:
   utfcpp:
     repository: https://github.com/nemtrif/utfcpp
     # tag: v4.0.8
-    commit: "6bbbaccabb14"
+    commit: "9dd905252f7d"
     kind: git
 
 targets:
