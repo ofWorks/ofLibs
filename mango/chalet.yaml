@@ -43,7 +43,7 @@ externalDependencies:
   lz4:
     repository: https://github.com/lz4/lz4
     kind: git
-    commit: "5c4c1fb23541"
+    commit: "9da37b2eebf0"
 
   deflate:
     repository: https://github.com/ebiggers/libdeflate
@@ -53,7 +53,7 @@ externalDependencies:
 
   mango:
     repository: https://github.com/t0rakka/mango
-    commit: "690d5a6c5179"
+    commit: "30a1b075ada3"
     kind: git
 
 targets:
