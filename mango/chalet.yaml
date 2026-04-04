@@ -47,7 +47,7 @@ externalDependencies:
 
   deflate:
     repository: https://github.com/ebiggers/libdeflate
-    commit: "272f43341eb0"
+    commit: "28e88e9c6f6c"
     # tag: v1.25
     kind: git
 
