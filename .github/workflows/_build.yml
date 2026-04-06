@@ -118,7 +118,7 @@ jobs:
 
       - name: Emscripten Install
         if: matrix.platform == 'emscripten'
-        uses: mymindstorm/setup-emsdk@v14
+        uses: mymindstorm/setup-emsdk@v15
         with:
           version: 5.0.0
           actions-cache-folder: "emsdk-cache"
