@@ -3,7 +3,7 @@ version: "1.0"
 externalDependencies:
   kissfft:
     repository: https://github.com/mborgerding/kissfft
-    commit: "1e56ac81667d"
+    commit: "6e9e673e420c"
     kind: git
 
 targets:
