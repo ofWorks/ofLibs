@@ -211,12 +211,14 @@ targets:
     install: true
     defines:
       - CMAKE_BUILD_TYPE=Release
-      - BUILD_SHARED_LIBS=OFF
+      - LCMS2_BUILD_SHARED=OFF
+      - LCMS2_BUILD_STATIC=ON
+      - LCMS2_BUILD_TOOLS=OFF
+      - LCMS2_BUILD_TESTS=OFF
       - CMAKE_INSTALL_PREFIX=install
       - CMAKE_INSTALL_INCLUDEDIR=include
       - CMAKE_INSTALL_LIBDIR=lib
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
-      - BUILD_TESTS=OFF
     defines[platform:macos]:
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
