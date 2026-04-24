@@ -17,10 +17,10 @@ externalDependencies:
   #   kind: git
 
   lcms2:
-    # repository: https://github.com/mm2/Little-CMS
+    repository: https://github.com/mm2/Little-CMS
     # commit: e8b6135
-    repository: https://github.com/ofworks/Little-CMS
-    commit: b6204a0f2057
+    # repository: https://github.com/ofworks/Little-CMS
+    # commit: b6204a0f2057
     kind: git
 
   # zlib-ng:
