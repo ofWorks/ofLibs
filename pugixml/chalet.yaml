@@ -4,7 +4,7 @@ externalDependencies:
   pugixml:
     repository: https://github.com/zeux/pugixml
     # tag: v1.14
-    commit: "9c1b438fe136"
+    commit: "063218842544"
     kind: git
 
 targets:
