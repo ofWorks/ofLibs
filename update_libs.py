@@ -387,7 +387,7 @@ def main():
     parser.add_argument("--workers", "-w", type=int, default=10, help="Parallel workers (default: 10)")
     args = parser.parse_args()
 
-    results = gather_results(args.workers)
+    results = gather_results(args.workers, progress=not args.json)
 
     if args.json:
         print(json.dumps(results, indent=2))
