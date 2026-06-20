@@ -1,0 +1,72 @@
+name: oflibs
+version: "1.0"
+externalDependencies:
+  dawn:
+    repository: https://github.com/google/dawn.git
+    commit: "5927f0221ff1"
+    kind: git
+
+targets:
+  dawn:
+    kind: cmakeProject
+    location: ${external:${name}}
+    recheck: false
+    rebuild: false
+    install: true
+    defines:
+      - CMAKE_INSTALL_INCLUDEDIR=include
+      - CMAKE_INSTALL_PREFIX=install
+      # - CMAKE_INSTALL_LIBDIR=lib
+      - CMAKE_INSTALL_LIBDIR=lib
+      - BUILD_SHARED_LIBS=OFF
+      - CMAKE_BUILD_TYPE=Release
+      - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+
+      # Fetch Dawn's third-party deps via its python script (no depot_tools/gclient)
+      - DAWN_FETCH_DEPENDENCIES=ON
+      # Produce installable libraries + cmake config files.
+      # Tint is folded into the monolithic lib below, so installing Tint's
+      # individual archives is unnecessary and actually breaks (its component
+      # .a files don't exist as standalone targets in a monolithic build).
+      - DAWN_ENABLE_INSTALL=ON
+      - TINT_ENABLE_INSTALL=OFF
+      # Single static archive (libwebgpu_dawn.a) instead of dozens of libs
+      - DAWN_BUILD_MONOLITHIC_LIBRARY=STATIC
+      # Trim the build surface: no samples/tests/tools/protobuf(IR binary)
+      - DAWN_BUILD_SAMPLES=OFF
+      - DAWN_BUILD_TESTS=OFF
+      - TINT_BUILD_TESTS=OFF
+      - TINT_BUILD_CMD_TOOLS=OFF
+      - DAWN_BUILD_PROTOBUF=OFF
+      # openFrameworks owns the window/surface, so Dawn's own GLFW windowing
+      # utils are not needed (and dropping them removes the X11/glfw dev deps).
+      - DAWN_USE_GLFW=OFF
+
+    # Backends are auto-detected per platform by Dawn, but we set them
+    # explicitly so the CI dependency requirements are unambiguous.
+    defines[platform:macos]:
+      - DAWN_ENABLE_METAL=ON
+      - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
+      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+
+    defines[platform:linux]:
+      - DAWN_ENABLE_VULKAN=ON
+      # X11 surface support (needs libx11-dev / libx11-xcb-dev at build time).
+      - DAWN_USE_X11=ON
+      - DAWN_USE_WAYLAND=OFF
+
+    defines[platform:windows]:
+      - DAWN_ENABLE_D3D12=ON
+      - DAWN_ENABLE_D3D11=ON
+      # DXC (dxcompiler.dll) is loaded at runtime from the Windows SDK,
+      # so we don't build it here.
+      - DAWN_USE_BUILT_DXC=OFF
+
+distribution:
+  dawn:
+    kind: archive
+    format: zip
+    include:
+      - ${externalBuild:${name}}/install/lib
+      - ${externalBuild:${name}}/install/include
+      - ${external:${name}}/LICENSE

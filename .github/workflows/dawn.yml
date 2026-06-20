@@ -1,0 +1,31 @@
+name: dawn
+
+# Dawn (WebGPU) is built only for the desktop platforms openFrameworks targets
+# with a native backend: macOS (Metal), Linux (Vulkan), Windows (D3D11/12).
+# Web uses the browser's WebGPU (emdawnwebgpu) and rpi cross-compile is not set
+# up, so we pass a restricted `platforms` set to the shared _build.yml.
+
+on:
+  push:
+    paths:
+      - dawn/**
+      - .github/workflows/dawn.yml
+
+jobs:
+  ci:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/_build.yml
+    with: {
+        lib: dawn,
+        # separate tag so Dawn is not bundled into the v1.0 release
+        version: add,
+        # Vulkan/X11 surface support on Linux (Vulkan loader is fetched by Dawn)
+        linux_apt: libx11-dev libx11-xcb-dev libxcb1-dev pkg-config,
+        platforms: '[
+          {"platform":"linux64","os":"ubuntu-22.04","toolchain":"llvm"},
+          {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"},
+          {"platform":"vs","os":"windows-latest","toolchain":"vs-stable"}
+          ]',
+      }
+    secrets: inherit

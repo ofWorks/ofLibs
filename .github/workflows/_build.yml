@@ -9,6 +9,19 @@ on:
       linux_apt: { required: false, type: string }
       brew: { required: false, type: string }
       meson: { required: false, type: boolean }
+      # JSON array of matrix entries. Defaults to the full platform set; pass a
+      # subset to restrict a lib to the platforms it actually supports.
+      platforms:
+        required: false
+        type: string
+        default: >-
+          [
+            {"platform":"linux64","os":"ubuntu-22.04","toolchain":"llvm"},
+            {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"},
+            {"platform":"vs","os":"windows-latest","toolchain":"vs-stable"},
+            {"platform":"rpi-aarch64","os":"ubuntu-22.04-arm","prefix":"aarch64-linux-gnu","toolchain":"aarch64-linux-gnu-gcc-12"},
+            {"platform":"emscripten","os":"ubuntu-latest","toolchain":"emscripten"}
+          ]
 
 permissions:
   contents: write
@@ -18,42 +31,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          # - { platform: linux64, os: ubuntu-latest, toolchain: llvm }
-          - { platform: linux64, os: ubuntu-22.04, toolchain: llvm }
-          - { platform: macos, os: macos-26, toolchain: apple-llvm }
-          - { platform: vs, os: windows-latest, toolchain: vs-stable }
-          - {
-              platform: rpi-aarch64,
-              os: ubuntu-22.04-arm,
-              prefix: aarch64-linux-gnu,
-              toolchain: aarch64-linux-gnu-gcc-12,
-            }
-
-          - { platform: emscripten, os: ubuntu-latest, toolchain: emscripten }
-
-          # - {
-          #     platform: rpi-armv6l,
-          #     os: ubuntu-latest,
-          #     prefix: arm-linux-gnueabihf,
-          #     toolchain: arm-linux-gnueabihf-gcc,
-          #   }
-
-          # - {
-          #     platform: msys2,
-          #     os: ubuntu-latest,
-          #     prefix: mingw-w64,
-          #     toolchain: x86_64-w64-mingw32-gcc,
-          #     # params: -t gcc -a x86_64-w64-mingw32,
-          #   }
-
-          # - {
-          #     platform: msys2,
-          #     os: windows-latest,
-          #     toolchain: gcc,
-          #     shell: msys2 -c 'export PATH=$PATH:/c/hostedtoolcache/windows/chalet-org/chalet/latest/windows-x64',
-          #     # shell: msys2 -c 'source $GITHUB_ENV; export $(cut -d= -f1 $GITHUB_ENV); {0}'
-          #   }
+        # Platform set comes from the `platforms` input (JSON). The default
+        # covers all platforms; callers may pass a subset (see dawn.yml).
+        include: ${{ fromJSON(inputs.platforms) }}
 
     runs-on: ${{ matrix.os }}
 
