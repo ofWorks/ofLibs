@@ -4,7 +4,8 @@ externalDependencies:
   tess2:
     repository: https://github.com/ofworks/libtess2
     # tag: v1.0.2
-    commit: 09a3d99
+    branch: llm
+    # commit: 09a3d99
     kind: git
 targets:
   tess2:
