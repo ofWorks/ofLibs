@@ -3,7 +3,7 @@ version: "1.0"
 externalDependencies:
   dawn:
     repository: https://github.com/google/dawn.git
-    commit: "5927f0221ff1"
+    commit: "292e993b4a84"
     kind: git
 
 targets:
@@ -48,6 +48,8 @@ targets:
       - DAWN_ENABLE_METAL=ON
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+      # CMAKE_INTERPROCEDURAL_OPTIMIZATION=ON could be enabled for smaller/faster
+      # libwebgpu_dawn.a binaries, but it significantly increases build times.
 
     defines[platform:linux]:
       - DAWN_ENABLE_VULKAN=ON
