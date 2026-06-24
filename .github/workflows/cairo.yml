@@ -133,7 +133,7 @@ jobs:
           version: 1.0
 
       - name: RPI - Cache Multistrap
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: raspbian
           key: ${{ matrix.prefix }}-rpicache
