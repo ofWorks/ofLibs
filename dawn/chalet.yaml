@@ -56,6 +56,12 @@ targets:
       # X11 surface support (needs libx11-dev / libx11-xcb-dev at build time).
       - DAWN_USE_X11=ON
       - DAWN_USE_WAYLAND=OFF
+      # The CI runner's Clang 14 advertises a clang-scan-deps but can't actually
+      # produce a C++20 module import graph, so Dawn's optional C++20 module
+      # interface (dawncpp_module) fails at CMake generate. We consume Dawn via
+      # the regular webgpu_cpp.h headers, not `import webgpu;`, so disable it.
+      # (macOS/AppleClang skips this target automatically; MSVC supports it.)
+      - DAWN_SUPPORTS_CXX_MODULES=OFF
 
     defines[platform:windows]:
       - DAWN_ENABLE_D3D12=ON
