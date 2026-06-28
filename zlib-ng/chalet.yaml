@@ -16,6 +16,12 @@ targets:
     recheck: false
     rebuild: false
     install: true
+    # Build only the library target. The utility executables (minigzip,
+    # minideflate, makefixed, ...) are never installed or distributed, and
+    # linking them under emscripten crashes wasm-opt ("popping from empty
+    # stack"). zlib-ng has no CMake option to skip them, so restrict the build.
+    targets:
+      - zlib-ng
     defines:
       - CMAKE_BUILD_TYPE=Release
       - BUILD_SHARED_LIBS=OFF # not working on zlib
