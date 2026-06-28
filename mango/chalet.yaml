@@ -320,6 +320,12 @@ targets:
       - ZLIB_ROOT=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install
 
     defines[platform:web]:
+      # mango's bundled unrar (source/external/unrar/rar.hpp) only selects the
+      # little-endian path for `defined(EMSCRIPTEN)`, but modern emscripten
+      # defines only `__EMSCRIPTEN__`, so it hits a #error. Define EMSCRIPTEN so
+      # unrar compiles. Only unrar references the bare macro; mango itself uses
+      # __EMSCRIPTEN__, so this is safe.
+      - CMAKE_CXX_FLAGS=-DEMSCRIPTEN=1
       - zlib_ROOT=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install
       - zlib_DIR=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install/lib/cmake/zlib
       - fmt_DIR=${cwd}/${externalBuild:fmt}/ext.fmt/install/lib/cmake/fmt
