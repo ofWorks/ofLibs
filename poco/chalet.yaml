@@ -50,7 +50,13 @@ targets:
       - ENABLE_PROMETHEUS=OFF
 
     defines[platform:web]:
-      - CMAKE_CXX_FLAGS="-DPOCO_NO_INOTIFY -UPOCO_HAVE_FD_EPOLL -DPOCO_HAVE_FD_POLL"
+      # Browsers have no raw sockets, and emscripten lacks <sys/epoll.h> which
+      # Poco hard-enables: it detects emscripten as Linux (Platform.h) and then
+      # #defines POCO_HAVE_FD_EPOLL in Net.h, so a command-line -U can't turn it
+      # off. Drop the Net module on web; no other enabled module depends on it.
+      - ENABLE_NET=OFF
+      # emscripten has no <sys/inotify.h>; Foundation's DirectoryWatcher needs this.
+      - CMAKE_CXX_FLAGS=-DPOCO_NO_INOTIFY
 
       # - CMAKE_INSTALL_INCLUDEDIR=include
       # - CMAKE_INSTALL_FULL_LIBDIR=lib

@@ -11,6 +11,13 @@ on:
       meson: { required: false, type: boolean }
       # JSON array of matrix entries. Defaults to the full platform set; pass a
       # subset to restrict a lib to the platforms it actually supports.
+      #
+      # linux64/rpi are pinned to ubuntu-22.04 (glibc 2.35) ON PURPOSE: the
+      # resulting static .a bakes in versioned glibc symbol refs, so building
+      # on an older runner keeps the libs loadable on older Linux distros.
+      # Don't bump to ubuntu-latest/24.04 unless a lib needs a newer toolchain
+      # (see dawn.yml, which opts into ubuntu-24.04 for Clang >= 16). emscripten
+      # stays on ubuntu-latest since it emits wasm (no host glibc dependency).
       platforms:
         required: false
         type: string

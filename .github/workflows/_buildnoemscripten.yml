@@ -19,7 +19,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { platform: linux64, os: ubuntu-latest, toolchain: llvm }
+          # Pinned to ubuntu-22.04 (glibc 2.35) so the static .a stays
+          # portable to older Linux distros. Keep in sync with _build.yml.
+          - { platform: linux64, os: ubuntu-22.04, toolchain: llvm }
           - { platform: macos, os: macos-26, toolchain: apple-llvm }
           - { platform: vs, os: windows-latest, toolchain: vs-stable }
           - {
@@ -236,6 +238,6 @@ jobs:
           # GITHUB_TOKEN: ${{ github.TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mv dist/${{ inputs.lib }}.zip ofLibs_${{ inputs.lib }}_${{ matrix.platform }}.zip
+          mv dist/*.zip ofLibs_${{ inputs.lib }}_${{ matrix.platform }}.zip
           ls -alF *.zip
           gh release upload ${{ inputs.version }} *.zip --clobber
