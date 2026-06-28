@@ -124,6 +124,9 @@ targets:
       - ZSTD_BUILD_SHARED=OFF
       - BUILD_STATIC_LIBS=ON
       - ZSTD_BUILD_STATIC=ON
+      # Don't build the zstd/zstd-frugal CLI tools: not distributed, and
+      # linking them under emscripten crashes wasm-opt.
+      - ZSTD_BUILD_PROGRAMS=OFF
 
       - CMAKE_INSTALL_PREFIX=install
       - CMAKE_INSTALL_INCLUDEDIR=include
@@ -168,9 +171,12 @@ targets:
       - BUILD_STATIC_LIBS=ON
       - ENABLE_STATIC_LIB=ON
       - ENABLE_SHARED_LIB=OFF
-      - ENABLE_APP_DEFAULT=OFF
+      # Build libbz2 only. ENABLE_APP_DEFAULT=OFF is ineffective here because
+      # bzip2's CMakeLists does set(ENABLE_APP_DEFAULT ON), shadowing the -D;
+      # ENABLE_LIB_ONLY forces the bzip2/bzip2recover apps off. They are not
+      # distributed and linking them under emscripten crashes wasm-opt.
+      - ENABLE_LIB_ONLY=ON
       - ENABLE_DOCS_DEFAULT=OFF
-      - ENABLE_EXAMPLES_DEFAULT=OFF
 
       - CMAKE_INSTALL_PREFIX=install
       - CMAKE_INSTALL_INCLUDEDIR=include
