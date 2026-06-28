@@ -1,4 +1,5 @@
 name: opencv
+# bump 2026-06-28: re-trigger at HEAD to pick up zlib-ng utils fix
 
 on:
   push:
