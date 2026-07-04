@@ -5,7 +5,7 @@ externalDependencies:
     repository: https://github.com/zlib-ng/zlib-ng
     # Pinned to latest commit with working zlib-ng
     # commit: ec2f43e910be013720da5d699669bd6b7298efac
-    commit: "f4b08115a14c"
+    commit: "5a341259b6a1"
     # tag: 2.2.5
     kind: git
 

@@ -3,7 +3,7 @@ version: 1.2.0
 externalDependencies:
   brotli:
     repository: https://github.com/google/brotli
-    commit: "83fe766bc81f"
+    commit: "27cc9fe9a4aa"
     # tag: v1.2.0
     kind: git
 
