@@ -1,0 +1,41 @@
+name: oflibs
+version: "1.0"
+externalDependencies:
+  miniaudio:
+    repository: https://github.com/mackron/miniaudio
+    commit: "9634bedb5b5a"
+    kind: git
+
+targets:
+  miniaudio:
+    kind: cmakeProject
+    location: ${external:${name}}
+    recheck: false
+    rebuild: false
+    install: true
+    defines:
+      - CMAKE_INSTALL_INCLUDEDIR=include
+      - CMAKE_INSTALL_PREFIX=install
+      - CMAKE_INSTALL_LIBDIR=lib
+      - BUILD_SHARED_LIBS=OFF
+      - CMAKE_BUILD_TYPE=Release
+      - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+
+      - MINIAUDIO_BUILD_EXAMPLES=OFF
+      - MINIAUDIO_BUILD_TESTS=OFF
+      - MINIAUDIO_BUILD_TOOLS=OFF
+      - MINIAUDIO_INSTALL=ON
+      - MINIAUDIO_NO_LIBVORBIS=ON
+      - MINIAUDIO_NO_LIBOPUS=ON
+    defines[platform:macos]:
+      - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
+      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+
+distribution:
+  miniaudio:
+    kind: archive
+    format: zip
+    include:
+      - ${externalBuild:${name}}/install/lib
+      - ${externalBuild:${name}}/install/include
+      - ${external:${name}}/LICENSE

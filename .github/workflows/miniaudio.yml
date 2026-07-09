@@ -1,0 +1,28 @@
+name: miniaudio
+
+on:
+  push:
+    paths:
+      - .github/workflows/miniaudio.yml
+      - miniaudio/**
+
+jobs:
+  ci:
+    permissions:
+      contents: write
+
+    uses: ./.github/workflows/_build.yml
+    with: {
+        lib: miniaudio,
+        version: v1.0,
+        linux_apt: libasound2-dev libpulse-dev libjack-dev,
+        # rpi-aarch64 cross-compilation is not set up for audio backend dev libs,
+        # so limit to the desktop platforms + emscripten.
+        platforms: '[
+          {"platform":"linux64","os":"ubuntu-22.04","toolchain":"llvm"},
+          {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"},
+          {"platform":"vs","os":"windows-latest","toolchain":"vs-stable"},
+          {"platform":"emscripten","os":"ubuntu-latest","toolchain":"emscripten"}
+          ]',
+      }
+    secrets: inherit

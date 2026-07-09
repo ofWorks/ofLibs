@@ -1,0 +1,43 @@
+name: oflibs
+version: "1.0"
+externalDependencies:
+  pffft:
+    repository: https://github.com/marton78/pffft
+    commit: "a4b03590cc2a"
+    kind: git
+    # Add a patch to disable problematic builds
+targets:
+  pffft:
+    kind: cmakeProject
+    location: ${external:${name}}
+    recheck: false
+    rebuild: false
+    install: true
+    defines:
+      - CMAKE_INSTALL_INCLUDEDIR=include
+      - CMAKE_INSTALL_PREFIX=install
+      - CMAKE_INSTALL_LIBDIR=lib
+      - BUILD_SHARED_LIBS=OFF
+      - CMAKE_BUILD_TYPE=Release
+      - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+      # Only build what we need
+      - PFFFT_USE_TYPE_FLOAT=ON
+      - PFFFT_USE_TYPE_DOUBLE=OFF
+      - PFFFT_USE_SIMD=ON
+      - INSTALL_PFFFT=ON
+      # Disable everything else to avoid arch conflicts
+      - BUILD_TESTING=OFF
+      - INSTALL_PFDSP=OFF
+      - INSTALL_PFFASTCONV=OFF
+    defines[platform:macos]:
+      - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
+      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+distribution:
+  pffft:
+    kind: archive
+    format: zip
+    include:
+      - ${externalBuild:${name}}/install/lib
+      - ${externalBuild:${name}}/install/include
+      - ${external:${name}}/COPYING
+      - ${external:${name}}/LICENSES
