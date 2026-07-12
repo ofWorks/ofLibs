@@ -3,7 +3,7 @@ version: "1.0"
 externalDependencies:
   dawn:
     repository: https://github.com/google/dawn.git
-    commit: "0ad72f040be7"
+    commit: "b87a8b9b6489"
     kind: git
 
 targets:
