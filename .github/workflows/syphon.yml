@@ -1,0 +1,23 @@
+name: syphon
+
+on:
+  push:
+    paths:
+      - syphon/**
+      - .github/workflows/syphon.yml
+
+jobs:
+  ci:
+    permissions:
+      contents: write
+
+    uses: ./.github/workflows/_build.yml
+    with:
+      lib: syphon
+      version: v1.0
+      # macOS-only: Syphon is a macOS IOSurface/Metal framework.
+      platforms: >-
+        [
+          {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"}
+        ]
+    secrets: inherit

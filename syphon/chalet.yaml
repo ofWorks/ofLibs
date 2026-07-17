@@ -1,0 +1,22 @@
+name: oflibs
+version: "1.0"
+externalDependencies:
+  syphon:
+    repository: https://github.com/Syphon/Syphon-Framework
+    commit: "71351d4b484c"
+    kind: git
+
+targets:
+  syphon:
+    kind: script
+    file: build_syphon.sh
+    arguments:
+      - ${external:${name}}
+
+distribution:
+  syphon:
+    kind: archive
+    format: zip
+    include:
+      - ${external:${name}}/build/Release/Syphon.framework
+      - ${external:${name}}/License.txt
