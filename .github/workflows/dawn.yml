@@ -19,7 +19,7 @@ jobs:
     with: {
         lib: dawn,
         # separate tag so Dawn is not bundled into the v1.0 release
-        version: add,
+        version: v1.0,
         # Vulkan/X11 surface support on Linux (Vulkan loader is fetched by Dawn)
         linux_apt: libx11-dev libx11-xcb-dev libxcb1-dev pkg-config,
         # Dawn/Tint require Clang >= 16 (C++20 P0634 "Down with typename");

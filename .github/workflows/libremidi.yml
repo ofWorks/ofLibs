@@ -12,5 +12,5 @@ jobs:
       contents: write
 
     uses: ./.github/workflows/_build.yml
-    with: { lib: libremidi, version: add }
+    with: { lib: libremidi, version: v1.0 }
     secrets: inherit
