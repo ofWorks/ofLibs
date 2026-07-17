@@ -5,7 +5,7 @@ externalDependencies:
     repository: https://github.com/assimp/assimp
     # tag: v6.0.4
     # This fixes Anisor bug https://github.com/assimp/assimp/issues/5635#
-    commit: "f1de01d68eb2"
+    commit: "a939f2479513"
     kind: git
 
 targets:
