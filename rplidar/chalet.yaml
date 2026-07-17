@@ -1,0 +1,24 @@
+name: oflibs
+version: "1.0"
+externalDependencies:
+  rplidar:
+    repository: https://github.com/dimitre/rplidar_sdk
+    branch: braid
+    commit: "7441b705f4be"
+    kind: git
+
+targets:
+  rplidar:
+    kind: script
+    file: build_rplidar.sh
+    arguments:
+      - ${external:${name}}
+
+distribution:
+  rplidar:
+    kind: archive
+    format: zip
+    include:
+      - ${external:${name}}/stage/lib
+      - ${external:${name}}/stage/include
+      - ${external:${name}}/LICENSE
