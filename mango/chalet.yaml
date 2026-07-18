@@ -54,7 +54,7 @@ externalDependencies:
 
   mango:
     repository: https://github.com/t0rakka/mango
-    commit: "c1695c758e7d"
+    commit: "c68ac4ed2ff0"
     kind: git
 
 targets:

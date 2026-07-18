@@ -4,7 +4,7 @@ externalDependencies:
   rplidar:
     repository: https://github.com/dimitre/rplidar_sdk
     branch: braid
-    commit: "7441b705f4be"
+    commit: "99478e5fb90d"
     kind: git
 
 targets:
