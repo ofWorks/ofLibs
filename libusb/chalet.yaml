@@ -3,7 +3,7 @@ version: "1.0"
 externalDependencies:
   libusb:
     repository: https://github.com/libusb/libusb-cmake
-    commit: "2fa2f30c446c"
+    commit: "bea6567b6379"
     kind: git
 targets:
   libusb:
