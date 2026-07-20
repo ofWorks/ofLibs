@@ -27,6 +27,11 @@ targets:
       # needs macOS 13.0; with a 11.0 deployment target it fails under -Werror.
       # Rigid-body physics doesn't use Jolt's compute abstraction — turn it off.
       - JPH_USE_MTL=OFF
+      # Distribution enables interprocedural optimization (thin-LTO), which emits
+      # bitcode .o files into the .a — those are NOT portable across clang
+      # versions, so a CI archive (newer Xcode) fails to link on an older local
+      # clang ("Invalid bitcode version"). Ship a native-object archive instead.
+      - INTERPROCEDURAL_OPTIMIZATION=OFF
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
       - CMAKE_INSTALL_PREFIX=install
       - CMAKE_INSTALL_INCLUDEDIR=include
