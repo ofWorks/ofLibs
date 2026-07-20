@@ -1,0 +1,40 @@
+name: oflibs
+version: 3.1.1
+
+externalDependencies:
+  box2d:
+    repository: https://github.com/erincatto/box2d
+    commit: "8c661469c9507d3ad6fbd2fea3f1aa71669c2fe3"
+    kind: git
+
+targets:
+  box2d:
+    kind: cmakeProject
+    location: ${external:${name}}
+    recheck: false
+    rebuild: false
+    install: true
+    defines:
+      - BUILD_SHARED_LIBS=OFF
+      - CMAKE_BUILD_TYPE=Release
+      - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+      - BOX2D_SAMPLES=OFF
+      - BOX2D_BENCHMARKS=OFF
+      - BOX2D_UNIT_TESTS=OFF
+      - BOX2D_DOCS=OFF
+      - CMAKE_INSTALL_PREFIX=install
+      - CMAKE_INSTALL_INCLUDEDIR=include
+      - CMAKE_INSTALL_LIBDIR=lib
+    defines[platform:macos]:
+      - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
+      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+
+distribution:
+  box2d:
+    kind: archive
+    format: zip
+    include:
+      - ${externalBuild:${name}}/install/lib
+      - ${externalBuild:${name}}/install/include
+      - ${external:${name}}/README.md
+      - ${external:${name}}/LICENSE

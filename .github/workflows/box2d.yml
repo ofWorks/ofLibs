@@ -1,0 +1,15 @@
+name: box2d
+
+on:
+  push:
+    paths:
+      - box2d/**
+      - .github/workflows/box2d.yml
+
+jobs:
+  ci:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/_build.yml
+    with: { lib: box2d, version: v1.0 }
+    secrets: inherit

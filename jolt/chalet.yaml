@@ -1,0 +1,49 @@
+name: oflibs
+version: 5.6.0
+
+externalDependencies:
+  jolt:
+    repository: https://github.com/jrouwe/JoltPhysics
+    commit: "e77f175595e64cb44218cc9d9d56fc365ad0e36a"
+    kind: git
+
+targets:
+  jolt:
+    kind: cmakeProject
+    # NOTE: Jolt's CMakeLists.txt lives in Build/, not the repo root.
+    location: ${external:${name}}/Build
+    recheck: false
+    rebuild: false
+    install: true
+    defines:
+      - CMAKE_BUILD_TYPE=Distribution
+      - TARGET_UNIT_TESTS=OFF
+      - TARGET_HELLO_WORLD=OFF
+      - TARGET_PERFORMANCE_TEST=OFF
+      - TARGET_SAMPLES=OFF
+      - TARGET_VIEWER=OFF
+      - CROSS_PLATFORM_DETERMINISTIC=OFF
+      # Jolt v5.x auto-enables a Metal compute backend whose MTLBinding.bindings
+      # needs macOS 13.0; with a 11.0 deployment target it fails under -Werror.
+      # Rigid-body physics doesn't use Jolt's compute abstraction — turn it off.
+      - JPH_USE_MTL=OFF
+      - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+      - CMAKE_INSTALL_PREFIX=install
+      - CMAKE_INSTALL_INCLUDEDIR=include
+      - CMAKE_INSTALL_LIBDIR=lib
+    defines[platform:macos]:
+      - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
+      # v1 arm64-only: Jolt selects SSE/AVX vs NEON per arch, so a single
+      # x86_64;arm64 pass can mis-select SIMD. Ship arm64 first; add x86_64
+      # via a lipo pass later only if a consumer needs it (dev/physics.md B.1).
+      - CMAKE_OSX_ARCHITECTURES=arm64
+
+distribution:
+  jolt:
+    kind: archive
+    format: zip
+    include:
+      - ${externalBuild:${name}}/install/lib
+      - ${externalBuild:${name}}/install/include
+      - ${external:${name}}/README.md
+      - ${external:${name}}/LICENSE

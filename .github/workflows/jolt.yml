@@ -1,0 +1,23 @@
+name: jolt
+
+on:
+  push:
+    paths:
+      - jolt/**
+      - .github/workflows/jolt.yml
+
+jobs:
+  ci:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/_build.yml
+    with:
+      lib: jolt
+      version: v1.0
+      # macOS-only for now (Braid is macOS-only, and v1 is arm64 — see
+      # jolt/chalet.yaml). Mirrors rplidar.yml / syphon.yml.
+      platforms: >-
+        [
+          {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"}
+        ]
+    secrets: inherit
