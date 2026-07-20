@@ -89,4 +89,3 @@ distribution:
       - ${externalBuild:${name}}/install/lib
       - ${externalBuild:${name}}/install/include
       - ${external:${name}}/LICENSE
-
