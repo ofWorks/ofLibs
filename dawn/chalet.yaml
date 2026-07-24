@@ -19,11 +19,19 @@ targets:
       - CMAKE_INSTALL_LIBDIR=lib
       - BUILD_SHARED_LIBS=OFF
       - CMAKE_BUILD_TYPE=Release
-      - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 
-      # ── Strip debug symbols from the static archive ──
-      - CMAKE_CXX_FLAGS=-g0
-      - CMAKE_C_FLAGS=-g0
+      # ── MSVC runtime: static, and it must reach the SUBPROJECTS too ──
+      # CMAKE_MSVC_RUNTIME_LIBRARY alone is not enough. It is only honoured
+      # under policy CMP0091=NEW, and subprojects that call
+      # cmake_minimum_required() themselves (abseil, SPIRV-Tools) reset policies
+      # to OLD in their own scope — there the variable goes inert and they fall
+      # back to the /MD default while Dawn's own targets get /MT. That shipped a
+      # webgpu_dawn.lib with BOTH runtimes inside it, which links into neither a
+      # /MT nor a /MD consumer (LNK2038, in opposite directions, on disjoint
+      # halves of the archive). CMAKE_POLICY_DEFAULT_CMP0091 sets the policy
+      # default for every subproject regardless of what it requests.
+      - CMAKE_POLICY_DEFAULT_CMP0091=NEW
+      - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 
       # Fetch Dawn's third-party deps via its python script
       - DAWN_FETCH_DEPENDENCIES=ON
@@ -60,6 +68,14 @@ targets:
       - CMAKE_OSX_ARCHITECTURES=arm64
       # Enable thin LTO for smaller/faster libwebgpu_dawn.a
       - CMAKE_INTERPROCEDURAL_OPTIMIZATION=OFF
+      # ── Strip debug symbols from the static archive ──
+      # Clang/GCC spelling, so it is set per-platform rather than globally. On
+      # MSVC it would be doubly wrong: cl.exe reads -g0 as an unknown /g0 and
+      # ignores it, AND assigning CMAKE_CXX_FLAGS wholesale discards MSVC's
+      # default /EHsc /GR (exceptions and RTTI). Release already omits debug
+      # info on MSVC, so Windows needs nothing here.
+      - CMAKE_CXX_FLAGS=-g0
+      - CMAKE_C_FLAGS=-g0
 
     defines[platform:linux]:
       - DAWN_ENABLE_VULKAN=ON
@@ -71,6 +87,9 @@ targets:
       - DAWN_USE_X11=ON
       - DAWN_USE_WAYLAND=OFF
       - DAWN_SUPPORTS_CXX_MODULES=OFF
+      # ── Strip debug symbols from the static archive ── (see macos note)
+      - CMAKE_CXX_FLAGS=-g0
+      - CMAKE_C_FLAGS=-g0
 
     defines[platform:windows]:
       - DAWN_ENABLE_D3D12=ON
