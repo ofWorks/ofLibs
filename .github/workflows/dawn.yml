@@ -26,10 +26,21 @@ jobs:
         # ubuntu-22.04 ships Clang 14, so Linux uses ubuntu-24.04 (Clang 18).
         # Note: this links against glibc 2.39, so the .a needs a reasonably
         # recent Linux at runtime.
+        #
+        # Windows is pinned to windows-2022 (MSVC 14.4x) for the same reason
+        # Linux is not on the newest image: a prebuilt lib must be built with
+        # the OLDEST toolset it has to link into, never the newest. MSVC's STL
+        # keeps its vectorized helpers (__std_rotate, __std_min_element_8u, ...)
+        # in the separately-compiled libcpmt.lib and only ever ADDS to that set,
+        # so old-lib-into-new-consumer is fine and new-lib-into-old-consumer is
+        # an unresolved-externals wall. windows-latest silently became a VS 2026
+        # image (MSVC 14.51) and broke exactly that way against a consumer on
+        # 14.44. Keep this in step with Braid's CI pin (.github/workflows/ci.yml)
+        # and with whatever the render nodes actually have installed.
         platforms: '[
           {"platform":"linux64","os":"ubuntu-24.04","toolchain":"llvm"},
           {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"},
-          {"platform":"vs","os":"windows-latest","toolchain":"vs-stable"}
+          {"platform":"vs","os":"windows-2022","toolchain":"vs-stable"}
           ]',
       }
     secrets: inherit
