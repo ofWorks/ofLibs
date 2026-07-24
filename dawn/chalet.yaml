@@ -21,17 +21,23 @@ targets:
       - CMAKE_BUILD_TYPE=Release
 
       # ── MSVC runtime: static, and it must reach the SUBPROJECTS too ──
-      # CMAKE_MSVC_RUNTIME_LIBRARY alone is not enough. It is only honoured
-      # under policy CMP0091=NEW, and subprojects that call
-      # cmake_minimum_required() themselves (abseil, SPIRV-Tools) reset policies
-      # to OLD in their own scope — there the variable goes inert and they fall
-      # back to the /MD default while Dawn's own targets get /MT. That shipped a
-      # webgpu_dawn.lib with BOTH runtimes inside it, which links into neither a
-      # /MT nor a /MD consumer (LNK2038, in opposite directions, on disjoint
-      # halves of the archive). CMAKE_POLICY_DEFAULT_CMP0091 sets the policy
-      # default for every subproject regardless of what it requests.
+      # Setting CMAKE_MSVC_RUNTIME_LIBRARY alone shipped a webgpu_dawn.lib with
+      # BOTH runtimes inside it, which links into neither a /MT nor a /MD
+      # consumer (LNK2038, in opposite directions, on disjoint halves of the
+      # archive). Two separate reasons, hence three lines here:
+      #
+      #  - CMP0091: the variable is only honoured under that policy. The
+      #    POLICY_DEFAULT form applies it to subprojects regardless of what
+      #    their own cmake_minimum_required() asks for. (Belt and braces —
+      #    everything currently in the tree requires >= 3.15 anyway.)
+      #  - abseil ignores the variable because it OVERWRITES it: see
+      #    third_party/abseil-cpp/CMakeLists.txt, which sets it from its own
+      #    `ABSL_MSVC_STATIC_RUNTIME` option — defaulting to OFF, i.e. the DLL
+      #    runtime. Measured: with only the two lines above, 102 of 673 objects
+      #    in the archive were still MSVCRT, every one of them abseil.
       - CMAKE_POLICY_DEFAULT_CMP0091=NEW
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+      - ABSL_MSVC_STATIC_RUNTIME=ON
 
       # Fetch Dawn's third-party deps via its python script
       - DAWN_FETCH_DEPENDENCIES=ON
