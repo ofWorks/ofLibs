@@ -19,3 +19,4 @@ jobs:
         linux_apt: libx11-dev libglu1-mesa-dev libgl1-mesa-dev libwayland-dev libxkbcommon-dev xorg-dev libegl1-mesa-dev libopengl-dev libglx-dev libglvnd-dev,
       }
     secrets: inherit
+# bump 2026-07-24: rebuild on windows-2022 (MSVC 14.4x) runner pin

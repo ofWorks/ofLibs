@@ -14,3 +14,4 @@ jobs:
     uses: ./.github/workflows/_build.yml
     with: { lib: blend2d, version: add }
     secrets: inherit
+# bump 2026-07-24: rebuild on windows-2022 (MSVC 14.4x) runner pin

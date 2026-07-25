@@ -21,7 +21,7 @@ jobs:
         platforms: '[
           {"platform":"linux64","os":"ubuntu-22.04","toolchain":"llvm"},
           {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"},
-          {"platform":"vs","os":"windows-latest","toolchain":"vs-stable"},
+          {"platform":"vs","os":"windows-2022","toolchain":"vs-stable"},
           {"platform":"emscripten","os":"ubuntu-latest","toolchain":"emscripten"}
           ]',
       }

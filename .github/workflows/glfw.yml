@@ -19,3 +19,4 @@ jobs:
         linux_apt: libwayland-dev libxkbcommon-dev libx11-dev xorg-dev libglu1-mesa-dev cmake extra-cmake-modules libxrandr-dev,
       }
     secrets: inherit
+# bump 2026-07-24: rebuild on windows-2022 (MSVC 14.4x) runner pin

@@ -21,3 +21,4 @@ jobs:
           libopengl-dev libglx-dev libglvnd-dev,
       }
     secrets: inherit
+# bump 2026-07-24: rebuild on windows-2022 (MSVC 14.4x) runner pin

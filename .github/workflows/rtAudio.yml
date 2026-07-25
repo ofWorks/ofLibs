@@ -20,3 +20,4 @@ jobs:
         linux_apt: jackd libpulse-dev libasound2-dev,
       }
     secrets: inherit
+# bump 2026-07-24: rebuild on windows-2022 (MSVC 14.4x) runner pin

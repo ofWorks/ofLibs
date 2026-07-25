@@ -21,7 +21,10 @@ jobs:
         include:
           # - { platform: linux64, os: ubuntu-latest, toolchain: llvm }
           # - { platform: macos, os: macos-26, toolchain: apple-llvm }
-          - { platform: vs, os: windows-latest, toolchain: vs-stable }
+          # Pinned to windows-2022 (MSVC 14.4x) so the prebuilt .lib does not
+          # reference newer libcpmt.lib vectorized helpers that older consumer
+          # toolsets lack. Keep in sync with _build.yml.
+          - { platform: vs, os: windows-2022, toolchain: vs-stable }
           # - {
           #     platform: rpi-aarch64,
           #     os: ubuntu-22.04-arm,
