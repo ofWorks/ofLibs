@@ -14,10 +14,17 @@ jobs:
     with:
       lib: jolt
       version: v1.0
-      # macOS-only for now (Braid is macOS-only, and v1 is arm64 — see
-      # jolt/chalet.yaml). Mirrors rplidar.yml / syphon.yml.
+      # The three platforms Braid runs on. The old "macOS-only because Braid is
+      # macOS-only" reason expired 2026-07-25, when Braid reached T2 on Windows
+      # and CI went green on Linux. Still not the default full matrix — rpi and
+      # emscripten stay off until something asks for them, since an archive
+      # nobody can run is an archive nobody can trust.
+      # macos is arm64; vs and linux64 are x64 at baseline SIMD, deliberately —
+      # see the long note in jolt/chalet.yaml before changing that.
       platforms: >-
         [
-          {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"}
+          {"platform":"linux64","os":"ubuntu-22.04","toolchain":"llvm"},
+          {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"},
+          {"platform":"vs","os":"windows-2022","toolchain":"vs-stable"}
         ]
     secrets: inherit

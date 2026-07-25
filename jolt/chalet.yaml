@@ -23,10 +23,49 @@ targets:
       - TARGET_SAMPLES=OFF
       - TARGET_VIEWER=OFF
       - CROSS_PLATFORM_DETERMINISTIC=OFF
+      # Rigid-body physics doesn't use Jolt's compute abstraction at all, so all
+      # three backends go off everywhere rather than per platform. MTL had to:
       # Jolt v5.x auto-enables a Metal compute backend whose MTLBinding.bindings
-      # needs macOS 13.0; with a 11.0 deployment target it fails under -Werror.
-      # Rigid-body physics doesn't use Jolt's compute abstraction — turn it off.
+      # needs macOS 13.0, and with a 11.0 deployment target it fails under
+      # -Werror. DX12 is the same shape on Windows and drags in d3dcompiler.lib
+      # — the very DLL that cost this port a day (Dawn's FXC "Error 87"). VK
+      # self-disables when the SDK is absent; say it out loud so a runner that
+      # happens to have the SDK doesn't silently build a different lib.
       - JPH_USE_MTL=OFF
+      - JPH_USE_DX12=OFF
+      - JPH_USE_VK=OFF
+      # BASELINE SIMD on x86, on purpose — inert on arm64, where Jolt never
+      # calls EMIT_X86_INSTRUCTION_SET_DEFINITIONS(), which is why these live
+      # here instead of in a per-platform block.
+      #
+      # Braid's braid_jolt.cpp compiles the Jolt headers with NO JPH_* defines
+      # at all — "matching by omission", stated in its own header comment — and
+      # braidgen passes no -m/arch flag. Jolt's defaults would build this lib
+      # with /arch:AVX2 (MSVC) or -mavx2 -mbmi -mf16c -mfma (clang) plus PUBLIC
+      # JPH_USE_AVX2/AVX/SSE4_x/F16C/LZCNT/TZCNT/FMADD, while the consumer TU
+      # falls back to plain SSE, since neither compiler defines __AVX2__ or
+      # __SSE4_x__ at the x86-64 baseline (Jolt/Core/Core.h, "Detect enabled
+      # instruction sets"). Same headers, two different inline SIMD
+      # implementations meeting across the link.
+      #
+      # And it is the SILENT kind: JPH_VERSION_ID's eleven feature bits cover
+      # double precision, determinism, FP exceptions, profiler, debug renderer,
+      # allocators, object-layer bits, asserts and object stream — no SIMD bit
+      # among them. The namespace-mangled version guard that catches every other
+      # ABI-define mismatch does not catch this one.
+      #
+      # So build the lib at the baseline the consumer already sees. It costs
+      # physics throughput; buy that back by teaching braidgen the -m/arch flags
+      # AND the matching defines together, never one without the other.
+      - USE_SSE4_1=OFF
+      - USE_SSE4_2=OFF
+      - USE_AVX=OFF
+      - USE_AVX2=OFF
+      - USE_AVX512=OFF
+      - USE_LZCNT=OFF
+      - USE_TZCNT=OFF
+      - USE_F16C=OFF
+      - USE_FMADD=OFF
       # Distribution enables interprocedural optimization (thin-LTO), which emits
       # bitcode .o files into the .a — those are NOT portable across clang
       # versions, so a CI archive (newer Xcode) fails to link on an older local
