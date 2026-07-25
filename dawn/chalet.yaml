@@ -98,6 +98,14 @@ targets:
       - CMAKE_C_FLAGS=-g0
 
     defines[platform:windows]:
+      # FXC (d3dcompiler_47.dll): without this, Dawn only probes next to the
+      # exe and then dies with "Windows Error: 87" — its bare-name fallback
+      # passes LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR, which Windows rejects for
+      # relative names, so the System32 copy is NEVER reached (Chromium ships
+      # the DLL beside the binary and never sees this). This option makes Dawn
+      # load the OS's System32 copy directly — present on every Win10/11 box.
+      # Dawn's caveat about the OS compiler applies to OLDER Windows only.
+      - DAWN_FORCE_SYSTEM_COMPONENT_LOAD=ON
       - DAWN_ENABLE_D3D12=ON
       - DAWN_ENABLE_D3D11=OFF
       - DAWN_ENABLE_METAL=OFF
