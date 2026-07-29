@@ -20,6 +20,14 @@ targets:
       - BUILD_SHARED_LIBS=OFF
       - CMAKE_BUILD_TYPE=Release
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+      # CMAKE_MSVC_RUNTIME_LIBRARY is silently IGNORED unless policy CMP0091 is
+      # NEW, and CMP0091 only defaults to NEW when the project's own
+      # cmake_minimum_required is >= 3.15 — miniaudio's is older, so the
+      # variable above did nothing and the .lib shipped /MD. Consumers built
+      # /MT then failed at link: every CRT call arrives as __imp_* (LNK4217 for
+      # the ones the linker can redirect, LNK2019 unresolved __imp__stricmp for
+      # the one it can't). Forcing the policy makes the line above take effect.
+      - CMAKE_POLICY_DEFAULT_CMP0091=NEW
 
       - MINIAUDIO_BUILD_EXAMPLES=OFF
       - MINIAUDIO_BUILD_TESTS=OFF
