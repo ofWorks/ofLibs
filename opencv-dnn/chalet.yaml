@@ -3,7 +3,7 @@ version: 0.1.7
 externalDependencies:
   opencv-dnn:
     repository: https://github.com/opencv/opencv
-    commit: "2b6c3df9547b"
+    commit: "e35ad60e4e1d"
     # tag: 4.13.0
     kind: git
 
