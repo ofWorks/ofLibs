@@ -1,0 +1,34 @@
+name: dawnDynamic
+
+# The SHARED twin of dawn.yml: same Dawn commit, built as a single
+# libwebgpu_dawn.dylib instead of a static archive. See dawnDynamic/chalet.yaml
+# for why it exists (it is an experiment about link time in the consumer, not a
+# replacement for dawn).
+#
+# macOS only. The static build stays the cross-platform one; this side only has
+# to answer a question about the macOS dev loop, and a shared Windows build
+# would add import-lib and DLL-placement concerns that contribute nothing to it.
+#
+# Publishes ofLibs_dawnDynamic_macos.zip to the v1.0 release, alongside — never
+# instead of — ofLibs_dawn_macos.zip. Distinct asset names, so the two coexist
+# and a consumer chooses by name.
+
+on:
+  push:
+    paths:
+      - dawnDynamic/**
+      - .github/workflows/dawnDynamic.yml
+
+jobs:
+  ci:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/_build.yml
+    with:
+      lib: dawnDynamic
+      version: v1.0
+      platforms: >-
+        [
+          {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"}
+        ]
+    secrets: inherit

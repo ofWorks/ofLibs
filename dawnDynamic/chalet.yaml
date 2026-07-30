@@ -1,0 +1,114 @@
+name: oflibs
+version: "1.0"
+
+# dawnDynamic — the SHARED twin of ../dawn.
+#
+# Same Dawn, same commit, same trimmed backend surface; the only difference that
+# matters is DAWN_BUILD_MONOLITHIC_LIBRARY=SHARED, which emits a single
+# libwebgpu_dawn.dylib instead of a 20.5 MB libwebgpu_dawn.a.
+#
+# Why it exists: linking Braid against the static archive costs ~0.19s of every
+# build — lld dead-strips 20.5 MB down to a ~10 MB binary on every single link,
+# and that is ~29% of the edit->on-screen cycle (braid dev/bench.md). A dylib
+# moves that work from link time to load time. Whether it is a net win is an
+# open question — dyld sits on the far side of macOS's ~230ms first-exec tax —
+# so this exists to be MEASURED against ../dawn, not because it is known better.
+#
+# macOS only, on purpose: the question is about Braid's macOS dev loop, and a
+# shared build on Windows drags in import-lib/DLL-placement concerns (and the
+# FXC note in ../dawn/chalet.yaml) that buy nothing for the experiment. If it
+# wins, widening to the other platforms is a separate, deliberate step.
+#
+# KEEP IN SYNC WITH ../dawn/chalet.yaml when the Dawn commit is bumped — the
+# comparison is only meaningful if both sides build the same source.
+
+externalDependencies:
+  dawnDynamic:
+    repository: https://github.com/google/dawn.git
+    commit: "c3dedb976f96"
+    kind: git
+
+targets:
+  dawnDynamic:
+    kind: cmakeProject
+    location: ${external:${name}}
+    recheck: false
+    rebuild: false
+    install: true
+    defines:
+      - CMAKE_INSTALL_INCLUDEDIR=include
+      - CMAKE_INSTALL_PREFIX=install
+      - CMAKE_INSTALL_LIBDIR=lib
+      - CMAKE_BUILD_TYPE=Release
+
+      # ── The one line this whole folder exists for ──
+      # SHARED emits libwebgpu_dawn.dylib; ../dawn passes STATIC.
+      #
+      # BUILD_SHARED_LIBS must stay OFF: Dawn's CMakeLists hard-errors on
+      # `DAWN_BUILD_MONOLITHIC_LIBRARY AND BUILD_SHARED_LIBS` (upstream
+      # CMakeLists.txt:218). The monolithic switch already controls the ONE
+      # output we ship; BUILD_SHARED_LIBS would instead scatter every
+      # subproject (abseil, SPIRV-Tools, ...) into its own dylib, which is the
+      # opposite of what a consumer wants to ship in an .app.
+      - DAWN_BUILD_MONOLITHIC_LIBRARY=SHARED
+      - BUILD_SHARED_LIBS=OFF
+
+      # ── Install name: the difference between a usable dylib and a coaster ──
+      # Without this, CMake bakes the absolute install prefix into the dylib's
+      # LC_ID_DYLIB — on CI that is a /Users/runner/... path that exists on no
+      # other machine, so every consumer fails at load with "image not found".
+      # @rpath defers the decision to the consumer's own -rpath, which is what
+      # lets the dylib sit in an .app bundle's Frameworks/ or beside the binary.
+      # BUILD_WITH_INSTALL_NAME_DIR applies it at link time as well as install
+      # time, so the build-tree copy is testable without a relink.
+      - CMAKE_INSTALL_NAME_DIR=@rpath
+      - CMAKE_BUILD_WITH_INSTALL_NAME_DIR=ON
+
+      # Fetch Dawn's third-party deps via its python script
+      - DAWN_FETCH_DEPENDENCIES=ON
+      - DAWN_ENABLE_INSTALL=ON
+      - TINT_ENABLE_INSTALL=OFF
+
+      # ── Trim build surface: no samples/tests/tools/protobuf ──
+      - DAWN_BUILD_SAMPLES=OFF
+      - DAWN_BUILD_TESTS=OFF
+      - TINT_BUILD_TESTS=OFF
+      - TINT_BUILD_CMD_TOOLS=OFF
+      - TINT_BUILD_FUZZER=OFF
+      - DAWN_BUILD_PROTOBUF=OFF
+
+      # ── Disable wire/serialization (browser IPC only) ──
+      - DAWN_ENABLE_WIRE=OFF
+
+      # ── Disable null backend (only for testing) ──
+      - DAWN_ENABLE_NULL=OFF
+
+      # openFrameworks owns the window/surface
+      - DAWN_USE_GLFW=OFF
+
+    defines[platform:macos]:
+      - DAWN_ENABLE_METAL=ON
+      - DAWN_ENABLE_VULKAN=OFF
+      - DAWN_ENABLE_D3D12=OFF
+      - DAWN_ENABLE_D3D11=OFF
+      - DAWN_ENABLE_DESKTOP_GL=OFF
+      - DAWN_ENABLE_OPENGLES=OFF
+      - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
+      - CMAKE_OSX_ARCHITECTURES=arm64
+      - CMAKE_INTERPROCEDURAL_OPTIMIZATION=OFF
+      # ── Strip debug symbols ──
+      # Clang spelling, hence per-platform. Matters more here than in ../dawn:
+      # a dylib carries its symbol table to disk and into every consumer's dyld
+      # load, where the static archive's debug bloat was at least dead-stripped
+      # away at link time.
+      - CMAKE_CXX_FLAGS=-g0
+      - CMAKE_C_FLAGS=-g0
+
+distribution:
+  dawnDynamic:
+    kind: archive
+    format: zip
+    include:
+      - ${externalBuild:${name}}/install/lib
+      - ${externalBuild:${name}}/install/include
+      - ${external:${name}}/LICENSE
