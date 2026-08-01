@@ -67,7 +67,7 @@ jobs:
       #   working-directory: .
       #   run: test -d ${{ inputs.lib }}
       # - name: ccache
-      #   uses: hendrikmuhs/ccache-action@v1.2.19
+      #   uses: hendrikmuhs/ccache-action@v1.2.23
       #   with:
       #     key: ${{ inputs.lib }}-${{ runner.os }}-${{ matrix.platform }}-ccache
       #
@@ -84,7 +84,7 @@ jobs:
 
       # - name: Linux Apt Cache Packages
       #   if: runner.os == 'Linux'
-      #   uses: awalsh128/cache-apt-pkgs-action@latest
+      #   uses: awalsh128/cache-apt-pkgs-action@v1.6.3
       #   with:
       #     packages: ${{ inputs.linux_apt }}
       #     version: 1.0
@@ -135,7 +135,7 @@ jobs:
 
       # - name: MSYS2 Windows
       #   if: matrix.platform == 'msys2' && runner.os == 'Windows'
-      #   uses: msys2/setup-msys2@v2.28.0
+      #   uses: msys2/setup-msys2@v2.32.0
       #   with:
       #     pacboy: gcc:p cmake:p
       #     # pacboy: wget2:p yaml-cpp:p pugixml:p nlohmann-json:p fmt:p toolchain:p openssl:p python:p assimp:p cairo:p curl:p freeglut:p FreeImage:p glew:p glfw:p glm:p libsndfile:p libusb:p libxml2:p mpg123:p openal:p opencv:p rtaudio:p uriparser:p utf8cpp:p
@@ -156,21 +156,21 @@ jobs:
 
       # - name: RPI - Apt Cache Cross Compile (No Multistrap)
       #   if: matrix.platform == 'rpi-aarch64' || matrix.platform == 'rpi-armv6l'
-      #   uses: awalsh128/cache-apt-pkgs-action@latest
+      #   uses: awalsh128/cache-apt-pkgs-action@v1.6.3
       #   with:
       #     packages: gcc-12-${{ matrix.prefix }} g++-12-${{ matrix.prefix }}
       #     version: 1.0
 
       # - name: RPI - Apt Cache Cross Compile
       #   if: matrix.platform == 'rpi-aarch64' || matrix.platform == 'rpi-armv6l'
-      #   uses: awalsh128/cache-apt-pkgs-action@latest
+      #   uses: awalsh128/cache-apt-pkgs-action@v1.6.3
       #   with:
       #     packages: multistrap gcc-12-${{ matrix.prefix }} g++-12-${{ matrix.prefix }}
       #     version: 1.0
 
       # - name: RPI - Cache Multistrap
       #   if: inputs.multistrap && (matrix.platform == 'rpi-aarch64' || matrix.platform == 'rpi-armv6l')
-      #   uses: actions/cache@v4
+      #   uses: actions/cache@v6
       #   with:
       #     path: raspbian
       #     key: rpi-multistrap-cache
