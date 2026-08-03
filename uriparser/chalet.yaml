@@ -30,6 +30,19 @@ targets:
       - URIPARSER_SHARED_LIBS=OFF
       - URI_STATIC_BUILD=ON # ADD THIS LINE
 
+    defines[env:ANDROID_ABI]:
+      - CMAKE_TOOLCHAIN_FILE=${env:ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake
+      - CMAKE_ANDROID_ARCH_ABI=${env:ANDROID_ABI}
+      - ANDROID_ABI=${env:ANDROID_ABI}
+      - ANDROID_API=${env:ANDROID_API}
+      - ANDROID_PLATFORM=${env:ANDROID_PLATFORM}
+      - ANDROID_TOOLCHAIN=clang
+      - ANDROID_NDK=${env:ANDROID_NDK_ROOT}
+      - ANDROID_NDK_ROOT=${env:ANDROID_NDK_ROOT}
+      - ANDROID_STL=c++_static
+      - CMAKE_POSITION_INDEPENDENT_CODE=ON
+      - ENABLE_VISIBILITY=OFF
+
     defines[toolchain:msvc]:
       # - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded # For /MT (static runtime)
       # - CMAKE_C_FLAGS=/MT /DURI_STATIC_BUILD
