@@ -5,6 +5,12 @@ You are welcome to jump in and help building and testing more libraries.<br>
 ![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+
+Android builds use NDK 23 (23.2.8568313), API 21, and the NDK's CMake
+toolchain. Supported ABIs are `arm64-v8a`, `armeabi-v7a`, `x86`, and
+`x86_64`; release archives are named `android-arm64`, `android-armv7`,
+`android-x86`, and `android-x86_64` respectively.
 
 
 ## ofCore
@@ -65,23 +71,23 @@ FreeImage have some issues. Poco now builds again and it was moved to "Additiona
 
 ## Core Libraries
 
-| Library | vs | macos | linux64 | rpi-aarch64 | rpi-armv6l |
-|---------|:--:|:-----:|:-------:|:-----------:|:----------:|
-| freetype | ✓ | ✓ | ✓ | ✓ | ✓ |
-| glew | ✓ | ✓ | ✓ | ✓ | ✓ |
-| glfw | ✓ | ✓ | ✓ | ✓ | ✓ |
-| glm | ✓ | ✓ | ✓ | ✓ | ✓ |
-| json | ✓ | ✓ | ✓ | ✓ | ✓ |
-| kissfft | — | — | ✓ | ✓ | ✓ |
-| mango | ✓ | ✓ | ✓ | ✓ | ✓ |
-| pugixml | ✓ | ✓ | ✓ | ✓ | ✓ |
-| rtAudio | ✓ | ✓ | ✓ | ✓ | ✓ |
-| tess2 | ✓ | ✓ | ✓ | ✓ | ✓ |
-| uriparser | ✓ | ✓ | ✓ | ✓ | ✓ |
-| utfcpp | ✓ | ✓ | ✓ | ✓ | ✓ |
-| videoInput | ✓ | — | — | — | — |
-| yaml-cpp | ✓ | ✓ | ✓ | ✓ | ✓ |
-| zlib-ng | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Library | vs | macos | linux64 | rpi-aarch64 | rpi-armv6l | Android |
+|---------|:--:|:-----:|:-------:|:-----------:|:----------:|:-------:|
+| freetype | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| glew | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| glfw | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| glm | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| json | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| kissfft | — | — | ✓ | ✓ | ✓ | — |
+| mango | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| pugixml | ✓ | ✓ | ✓ | ✓ | ✓ | arm64-v8a, armeabi-v7a, x86, x86_64 |
+| rtAudio | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| tess2 | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| uriparser | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| utfcpp | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| videoInput | ✓ | — | — | — | — | — |
+| yaml-cpp | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| zlib-ng | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 
 ## Addon Libraries
 
