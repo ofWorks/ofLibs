@@ -119,11 +119,10 @@ jobs:
           version: 5.0.4
           actions-cache-folder: "emsdk-cache"
 
-      - name: Android SDK Setup
-        if: startsWith(matrix.platform, 'android-')
-        uses: android-actions/setup-android@v3
-
-      - name: Android NDK 23 Setup
+      # GitHub's Ubuntu images already provide the Android command-line tools.
+      # Avoid setup-android here: v3 targets deprecated Node 20 and currently
+      # fails when GitHub forces the action to run on Node 24.
+      - name: Android SDK / NDK 23 Setup
         if: startsWith(matrix.platform, 'android-')
         env:
           ANDROID_NDK_VERSION: 23.2.8568313
@@ -131,16 +130,30 @@ jobs:
           ANDROID_CMAKE_VERSION: 3.22.1
           ANDROID_ABI: ${{ matrix.android_abi }}
         run: |
-          yes | sdkmanager --licenses > /dev/null || true
-          sdkmanager \
+          sdkmanager_bin="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$sdkmanager_bin" ]; then
+            sdkmanager_bin="$(command -v sdkmanager || true)"
+          fi
+          if [ -z "$sdkmanager_bin" ] || [ ! -x "$sdkmanager_bin" ]; then
+            echo "::error::sdkmanager was not found on the GitHub runner"
+            exit 1
+          fi
+
+          yes | "$sdkmanager_bin" --licenses > /dev/null || true
+          "$sdkmanager_bin" \
             "platforms;android-${ANDROID_COMPILE_SDK}" \
             "ndk;${ANDROID_NDK_VERSION}" \
             "cmake;${ANDROID_CMAKE_VERSION}"
+          android_ndk_root="${ANDROID_SDK_ROOT}/ndk/${ANDROID_NDK_VERSION}"
+          if [ ! -f "${android_ndk_root}/build/cmake/android.toolchain.cmake" ]; then
+            echo "::error::Android NDK toolchain was not installed at ${android_ndk_root}"
+            exit 1
+          fi
           echo "ANDROID_ABI=${ANDROID_ABI}" >> "$GITHUB_ENV"
           echo "ANDROID_API=21" >> "$GITHUB_ENV"
           echo "ANDROID_PLATFORM=android-21" >> "$GITHUB_ENV"
-          echo "ANDROID_NDK_ROOT=${ANDROID_SDK_ROOT}/ndk/${ANDROID_NDK_VERSION}" >> "$GITHUB_ENV"
-          echo "ANDROID_NDK_HOME=${ANDROID_SDK_ROOT}/ndk/${ANDROID_NDK_VERSION}" >> "$GITHUB_ENV"
+          echo "ANDROID_NDK_ROOT=${android_ndk_root}" >> "$GITHUB_ENV"
+          echo "ANDROID_NDK_HOME=${android_ndk_root}" >> "$GITHUB_ENV"
 
       # - name: Verify emsdk
       #   if: matrix.platform == 'emscripten'
@@ -247,12 +260,25 @@ jobs:
           aarch64-linux-gnu-readelf -d **/*.a 2>/dev/null | grep -E "GLIBC|CXXABI" || true
           # Should show versions like GLIBC_2.36, NOT 2.38+
 
-      - name: Rename and Publish Release
-        env:
-          # GITHUB_TOKEN: ${{ github.TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Rename Build Archive
         run: |
           mv dist/*.zip ofLibs_${{ inputs.lib }}_${{ matrix.platform }}.zip
           ls -alF *.zip
-          gh release upload ${{ inputs.version }} *.zip --clobber
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ofLibs-${{ inputs.lib }}-${{ matrix.platform }}
+          path: ${{ inputs.lib }}/ofLibs_${{ inputs.lib }}_${{ matrix.platform }}.zip
+          if-no-files-found: error
+
+      - name: Publish Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view "${{ inputs.version }}" > /dev/null 2>&1; then
+            gh release upload "${{ inputs.version }}" ofLibs_${{ inputs.lib }}_${{ matrix.platform }}.zip --clobber
+          else
+            echo "::notice::Release '${{ inputs.version }}' does not exist in this repository; archive built successfully but upload was skipped."
+          fi
         # mv dist/${{ inputs.lib }}.zip ofLibs_${{ inputs.lib }}_${{ matrix.platform }}.zip
