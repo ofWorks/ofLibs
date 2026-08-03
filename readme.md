@@ -12,6 +12,10 @@ toolchain. Supported ABIs are `arm64-v8a`, `armeabi-v7a`, `x86`, and
 `x86_64`; release archives are named `android-arm64`, `android-armv7`,
 `android-x86`, and `android-x86_64` respectively.
 
+Android-enabled recipes currently include Assimp, Brotli, fmt, FreeType, GLM,
+nlohmann/json, OpenCV, Poco, pugixml, tess2, uriparser, utfcpp, and zlib-ng.
+An Android checkmark in the tables means all four ABIs above.
+
 
 ## ofCore
 [![freetype](https://github.com/ofWorks/ofLibs/actions/workflows/freetype.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/freetype.yml )
@@ -73,28 +77,28 @@ FreeImage have some issues. Poco now builds again and it was moved to "Additiona
 
 | Library | vs | macos | linux64 | rpi-aarch64 | rpi-armv6l | Android |
 |---------|:--:|:-----:|:-------:|:-----------:|:----------:|:-------:|
-| freetype | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| freetype | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | glew | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | glfw | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| glm | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| json | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| glm | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| json | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | kissfft | — | — | ✓ | ✓ | ✓ | — |
 | mango | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| pugixml | ✓ | ✓ | ✓ | ✓ | ✓ | arm64-v8a, armeabi-v7a, x86, x86_64 |
+| pugixml | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | rtAudio | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| tess2 | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| uriparser | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| utfcpp | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| tess2 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| uriparser | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| utfcpp | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | videoInput | ✓ | — | — | — | — | — |
 | yaml-cpp | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| zlib-ng | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| zlib-ng | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
 ## Addon Libraries
 
-| Library | vs | macos | linux64 | rpi-aarch64 | rpi-armv6l | Associated Addon |
-|---------|:--:|:-----:|:-------:|:-----------:|:----------:|------------------|
-| assimp | ✓ | ✓ | ✓ | ✓ | ✓ | ofxAssimp |
-| cairo | ✓ | ✓ | ✓ | ✓ | ✓ | ofxCairo |
-| libusb | ✓ | ✓ | ✓ | ✓ | ✓ | ofxKinect |
-| opencv | ✓ | ✓ | ✓ | ✓ | ✓ | ofxOpenCv |
-| pixman | ✓ | ✓ | ✓ | ✓ | ✓ | ofxCairo |
+| Library | vs | macos | linux64 | rpi-aarch64 | rpi-armv6l | Android | Associated Addon |
+|---------|:--:|:-----:|:-------:|:-----------:|:----------:|:-------:|------------------|
+| assimp | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ofxAssimp |
+| cairo | ✓ | ✓ | ✓ | ✓ | ✓ | — | ofxCairo |
+| libusb | ✓ | ✓ | ✓ | ✓ | ✓ | — | ofxKinect |
+| opencv | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ofxOpenCv |
+| pixman | ✓ | ✓ | ✓ | ✓ | ✓ | — | ofxCairo |
