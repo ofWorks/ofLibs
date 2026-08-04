@@ -13,11 +13,10 @@ name: dawnDynamic
 # instead of — ofLibs_dawn_macos.zip. Distinct asset names, so the two coexist
 # and a consumer chooses by name.
 
+# Disabled: no longer builds on push. Run it by hand from the Actions tab when
+# the experiment needs another data point.
 on:
-  push:
-    paths:
-      - dawnDynamic/**
-      - .github/workflows/dawnDynamic.yml
+  workflow_dispatch:
 
 jobs:
   ci:
