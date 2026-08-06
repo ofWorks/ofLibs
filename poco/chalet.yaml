@@ -60,6 +60,22 @@ targets:
 
       # - CMAKE_INSTALL_INCLUDEDIR=include
       # - CMAKE_INSTALL_FULL_LIBDIR=lib
+    defines[env:ANDROID_ABI]:
+      - CMAKE_TOOLCHAIN_FILE=${env:ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake
+      - CMAKE_ANDROID_ARCH_ABI=${env:ANDROID_ABI}
+      - ANDROID_ABI=${env:ANDROID_ABI}
+      - ANDROID_API=${env:ANDROID_API}
+      - ANDROID_PLATFORM=${env:ANDROID_PLATFORM}
+      - ANDROID_TOOLCHAIN=clang
+      - ANDROID_NDK=${env:ANDROID_NDK_ROOT}
+      - ANDROID_NDK_ROOT=${env:ANDROID_NDK_ROOT}
+      - ANDROID_STL=c++_static
+      - POCO_STATIC=ON
+      - ENABLE_DATA_SQLITE=OFF
+      - ENABLE_DATA_ODBC=OFF
+      - ENABLE_DATA_MYSQL=OFF
+      - CMAKE_C_FLAGS_RELEASE=-g0 -O3
+      - CMAKE_CXX_FLAGS_RELEASE=-g0 -O3
     # defines[platform:macos]:
     # - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
     # - CMAKE_OSX_DEPLOYMENT_TARGET=11.0

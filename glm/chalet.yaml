@@ -37,6 +37,24 @@ targets:
       - GLM_ENABLE_SIMD_AVX=OFF
       - GLM_ENABLE_SIMD_AVX2=OFF
       - CMAKE_CXX_FLAGS="-msimd128"
+    defines[env:ANDROID_ABI]:
+      - CMAKE_TOOLCHAIN_FILE=${env:ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake
+      - CMAKE_ANDROID_ARCH_ABI=${env:ANDROID_ABI}
+      - ANDROID_ABI=${env:ANDROID_ABI}
+      - ANDROID_API=${env:ANDROID_API}
+      - ANDROID_PLATFORM=${env:ANDROID_PLATFORM}
+      - ANDROID_TOOLCHAIN=clang
+      - ANDROID_NDK=${env:ANDROID_NDK_ROOT}
+      - ANDROID_NDK_ROOT=${env:ANDROID_NDK_ROOT}
+      - ANDROID_STL=c++_static
+      # Avoid leaking the Linux runner's SIMD selection into the NDK target.
+      - GLM_ENABLE_SIMD_AVX=OFF
+      - GLM_ENABLE_SIMD_AVX2=OFF
+      - GLM_ENABLE_SIMD_SSE2=OFF
+      - GLM_ENABLE_SIMD_SSE3=OFF
+      - GLM_ENABLE_SIMD_SSSE3=OFF
+      - GLM_ENABLE_SIMD_SSE4_1=OFF
+      - GLM_ENABLE_SIMD_SSE4_2=OFF
     defines[platform:macos]:
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
@@ -59,6 +77,18 @@ targets:
       - GLM_ENABLE_SIMD_SSSE3=ON
       - GLM_ENABLE_SIMD_SSE4_1=ON
       - GLM_ENABLE_SIMD_SSE4_2=ON
+
+    # Android cross-builds run on an x86_64 host, so override the host
+    # architecture block after it has been applied. The NDK/compiler selects
+    # ABI-appropriate instructions itself.
+    defines[architecture:x86_64+env:ANDROID_ABI]:
+      - GLM_ENABLE_SIMD_AVX=OFF
+      - GLM_ENABLE_SIMD_AVX2=OFF
+      - GLM_ENABLE_SIMD_SSE2=OFF
+      - GLM_ENABLE_SIMD_SSE3=OFF
+      - GLM_ENABLE_SIMD_SSSE3=OFF
+      - GLM_ENABLE_SIMD_SSE4_1=OFF
+      - GLM_ENABLE_SIMD_SSE4_2=OFF
 
     # this can be removed soon, if the cross compiler points architecture target, not the actual machine
     # defines[toolchain:{aarch64-linux-gnu-gcc,arm-linux-gnueabihf-gcc}]:
