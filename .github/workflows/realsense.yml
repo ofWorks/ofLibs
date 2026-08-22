@@ -1,0 +1,28 @@
+name: realsense
+
+on:
+  push:
+    paths:
+      - realsense/**
+      - .github/workflows/realsense.yml
+
+jobs:
+  ci:
+    permissions:
+      contents: write
+
+    uses: ./.github/workflows/_build.yml
+    with: {
+        lib: realsense,
+        version: v1.0,
+        linux_apt: libudev-dev,
+        # Desktop only: librealsense talks to a USB3 device, so there is
+        # nothing for emscripten to do and no rpi consumer yet.
+        platforms: >-
+          [
+            {"platform":"linux64","os":"ubuntu-22.04","toolchain":"llvm"},
+            {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"},
+            {"platform":"vs","os":"windows-2022","toolchain":"vs-stable"}
+          ],
+      }
+    secrets: inherit

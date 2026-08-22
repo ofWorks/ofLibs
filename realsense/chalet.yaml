@@ -1,0 +1,86 @@
+name: oflibs
+version: "1.0"
+externalDependencies:
+  realsense:
+    repository: https://github.com/IntelRealSense/librealsense
+    commit: "dfd6aa91250f"
+    kind: git
+    # tag: v2.58.3
+
+targets:
+  libusb-external:
+    kind: chaletProject
+    location: ../libusb
+  realsense:
+    kind: cmakeProject
+    location: ${external:${name}}
+    recheck: false
+    rebuild: false
+    install: true
+    defines:
+      - CMAKE_CXX_STANDARD=17
+      - CMAKE_INSTALL_LIBDIR=lib
+      - BUILD_SHARED_LIBS=OFF
+      - CMAKE_BUILD_TYPE=Release
+      - CMAKE_POSITION_INDEPENDENT_CODE=ON
+      - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+
+      # One fat static archive (realsense2-all) bundling the core lib plus its
+      # in-tree third-party pieces (libusb, lz4, easyloggingpp, rsutils).
+      - BUILD_RS2_ALL=ON
+
+      # The RS USB backend is mandatory on macOS/Windows7 and is the only
+      # backend that needs no kernel patches on Linux either. Keep it on
+      # everywhere so all three platforms ship the same code path.
+      - FORCE_RSUSB_BACKEND=ON
+
+      # Point at ofLibs' own libusb rather than whatever the host happens to
+      # have (upstream's find_package picks up /opt/homebrew, which is not
+      # there on a clean runner). librealsense2.a leaves the libusb symbols
+      # undefined either way, so consumers link ofLibs libusb alongside it —
+      # this only guarantees the headers match that lib.
+      - LIBUSB_INC=${externalBuild:libusb-external}/ext.libusb/install/include/libusb-1.0
+      - LIBUSB_LIB=${externalBuild:libusb-external}/ext.libusb/install/lib/libusb-1.0.a
+
+      - BUILD_EXAMPLES=OFF
+      - BUILD_GRAPHICAL_EXAMPLES=OFF
+      - BUILD_TOOLS=OFF
+      - BUILD_UNIT_TESTS=OFF
+      - BUILD_VIEWER_TESTS=OFF
+      - BUILD_PYTHON_BINDINGS=OFF
+      - BUILD_CSHARP_BINDINGS=OFF
+      - BUILD_UNITY_BINDINGS=OFF
+      - BUILD_OPENNI2_BINDINGS=OFF
+      - BUILD_GLSL_EXTENSIONS=OFF
+
+      # No curl, no network fetch at configure or run time.
+      - CHECK_FOR_UPDATES=OFF
+      - BUILD_WITH_DDS=OFF
+      - BUILD_NETWORK_DEVICE=OFF
+      # rosbag2 drags in fastcdr, whose long-double serialization does not
+      # compile on arm64 (`unsupported long double type and no __float128`).
+      # The legacy rosbag1 recorder is still built and is all .bag playback
+      # needs; live streaming does not touch either.
+      - BUILD_ROSBAG2=OFF
+
+      - BUILD_WITH_CUDA=OFF
+      - BUILD_WITH_OPENMP=OFF
+      # ccache is on by default upstream; off keeps CI builds reproducible.
+      - ENABLE_CCACHE=OFF
+
+    defines[platform:macos]:
+      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+      - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
+
+    defines[platform:windows]:
+      - CMAKE_INSTALL_PREFIX=install
+      - BUILD_WITH_STATIC_CRT=ON
+
+distribution:
+  realsense:
+    kind: archive
+    format: zip
+    include:
+      - ${external:${name}}/LICENSE**
+      - ${externalBuild:${name}}/install/include
+      - ${externalBuild:${name}}/install/lib
