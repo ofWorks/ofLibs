@@ -29,11 +29,6 @@ targets:
       # in-tree third-party pieces (libusb, lz4, easyloggingpp, rsutils).
       - BUILD_RS2_ALL=ON
 
-      # The RS USB backend is mandatory on macOS/Windows7 and is the only
-      # backend that needs no kernel patches on Linux either. Keep it on
-      # everywhere so all three platforms ship the same code path.
-      - FORCE_RSUSB_BACKEND=ON
-
       # Point at ofLibs' own libusb rather than whatever the host happens to
       # have (upstream's find_package picks up /opt/homebrew, which is not
       # there on a clean runner). librealsense2.a leaves the libusb symbols
@@ -68,11 +63,23 @@ targets:
       # ccache is on by default upstream; off keeps CI builds reproducible.
       - ENABLE_CCACHE=OFF
 
+    # The RS USB backend (libusb + libuvc in user space) is mandatory on macOS
+    # and is also the no-kernel-patch path on Linux, so both use it. Windows is
+    # deliberately left on the native Media Foundation backend: FORCE_RSUSB
+    # there is the Win7 path, and it hangs an `add_custom_target(realsense-driver
+    # DEPENDS ${DRIVERS})` off a RELATIVE-path glob of src/win7/drivers, which
+    # ninja cannot resolve ("IntelRealSense_D400_series_win7.inf ... missing and
+    # no known rule to make it"). Win10/11 do not want those drivers anyway.
     defines[platform:macos]:
+      - FORCE_RSUSB_BACKEND=ON
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
 
+    defines[platform:linux]:
+      - FORCE_RSUSB_BACKEND=ON
+
     defines[platform:windows]:
+      - FORCE_RSUSB_BACKEND=OFF
       - CMAKE_INSTALL_PREFIX=install
       - BUILD_WITH_STATIC_CRT=ON
 
