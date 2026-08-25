@@ -270,7 +270,32 @@ targets:
       - ENABLE_SSE4=ON
       # - BUILD_OPENGL=OFF
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
-      - LIBRARY_DISABLE=ON
+      # LIBRARY_DISABLE=ON is a blanket force-off (mango CMakeLists.txt:78-101)
+      # implemented with plain set(), so it *shadows* any per-format -D flag —
+      # passing IMAGE_FORMAT_EXR=ON alongside it silently does nothing. The
+      # switches are listed individually instead so EXR can be turned back on.
+      # image_exr.cpp is self-contained (mango headers + its own zip/piz over
+      # zlib/libdeflate): one .cpp, no new dependency.
+      - IMAGE_FORMAT_EXR=ON
+      - IMAGE_FORMAT_IFF=OFF
+      - IMAGE_FORMAT_TIFF=OFF
+      - IMAGE_FORMAT_PSD=OFF
+      - IMAGE_FORMAT_JXR=OFF
+      - IMAGE_FORMAT_JXL=OFF
+      - IMAGE_FORMAT_JP2=OFF
+      - IMAGE_FORMAT_WEBP=OFF
+      - IMAGE_FORMAT_WP2=OFF
+      - IMAGE_FORMAT_AVIF=OFF
+      - IMAGE_FORMAT_HEIF=OFF
+      - IMAGE_FORMAT_CAMERA=OFF
+      - IMAGE_FORMAT_RETRO=OFF
+      - IMAGE_FORMAT_KTX2=OFF
+      - LIBRARY_LZMA=OFF
+      - LIBRARY_LZFSE=OFF
+      - LIBRARY_ISAL=OFF
+      - LIBRARY_FREETYPE=OFF
+      - LIBRARY_HARFBUZZ=OFF
+      - LIBRARY_LZ4=OFF
       - PKG_CONFIG_PATH=${cwd}/${externalBuild:lcms2}/install/lib/pkgconfig
       - CMAKE_LIBRARY_PATH=${cwd}/${externalBuild:lcms2}/install/lib
       - CMAKE_INCLUDE_PATH=${cwd}/${externalBuild:lcms2}/install/include
