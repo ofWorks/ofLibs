@@ -18,7 +18,7 @@ externalDependencies:
 
   lcms2:
     repository: https://github.com/mm2/Little-CMS
-    commit: "a5b898c7e398"
+    commit: "cb35a0c1df79"
     # commit: e8b6135
     # repository: https://github.com/ofworks/Little-CMS
     # commit: b6204a0f2057
@@ -48,13 +48,13 @@ externalDependencies:
 
   deflate:
     repository: https://github.com/ebiggers/libdeflate
-    commit: "b122c8be1d78"
+    commit: "92e6a0db9fa8"
     # tag: v1.25
     kind: git
 
   mango:
     repository: https://github.com/t0rakka/mango
-    commit: "a429fc6aea92"
+    commit: "fa9610058a31"
     kind: git
 
 targets:
