@@ -135,7 +135,7 @@ targets:
 
     defines[platform:macos]:
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
-      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+      - CMAKE_OSX_ARCHITECTURES=arm64
 
     defines[toolchain:msvc]:
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
@@ -157,7 +157,7 @@ targets:
 
     defines[platform:macos]:
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
-      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+      - CMAKE_OSX_ARCHITECTURES=arm64
 
   bzip2:
     kind: cmakeProject
@@ -184,7 +184,7 @@ targets:
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
     defines[platform:macos]:
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
-      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+      - CMAKE_OSX_ARCHITECTURES=arm64
 
   deflate:
     kind: cmakeProject
@@ -208,7 +208,7 @@ targets:
 
     defines[platform:macos]:
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
-      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+      - CMAKE_OSX_ARCHITECTURES=arm64
 
   lcms2:
     kind: cmakeProject
@@ -228,7 +228,7 @@ targets:
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
     defines[platform:macos]:
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
-      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+      - CMAKE_OSX_ARCHITECTURES=arm64
 
     defines[toolchain:msvc]:
       - b_vscrt=static_from_buildtype
@@ -268,7 +268,13 @@ targets:
       - BUILD_STATIC_LIBS=ON
 
       - ENABLE_SSE4=ON
-      # - BUILD_OPENGL=OFF
+      # Build the static libs only. mango 3.6.1 defaults BUILD_OPENGL/VULKAN/
+      # IMPORT3D/EXAMPLES/TOOLS/TESTS all ON (CMakeLists.txt:14-19), and its
+      # examples hard-require system libjpeg/libpng/simdjson
+      # (examples/image/CMakeLists.txt:87 find_module(... JPEG ... REQUIRED)),
+      # which fails at configure time on every CI runner. Only mango-core and
+      # mango-image are distributed anyway.
+      - BUILD_MINIMAL=ON
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
       # LIBRARY_DISABLE=ON is a blanket force-off (mango CMakeLists.txt:78-101)
       # implemented with plain set(), so it *shadows* any per-format -D flag —
@@ -366,7 +372,7 @@ targets:
       # - CMAKE_PREFIX_PATH=${cwd}/${externalBuild:lcms2}/install/opt/homebrew;${cwd}/${externalBuild:deflate}/install;${cwd}/${externalBuild:fmt}/ext.fmt/install;${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install;${cwd}/${externalBuild:zstd}/install;${cwd}/${externalBuild:lz4}/install;${cwd}/${externalBuild:bzip2}/install
 
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
-      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+      - CMAKE_OSX_ARCHITECTURES=arm64
     defines[toolchain:msvc]:
       # temporary, only to have a verbose output.
       - CMAKE_FIND_DEBUG_MODE=ON
