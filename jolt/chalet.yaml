@@ -4,7 +4,7 @@ version: 5.6.0
 externalDependencies:
   jolt:
     repository: https://github.com/jrouwe/JoltPhysics
-    commit: "512cf8bf987b"
+    commit: "1e19ff51a16f"
     kind: git
 
 targets:
