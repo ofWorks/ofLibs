@@ -97,7 +97,7 @@ targets:
       - BUILD_opencv_dnn=OFF
 
       - BUILD_ZLIB=OFF
-      - ZLIB_ROOT=${externalBuild:zlib-ng-external}/ext.zlib-ng/install
+      - ZLIB_ROOT=${cwd}/${externalBuild:zlib-ng-external}/ext.zlib-ng/install
 
       # - BUILD_opencv_dnn=ON
       # - OPENCV_DNN_OPENCL=OFF
