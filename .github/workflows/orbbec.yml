@@ -20,8 +20,18 @@ jobs:
         # camera, so emscripten has nothing to do. rpi-aarch64 is left off
         # until there is a consumer: upstream's ARM64 target is the NVIDIA
         # Jetson line, whose GMSL serial-camera path this recipe disables.
+        #
+        # linux64 is the one job NOT on the house llvm toolchain. Upstream's
+        # cmake/compiler_flags.cmake turns on `-Weverything -Werror` for every
+        # clang EXCEPT AppleClang, and adds `-Wno-reserved-identifier` only
+        # `if(ANDROID)`. Bundled live555 declares `class _Tables` and
+        # `class _EventTime`, so -Wreserved-identifier fires as an error the
+        # moment the network PAL is compiled. macOS escapes it by being
+        # AppleClang; gcc escapes it because -Wreserved-identifier is
+        # clang-only, and gcc is the toolchain upstream actually builds Linux
+        # with. Revisit if upstream ever widens that ANDROID guard.
         platforms: '[
-          {"platform":"linux64","os":"ubuntu-22.04","toolchain":"llvm"},
+          {"platform":"linux64","os":"ubuntu-22.04","toolchain":"gcc"},
           {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"},
           {"platform":"vs","os":"windows-2022","toolchain":"vs-stable"}
           ]',
