@@ -1,0 +1,72 @@
+name: oflibs
+version: "1.0"
+externalDependencies:
+  orbbec:
+    repository: https://github.com/orbbec/OrbbecSDK_v2
+    commit: "b71adc7d48f7"
+    kind: git
+    # tag: v2.9.3
+
+targets:
+  orbbec:
+    kind: cmakeProject
+    location: ${external:${name}}
+    recheck: false
+    rebuild: false
+    install: true
+    defines:
+      - CMAKE_BUILD_TYPE=Release
+      - CMAKE_INSTALL_LIBDIR=lib
+      - CMAKE_POSITION_INDEPENDENT_CODE=ON
+      - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+
+      # SHARED is not a choice here. src/CMakeLists.txt says
+      # `add_library(${OB_SDK_LIB_NAME} SHARED "")` literally, so
+      # BUILD_SHARED_LIBS is ignored and there is no static target to ask for.
+      # The SDK is also not self-contained even when linked: it dlopens the
+      # prebuilt extension dylibs (filters, frameprocessor) from an `extensions/`
+      # directory next to the binary at runtime. Consumers ship the dylib plus
+      # that tree — see the distribution block, which carries both.
+
+      - OB_BUILD_EXAMPLES=OFF
+      - OB_BUILD_TOOLS=OFF
+      - OB_BUILD_TESTS=OFF
+      - OB_BUILD_DOCS=OFF
+      - OB_INSTALL_EXAMPLES_SOURCE=OFF
+
+      # GMSL is the NVIDIA Jetson serial-camera path; nothing desktop uses it
+      # and it drags in Tegra-specific plumbing.
+      - OB_BUILD_GMSL_PAL=OFF
+
+      # Both transports stay on: USB/UVC for Gemini and friends, and the
+      # network PAL because Femto Mega over Ethernet is the only path that
+      # avoids macOS's UVCAssistant exclusive-claim problem (OrbbecSDK_v2#124).
+      - OB_BUILD_USB_PAL=ON
+      - OB_BUILD_NET_PAL=ON
+
+    # arm64 only, deliberately. cmake/macos_config.cmake branches on
+    # CMAKE_OSX_ARCHITECTURES being EXACTLY "arm64" or "x86_64"; a universal
+    # "x86_64;arm64" falls through to the else branch, which reads
+    # CMAKE_SYSTEM_PROCESSOR instead and would define __NEON__ for the x86_64
+    # slice too. Same call as ../dawnDynamic and ../mango.
+    #
+    # Note there is NO depth engine on macOS: extensions/depthengine/mac holds
+    # only a .gitkeep and extensions/CMakeLists.txt skips it under `if(NOT
+    # APPLE)`. That blob turns Femto BOLT's raw phase frames into depth on the
+    # host, so Bolt has no macOS depth. Femto MEGA computes depth on-device and
+    # is unaffected.
+    defines[platform:macos]:
+      - CMAKE_OSX_ARCHITECTURES=arm64
+      - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
+
+    defines[platform:windows]:
+      - CMAKE_INSTALL_PREFIX=install
+
+distribution:
+  orbbec:
+    kind: archive
+    format: zip
+    include:
+      - ${external:${name}}/LICENSE.txt
+      - ${externalBuild:${name}}/install/include
+      - ${externalBuild:${name}}/install/lib

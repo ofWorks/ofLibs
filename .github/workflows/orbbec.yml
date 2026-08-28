@@ -1,0 +1,29 @@
+name: orbbec
+
+on:
+  push:
+    paths:
+      - orbbec/**
+      - .github/workflows/orbbec.yml
+
+jobs:
+  ci:
+    permissions:
+      contents: write
+
+    uses: ./.github/workflows/_build.yml
+    with: {
+        lib: orbbec,
+        version: v1.0,
+        linux_apt: libudev-dev,
+        # Desktop only. The SDK talks to a USB3 or Gigabit-Ethernet depth
+        # camera, so emscripten has nothing to do. rpi-aarch64 is left off
+        # until there is a consumer: upstream's ARM64 target is the NVIDIA
+        # Jetson line, whose GMSL serial-camera path this recipe disables.
+        platforms: '[
+          {"platform":"linux64","os":"ubuntu-22.04","toolchain":"llvm"},
+          {"platform":"macos","os":"macos-26","toolchain":"apple-llvm"},
+          {"platform":"vs","os":"windows-2022","toolchain":"vs-stable"}
+          ]',
+      }
+    secrets: inherit
