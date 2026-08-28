@@ -27,6 +27,9 @@ targets:
       - INSTALL_PFFFT=ON
       # Disable everything else to avoid arch conflicts
       - BUILD_TESTING=OFF
+      - PFFFT_BUILD_TESTS=OFF
+      - PFFFT_BUILD_BENCHMARKS=OFF
+      - PFFFT_BUILD_EXAMPLES=OFF
       - INSTALL_PFDSP=OFF
       - INSTALL_PFFASTCONV=OFF
     defines[platform:macos]:
