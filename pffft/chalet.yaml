@@ -3,7 +3,7 @@ version: "1.0"
 externalDependencies:
   pffft:
     repository: https://github.com/marton78/pffft
-    commit: "a4b03590cc2a"
+    commit: "fd0d9c5b7ae8"
     kind: git
     # Add a patch to disable problematic builds
 targets:
