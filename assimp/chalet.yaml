@@ -53,6 +53,24 @@ targets:
       - ASSIMP_BUILD_ZLIB=ON
       # - JS_ONLY=ON
       # - CMAKE_EXECUTABLE_SUFFIX=.js
+    defines[env:ANDROID_ABI]:
+      - CMAKE_TOOLCHAIN_FILE=${env:ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake
+      - CMAKE_ANDROID_ARCH_ABI=${env:ANDROID_ABI}
+      - ANDROID_ABI=${env:ANDROID_ABI}
+      - ANDROID_API=${env:ANDROID_API}
+      - ANDROID_PLATFORM=${env:ANDROID_PLATFORM}
+      - ANDROID_TOOLCHAIN=clang
+      - ANDROID_NDK=${env:ANDROID_NDK_ROOT}
+      - ANDROID_NDK_ROOT=${env:ANDROID_NDK_ROOT}
+      - ANDROID_STL=c++_static
+      - ASSIMP_ANDROID_JNIIOSYSTEM=ON
+      - ASSIMP_BUILD_SAMPLES=OFF
+      - ASSIMP_BUILD_DOCS=OFF
+      - ASSIMP_BUILD_STL_IMPORTER=OFF
+      - ENABLE_VISIBILITY=OFF
+      - ZLIB_ROOT=${externalBuild:zlib-ng}/ext.zlib-ng/install
+      - ZLIB_LIBRARY=${externalBuild:zlib-ng}/ext.zlib-ng/install/lib/libz.a
+      - ZLIB_INCLUDE_DIR=${externalBuild:zlib-ng}/ext.zlib-ng/install/include
     defines[platform:windows]:
       - ASSIMP_BUILD_ZLIB=ON
     # defines[platform:!windows]:
