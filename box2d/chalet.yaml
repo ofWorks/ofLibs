@@ -4,6 +4,10 @@ version: 3.1.1
 externalDependencies:
   box2d:
     repository: https://github.com/erincatto/box2d
+    # last working commit: 617d32a (Tunable ccd #1093, 2026-08-20)
+    # 02179697fd8a (Deferred restitution #1094) breaks GCC aarch64 builds:
+    # b2SoftMaskW in src/contact_solver.c assigns uint32x4_t to int32x4_t.
+    # reported upstream: https://github.com/erincatto/box2d/commit/02179697fd8a9e84b613020eb6ec56441408ae8d
     commit: "02179697fd8a"
     kind: git
 

@@ -4,7 +4,7 @@ version: 0.11.0
 externalDependencies:
   fmt:
     repository: https://github.com/fmtlib/fmt
-    commit: "b039e624c02a"
+    commit: "c5728fb72088"
     kind: git
 
 targets:

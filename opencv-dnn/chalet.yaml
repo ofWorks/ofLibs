@@ -3,7 +3,12 @@ version: 0.1.7
 externalDependencies:
   opencv-dnn:
     repository: https://github.com/opencv/opencv
-    commit: "0627765f01be"
+    # last working commit: 1e0a222d1 (Merge PR #29829, 2026-08-31)
+    # 0627765f01be (Merge PR #29360 exotic_cast_operations) breaks WITH_PROTOBUF=OFF:
+    # cast2_layer.cpp re-adds the unconditional "opencv-onnx.pb.h" include that
+    # f7ad2315 had removed for exactly this reason.
+    # reported upstream: https://github.com/opencv/opencv/pull/29360
+    commit: "ed61538c9077"
     # tag: 4.13.0
     kind: git
 

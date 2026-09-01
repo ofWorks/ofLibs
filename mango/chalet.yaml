@@ -18,7 +18,7 @@ externalDependencies:
 
   lcms2:
     repository: https://github.com/mm2/Little-CMS
-    commit: "8db7d0328f3c"
+    commit: "47270ff27e4e"
     # commit: e8b6135
     # repository: https://github.com/ofworks/Little-CMS
     # commit: b6204a0f2057
@@ -54,7 +54,7 @@ externalDependencies:
 
   mango:
     repository: https://github.com/t0rakka/mango
-    commit: "6f8697eb6645"
+    commit: "af28c8bcb114"
     kind: git
 
 targets:
