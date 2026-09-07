@@ -5,7 +5,7 @@ externalDependencies:
   cairo:
     repository: https://gitlab.freedesktop.org/cairo/cairo
     # tag: 1.18.4
-    commit: "bd04e43e201e"
+    commit: "dd6262c17e65"
     kind: git
 targets:
   cairo:

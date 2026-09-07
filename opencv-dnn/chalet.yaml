@@ -8,7 +8,7 @@ externalDependencies:
     # cast2_layer.cpp re-adds the unconditional "opencv-onnx.pb.h" include that
     # f7ad2315 had removed for exactly this reason.
     # reported upstream: https://github.com/opencv/opencv/pull/29360
-    commit: "ed61538c9077"
+    commit: "23212f1427cc"
     # tag: 4.13.0
     kind: git
 
