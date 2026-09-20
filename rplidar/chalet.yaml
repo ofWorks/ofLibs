@@ -4,7 +4,9 @@ externalDependencies:
   rplidar:
     repository: https://github.com/dimitre/rplidar_sdk
     branch: braid
-    commit: "99478e5fb90d"
+    # Pin the tip of braid, not its upstream base (99478e5fb90d): the
+    # __APPLE__ patches to hal/locker.h and hal/event.h live only on braid.
+    commit: "7441b705f4be"
     kind: git
 
 targets:
