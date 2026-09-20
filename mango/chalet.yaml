@@ -456,3 +456,4 @@ distribution:
     # - ${external:lcms2}/LICENSE
     # - ${external:lz4}/LICENSE
     # - ${external:zstd}/LICENSE
+# bump 2026-09-20: rebuild after fmt chalet.yaml test fix

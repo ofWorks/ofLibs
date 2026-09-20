@@ -18,8 +18,11 @@ targets:
 
       - pixman:default_library=static
 
-      # Disable tests
+      # Disable tests (pixman's too: its test/demo executables are built by
+      # default and fail to link under emscripten)
       - tests=disabled
+      - pixman:tests=disabled
+      - pixman:demos=disabled
 
       # Disable X11 backends
       - xcb=disabled
@@ -55,6 +58,14 @@ targets:
       - pixman:sse2=disabled
       - pixman:ssse3=disabled
       - pixman:vmx=disabled
+
+    defines[toolchain:msvc]:
+      # With dwrite=disabled cairo's meson.build targets _WIN32_WINNT_VISTA, but
+      # src/win32/cairo-win32-system.c (since 100d249d, "WICFactory: Make
+      # thread-safe") uses CO_MTA_USAGE_COOKIE, which the SDK only declares for
+      # Windows 8+. c_args come after project args in meson, so this overrides.
+      - c_args=-D_WIN32_WINNT=_WIN32_WINNT_WIN8 -DWINVER=_WIN32_WINNT_WIN8
+      - cpp_args=-D_WIN32_WINNT=_WIN32_WINNT_WIN8 -DWINVER=_WIN32_WINNT_WIN8
 
     defines[platform:macos]:
       - c_args=-mmacos-version-min=11.0
