@@ -47,6 +47,10 @@ targets:
       - ENABLE_SEVENZIP=OFF
       - ENABLE_ENCODINGS=OFF
       - ENABLE_ACTIVERECORD=OFF
+      # Defaults ON and FORCE-enables ENABLE_ACTIVERECORD (CMakeLists.txt:381),
+      # so the line above did nothing without it. Its poco-arc executable also
+      # fails to link under emscripten (pthread_setschedparam undefined).
+      - ENABLE_ACTIVERECORD_COMPILER=OFF
       - ENABLE_PROMETHEUS=OFF
 
     defines[platform:web]:
