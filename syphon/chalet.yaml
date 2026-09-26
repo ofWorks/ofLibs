@@ -3,7 +3,7 @@ version: "1.0"
 externalDependencies:
   syphon:
     repository: https://github.com/Syphon/Syphon-Framework
-    commit: "71351d4b484c"
+    commit: "f4761677a45b"
     kind: git
 
 targets:
