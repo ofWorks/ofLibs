@@ -10,7 +10,7 @@ externalDependencies:
     # reported upstream: https://github.com/opencv/opencv/pull/29360
     # still present at 5.x HEAD b2b4f3482095 (2026-09-17); pinned back to the
     # last working commit until upstream guards the include.
-    commit: "a0cda081f8d7"
+    commit: "c54b7977008e"
     # tag: 4.13.0
     kind: git
 
