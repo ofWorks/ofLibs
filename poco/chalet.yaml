@@ -52,6 +52,20 @@ targets:
       # fails to link under emscripten (pthread_setschedparam undefined).
       - ENABLE_ACTIVERECORD_COMPILER=OFF
       - ENABLE_PROMETHEUS=OFF
+      # RemotingNG/XSD options default ON and FORCE-enable ENABLE_NET, which
+      # breaks the web build (ENABLE_NET=OFF there, emscripten lacks epoll).
+      - ENABLE_CODEGENERATION=OFF
+      - ENABLE_REMOTINGNG=OFF
+      - ENABLE_REMOTINGNG_TCP=OFF
+      - ENABLE_REMOTINGNG_HTTP=OFF
+      - ENABLE_REMOTINGNG_JSONRPC=OFF
+      - ENABLE_REMOTINGNG_REST=OFF
+      - ENABLE_REMOTINGNG_SOAP=OFF
+      - ENABLE_REMOTINGNG_REMOTEGEN=OFF
+      - ENABLE_XSD_TYPES=OFF
+      - ENABLE_XSD_PARSER=OFF
+      - ENABLE_XSD_CODEGEN=OFF
+      - ENABLE_XSD_VALIDATOR=OFF
 
     defines[platform:web]:
       # Browsers have no raw sockets, and emscripten lacks <sys/epoll.h> which
