@@ -25,7 +25,7 @@ version: "1.0"
 externalDependencies:
   dawnDynamic:
     repository: https://github.com/google/dawn.git
-    commit: "7380ff656d06"
+    commit: "b1236a9bb4a4"
     kind: git
 
 targets:
