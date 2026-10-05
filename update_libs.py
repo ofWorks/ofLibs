@@ -160,8 +160,8 @@ def parse_chalet_yaml(filepath: Path) -> list[dict]:
         if dep_info.get("commit"):
             commit_value = re.escape(str(dep_info["commit"]))
             # Inline:  commit: <value> # pinned   OR   previous line: # pinned\n commit: <value>
-            inline = rf"^\s*commit:\s*{commit_value}.*#\s*pinned\b"
-            prev = rf"#\s*pinned\b.*$\s*^\s*commit:\s*{commit_value}"
+            inline = rf"^\s*commit:\s*[\"']?{commit_value}.*#\s*pinned\b"
+            prev = rf"#\s*pinned\b.*$\s*^\s*commit:\s*[\"']?{commit_value}"
             flags = re.MULTILINE | re.IGNORECASE
             is_pinned = bool(
                 re.search(inline, raw_content, flags) or re.search(prev, raw_content, flags)
