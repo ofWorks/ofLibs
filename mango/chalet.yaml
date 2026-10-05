@@ -18,7 +18,7 @@ externalDependencies:
 
   lcms2:
     repository: https://github.com/mm2/Little-CMS
-    commit: "9f9b52021eff"
+    commit: "15c24e7ded91"
     # commit: e8b6135
     # repository: https://github.com/ofworks/Little-CMS
     # commit: b6204a0f2057
@@ -138,7 +138,14 @@ targets:
       - CMAKE_OSX_ARCHITECTURES=arm64
 
     defines[toolchain:msvc]:
+      # CMAKE_MSVC_RUNTIME_LIBRARY is ignored unless policy CMP0091 is NEW, and
+      # this project's cmake_minimum_required predates 3.15 — without the
+      # policy default the lib silently builds /MD and every /MT link warns
+      # LNK4217/LNK4286 (seen on mata, Oct 2026).
+      - CMAKE_POLICY_DEFAULT_CMP0091=NEW
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+      # zstd's own switch (CMakeModules/AddZstdCompilationFlags.cmake): rewrites /MD → /MT.
+      - ZSTD_USE_STATIC_RUNTIME=ON
 
   lz4:
     kind: cmakeProject
@@ -181,6 +188,11 @@ targets:
       - CMAKE_INSTALL_PREFIX=install
       - CMAKE_INSTALL_INCLUDEDIR=include
       - CMAKE_INSTALL_LIBDIR=lib
+      # CMAKE_MSVC_RUNTIME_LIBRARY is ignored unless policy CMP0091 is NEW, and
+      # this project's cmake_minimum_required predates 3.15 — without the
+      # policy default the lib silently builds /MD and every /MT link warns
+      # LNK4217/LNK4286 (seen on mata, Oct 2026).
+      - CMAKE_POLICY_DEFAULT_CMP0091=NEW
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
     defines[platform:macos]:
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
@@ -204,6 +216,11 @@ targets:
       - CMAKE_INSTALL_PREFIX=install
       - CMAKE_INSTALL_INCLUDEDIR=include
       - CMAKE_INSTALL_LIBDIR=lib
+      # CMAKE_MSVC_RUNTIME_LIBRARY is ignored unless policy CMP0091 is NEW, and
+      # this project's cmake_minimum_required predates 3.15 — without the
+      # policy default the lib silently builds /MD and every /MT link warns
+      # LNK4217/LNK4286 (seen on mata, Oct 2026).
+      - CMAKE_POLICY_DEFAULT_CMP0091=NEW
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 
     defines[platform:macos]:

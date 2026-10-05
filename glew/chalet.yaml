@@ -3,7 +3,7 @@ version: "2.3.1"
 externalDependencies:
   glew:
     repository: https://github.com/Perlmint/glew-cmake
-    commit: "7f5ed2d577ea"
+    commit: "e9e6f97c8a8e"
     kind: git
 targets:
   glew:

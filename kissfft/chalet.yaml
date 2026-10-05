@@ -20,6 +20,10 @@ targets:
       - CMAKE_INSTALL_LIBDIR=lib
       - BUILD_SHARED_LIBS=OFF
       - CMAKE_BUILD_TYPE=Release
+      # The runtime line below is ignored unless policy CMP0091 is NEW, and this
+      # project's cmake_minimum_required 3.10 predates 3.15 — without the default the lib
+      # silently builds /MD and a /MT link warns LNK4217/LNK4286 (Oct 2026).
+      - CMAKE_POLICY_DEFAULT_CMP0091=NEW
       - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 
       - KISSFFT_PKGCONFIG=OFF

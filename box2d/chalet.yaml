@@ -4,7 +4,7 @@ version: 3.1.1
 externalDependencies:
   box2d:
     repository: https://github.com/erincatto/box2d
-    commit: "956ce4e1e8ac"
+    commit: "ac7c751eaedd"
     kind: git
 
 targets:
