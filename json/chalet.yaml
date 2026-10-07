@@ -4,7 +4,7 @@ externalDependencies:
   json:
     repository: https://github.com/nlohmann/json
     # tag: v3.12.0
-    commit: "23d3b373e1a4"
+    commit: "a5f5d3059b47"
     kind: git
 
 targets:
