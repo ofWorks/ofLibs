@@ -25,6 +25,21 @@ targets:
 
       # avoid creating pkgconfig folder
       # - BROTLI_BUNDLED_MODE=ON
+    defines[env:ANDROID_ABI]:
+      - CMAKE_TOOLCHAIN_FILE=${env:ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake
+      - CMAKE_ANDROID_ARCH_ABI=${env:ANDROID_ABI}
+      - ANDROID_ABI=${env:ANDROID_ABI}
+      - ANDROID_API=${env:ANDROID_API}
+      - ANDROID_PLATFORM=${env:ANDROID_PLATFORM}
+      - ANDROID_TOOLCHAIN=clang
+      - ANDROID_NDK=${env:ANDROID_NDK_ROOT}
+      - ANDROID_NDK_ROOT=${env:ANDROID_NDK_ROOT}
+      - ANDROID_STL=c++_static
+      - BROTLI_DISABLE_TESTS=ON
+      - BROTLI_BUILD_TOOLS=OFF
+      - BROTLI_BUNDLED_MODE=OFF
+      - BUILD_TESTING=OFF
+      - ENABLE_VISIBILITY=OFF
     defines[platform:macos]:
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0

@@ -1,0 +1,15 @@
+name: brotli
+
+on:
+  push:
+    paths:
+      - .github/workflows/brotli.yml
+      - brotli/**
+
+jobs:
+  android:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/_build_android.yml
+    with: { lib: brotli, version: v1.0 }
+    secrets: inherit

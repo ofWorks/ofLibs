@@ -117,6 +117,40 @@ targets:
       - BUILD_PERF_TESTS=OFF
       - BUILD_TESTS=OFF
 
+    defines[env:ANDROID_ABI]:
+      - CMAKE_TOOLCHAIN_FILE=${env:ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake
+      - CMAKE_ANDROID_ARCH_ABI=${env:ANDROID_ABI}
+      - ANDROID_ABI=${env:ANDROID_ABI}
+      - ANDROID_API=${env:ANDROID_API}
+      - ANDROID_PLATFORM=${env:ANDROID_PLATFORM}
+      - ANDROID_TOOLCHAIN=clang
+      - ANDROID_NDK=${env:ANDROID_NDK_ROOT}
+      - ANDROID_NDK_ROOT=${env:ANDROID_NDK_ROOT}
+      - ANDROID_STL=c++_static
+      - BUILD_ANDROID_EXAMPLES=OFF
+      - INSTALL_ANDROID_EXAMPLES=OFF
+      - BUILD_opencv_java_android=OFF
+      - BUILD_FAT_JAVA_LIB=OFF
+      - WITH_1394=OFF
+      - WITH_CUDA=OFF
+      - WITH_CUFFT=OFF
+      - WITH_GIGEAPI=OFF
+      - WITH_GPHOTO2=OFF
+      - WITH_GSTREAMER=OFF
+      - WITH_GTK=OFF
+      - WITH_GTK_2_X=OFF
+      - WITH_IMAGEIO=OFF
+      - WITH_LIBV4L=OFF
+      - WITH_OPENGL=OFF
+      - WITH_OPENNI=OFF
+      - WITH_OPENNI2=OFF
+      - WITH_QT=OFF
+      - WITH_QUICKTIME=OFF
+      - WITH_V4L=OFF
+      - WITH_VTK=OFF
+      - WITH_ITT=OFF
+      - WITH_CAROTENE=OFF
+
     defines[platform:macos]:
       - APPLE_FRAMEWORK=ON
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
