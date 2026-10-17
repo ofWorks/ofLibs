@@ -1,0 +1,27 @@
+name: brotli
+
+on:
+  push:
+    paths:
+      - brotli/**
+      - .github/workflows/brotli.yml
+      - .github/workflows/_build_android.yml
+  pull_request:
+    paths:
+      - brotli/**
+      - .github/workflows/brotli.yml
+      - .github/workflows/_build.yml
+      - .github/workflows/_build_android.yml
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  android:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/_build_android.yml
+    with: { lib: brotli, version: v1.0 }
+    secrets: inherit
