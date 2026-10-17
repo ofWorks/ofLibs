@@ -3,8 +3,20 @@ name: freetype
 on:
   push:
     paths:
-      - .github/workflows/freetype.yml
       - freetype/**
+      - .github/workflows/freetype.yml
+      - .github/workflows/_build_android.yml
+  pull_request:
+    paths:
+      - freetype/**
+      - .github/workflows/freetype.yml
+      - .github/workflows/_build.yml
+      - .github/workflows/_build_android.yml
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   ci:
@@ -12,6 +24,12 @@ jobs:
       contents: write
 
     uses: ./.github/workflows/_build.yml
+    with: { lib: freetype, version: v1.0 }
+    secrets: inherit
+  android:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/_build_android.yml
     with: { lib: freetype, version: v1.0 }
     secrets: inherit
 # bump 2026-07-24: rebuild on windows-2022 (MSVC 14.4x) runner pin

@@ -1,0 +1,92 @@
+name: ofLibs freeimage
+version: "3.19.23"
+
+externalDependencies:
+  freeimage:
+    repository: https://github.com/danoli3/FreeImage
+    # tag: 3.19.23
+    commit: "cc2bfc1b67d3"
+    kind: git
+
+targets:
+  zlib-ng-external:
+    kind: chaletProject
+    location: ../zlib-ng
+
+  freeimage:
+    kind: cmakeProject
+    location: ${external:${name}}
+    recheck: false
+    rebuild: false
+    install: true
+
+    defines:
+      - BUILD_SHARED_LIBS=OFF
+      - CMAKE_BUILD_TYPE=Release
+      - CMAKE_POSITION_INDEPENDENT_CODE=ON
+      - CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
+      - CMAKE_INSTALL_PREFIX=install
+      - CMAKE_INSTALL_LIBDIR=lib
+      - CMAKE_INSTALL_INCLUDEDIR=include
+      # OpenEXR (bundled) needs C++17.
+      - CMAKE_CXX_STANDARD=17
+      - BUILD_TESTS=OFF
+
+      # zlib comes from ofLibs zlib-ng (ZLIB_COMPAT), so FreeImage and oF core
+      # share one zlib instead of linking two copies of the same symbols.
+      - BUILD_ZLIB=ON
+      - USE_SYSTEM_ZLIB=ON
+      - ZLIB_ROOT=${cwd}/${externalBuild:zlib-ng-external}/ext.zlib-ng/install
+
+      # Everything else is the bundled copy in FreeImage/Source, matching the
+      # apothecary formula: PNG, JPEG, TIFF, OpenJPEG, WebP, OpenEXR, LibRaw.
+      - BUILD_LIBPNG=ON
+      - BUILD_LIBJPEG=ON
+      - BUILD_LIBTIFF=ON
+      - BUILD_LIBOPENJPEG=ON
+      - BUILD_WEBP=ON
+      - BUILD_OPENEXR=ON
+      - BUILD_LIBRAWLITE=ON
+      # 3.19.23 optional backends that link *system* libjxl/libheif; keep the
+      # prebuilt archives self-contained.
+      - BUILD_LIBJXL=OFF
+      - BUILD_LIBHEIF=OFF
+
+    # Emscripten's toolchain restricts find_library() to its sysroot, so
+    # ZLIB_ROOT alone is ignored there; point FindZLIB at zlib-ng directly.
+    defines[platform:web]:
+      - ZLIB_INCLUDE_DIR=${cwd}/${externalBuild:zlib-ng-external}/ext.zlib-ng/install/include
+      - ZLIB_LIBRARY=${cwd}/${externalBuild:zlib-ng-external}/ext.zlib-ng/install/lib/libz.a
+
+    # JPEG-XR is Windows-only (CMake default is ON for WIN32 only).
+    defines[platform:windows]:
+      - BUILD_JXR=ON
+
+    defines[env:ANDROID_ABI]:
+      - CMAKE_TOOLCHAIN_FILE=${env:ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake
+      - CMAKE_ANDROID_ARCH_ABI=${env:ANDROID_ABI}
+      - ANDROID_ABI=${env:ANDROID_ABI}
+      # LibRaw's libraw.h sets _FILE_OFFSET_BITS=64 for __linux__ (true on Android);
+      # 32-bit bionic hides ftello() under that below API 24, breaking libc++
+      # <fstream>. (apothecary's Android default is API 25+, so it never hits this.)
+      - ANDROID_API=24
+      - ANDROID_PLATFORM=android-24
+      - ANDROID_TOOLCHAIN=clang
+      - ANDROID_NDK=${env:ANDROID_NDK_ROOT}
+      - ANDROID_NDK_ROOT=${env:ANDROID_NDK_ROOT}
+      - ANDROID_STL=c++_static
+
+    defines[platform:macos]:
+      - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
+      - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
+
+distribution:
+  freeimage:
+    kind: archive
+    format: zip
+    include:
+      - ${external:${name}}/license-fi.txt
+      - ${external:${name}}/license-gplv2.txt
+      - ${external:${name}}/license-gplv3.txt
+      - ${externalBuild:${name}}/install/include
+      - ${externalBuild:${name}}/install/lib

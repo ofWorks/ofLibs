@@ -1,0 +1,34 @@
+name: freeimage
+
+on:
+  push:
+    paths:
+      - freeimage/**
+      - .github/workflows/freeimage.yml
+      - .github/workflows/_build_android.yml
+  pull_request:
+    paths:
+      - freeimage/**
+      - .github/workflows/freeimage.yml
+      - .github/workflows/_build.yml
+      - .github/workflows/_build_android.yml
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  ci:
+    permissions:
+      contents: write
+
+    uses: ./.github/workflows/_build.yml
+    with: { lib: freeimage, version: v1.0 }
+    secrets: inherit
+  android:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/_build_android.yml
+    with: { lib: freeimage, version: v1.0 }
+    secrets: inherit

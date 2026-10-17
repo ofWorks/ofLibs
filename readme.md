@@ -5,9 +5,20 @@ You are welcome to jump in and help building and testing more libraries.<br>
 ![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+
+Android builds use NDK 23 (23.2.8568313), API 21, and the NDK's CMake
+toolchain. Supported ABIs are `arm64-v8a`, `armeabi-v7a`, `x86`, and
+`x86_64`; release archives are named `android-arm64`, `android-armv7`,
+`android-x86`, and `android-x86_64` respectively.
+
+Android-enabled recipes currently include Assimp, Brotli, fmt, FreeImage, FreeType, GLM,
+nlohmann/json, OpenCV, Poco, pugixml, tess2, uriparser, utfcpp, and zlib-ng.
+An Android checkmark in the tables means all four ABIs above.
 
 
 ## ofCore
+[![freeimage](https://github.com/ofWorks/ofLibs/actions/workflows/freeimage.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/freeimage.yml )
 [![freetype](https://github.com/ofWorks/ofLibs/actions/workflows/freetype.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/freetype.yml )
 [![glew](https://github.com/ofWorks/ofLibs/actions/workflows/glew.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/glew.yml )
 [![glfw](https://github.com/ofWorks/ofLibs/actions/workflows/glfw.yml/badge.svg )](https://github.com/ofWorks/ofLibs/actions/workflows/glfw.yml )
@@ -65,30 +76,31 @@ FreeImage have some issues. Poco now builds again and it was moved to "Additiona
 
 ## Core Libraries
 
-| Library | vs | macos | linux64 | rpi-aarch64 | rpi-armv6l |
-|---------|:--:|:-----:|:-------:|:-----------:|:----------:|
-| freetype | ✓ | ✓ | ✓ | ✓ | ✓ |
-| glew | ✓ | ✓ | ✓ | ✓ | ✓ |
-| glfw | ✓ | ✓ | ✓ | ✓ | ✓ |
-| glm | ✓ | ✓ | ✓ | ✓ | ✓ |
-| json | ✓ | ✓ | ✓ | ✓ | ✓ |
-| kissfft | — | — | ✓ | ✓ | ✓ |
-| mango | ✓ | ✓ | ✓ | ✓ | ✓ |
-| pugixml | ✓ | ✓ | ✓ | ✓ | ✓ |
-| rtAudio | ✓ | ✓ | ✓ | ✓ | ✓ |
-| tess2 | ✓ | ✓ | ✓ | ✓ | ✓ |
-| uriparser | ✓ | ✓ | ✓ | ✓ | ✓ |
-| utfcpp | ✓ | ✓ | ✓ | ✓ | ✓ |
-| videoInput | ✓ | — | — | — | — |
-| yaml-cpp | ✓ | ✓ | ✓ | ✓ | ✓ |
-| zlib-ng | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Library | vs | macos | linux64 | rpi-aarch64 | rpi-armv6l | Android |
+|---------|:--:|:-----:|:-------:|:-----------:|:----------:|:-------:|
+| freeimage | ✓ | ✓ | ✓ | ✓ | — | ✓ |
+| freetype | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| glew | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| glfw | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| glm | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| json | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| kissfft | — | — | ✓ | ✓ | ✓ | — |
+| mango | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| pugixml | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| rtAudio | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| tess2 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| uriparser | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| utfcpp | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| videoInput | ✓ | — | — | — | — | — |
+| yaml-cpp | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| zlib-ng | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
 ## Addon Libraries
 
-| Library | vs | macos | linux64 | rpi-aarch64 | rpi-armv6l | Associated Addon |
-|---------|:--:|:-----:|:-------:|:-----------:|:----------:|------------------|
-| assimp | ✓ | ✓ | ✓ | ✓ | ✓ | ofxAssimp |
-| cairo | ✓ | ✓ | ✓ | ✓ | ✓ | ofxCairo |
-| libusb | ✓ | ✓ | ✓ | ✓ | ✓ | ofxKinect |
-| opencv | ✓ | ✓ | ✓ | ✓ | ✓ | ofxOpenCv |
-| pixman | ✓ | ✓ | ✓ | ✓ | ✓ | ofxCairo |
+| Library | vs | macos | linux64 | rpi-aarch64 | rpi-armv6l | Android | Associated Addon |
+|---------|:--:|:-----:|:-------:|:-----------:|:----------:|:-------:|------------------|
+| assimp | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ofxAssimp |
+| cairo | ✓ | ✓ | ✓ | ✓ | ✓ | — | ofxCairo |
+| libusb | ✓ | ✓ | ✓ | ✓ | ✓ | — | ofxKinect |
+| opencv | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ofxOpenCv |
+| pixman | ✓ | ✓ | ✓ | ✓ | ✓ | — | ofxCairo |
