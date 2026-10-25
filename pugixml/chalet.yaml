@@ -25,6 +25,19 @@ targets:
       - CMAKE_C_STANDARD=20
       - CMAKE_CXX_STANDARD=20
 
+    # Mirrors apothecary's Android CMake invocation. The reusable workflow
+    # supplies the ABI and NDK root for each matrix entry.
+    defines[env:ANDROID_ABI]:
+      - CMAKE_TOOLCHAIN_FILE=${env:ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake
+      - CMAKE_ANDROID_ARCH_ABI=${env:ANDROID_ABI}
+      - ANDROID_ABI=${env:ANDROID_ABI}
+      - ANDROID_API=${env:ANDROID_API}
+      - ANDROID_PLATFORM=${env:ANDROID_PLATFORM}
+      - ANDROID_TOOLCHAIN=clang
+      - ANDROID_NDK=${env:ANDROID_NDK_ROOT}
+      - ANDROID_NDK_ROOT=${env:ANDROID_NDK_ROOT}
+      - ANDROID_STL=c++_static
+
     defines[platform:macos]:
       - CMAKE_OSX_ARCHITECTURES=x86_64;arm64
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
