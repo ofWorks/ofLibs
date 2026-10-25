@@ -1,0 +1,27 @@
+name: Build ofLibs Android
+
+on:
+  workflow_call:
+    inputs:
+      lib: { required: true, type: string }
+      version: { required: true, type: string }
+      linux_apt: { required: false, type: string }
+
+permissions:
+  contents: write
+
+jobs:
+  android:
+    uses: ./.github/workflows/_build.yml
+    with:
+      lib: ${{ inputs.lib }}
+      version: ${{ inputs.version }}
+      linux_apt: ${{ inputs.linux_apt }}
+      platforms: >-
+        [
+          {"platform":"android-arm64","os":"ubuntu-22.04","toolchain":"llvm","android_abi":"arm64-v8a"},
+          {"platform":"android-armv7","os":"ubuntu-22.04","toolchain":"llvm","android_abi":"armeabi-v7a"},
+          {"platform":"android-x86","os":"ubuntu-22.04","toolchain":"llvm","android_abi":"x86"},
+          {"platform":"android-x86_64","os":"ubuntu-22.04","toolchain":"llvm","android_abi":"x86_64"}
+        ]
+    secrets: inherit

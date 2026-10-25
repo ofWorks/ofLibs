@@ -36,6 +36,24 @@ targets:
     defines[platform:web]:
       - JS_ONLY=ON
       - CMAKE_EXECUTABLE_SUFFIX=.js
+    defines[env:ANDROID_ABI]:
+      - CMAKE_TOOLCHAIN_FILE=${env:ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake
+      - CMAKE_ANDROID_ARCH_ABI=${env:ANDROID_ABI}
+      - ANDROID_ABI=${env:ANDROID_ABI}
+      - ANDROID_API=${env:ANDROID_API}
+      - ANDROID_PLATFORM=${env:ANDROID_PLATFORM}
+      - ANDROID_TOOLCHAIN=clang
+      - ANDROID_NDK=${env:ANDROID_NDK_ROOT}
+      - ANDROID_NDK_ROOT=${env:ANDROID_NDK_ROOT}
+      - ANDROID_STL=c++_static
+      - WITH_NATIVE_INSTRUCTIONS=OFF
+      - WITH_GZFILEOP=ON
+      - ENABLE_VISIBILITY=OFF
+    # NDK 23 (clang 12) only declares _mm_cvtsi64_si128 on x86_64, and zlib-ng's
+    # 32-bit polyfill (arch/x86/x86_intrins.h) skips clang, so crc32_chorba_sse2.c
+    # fails on i686. Drop the SSE Chorba fallback there; braid/PCLMULQDQ remain.
+    defines[env:ANDROID_ABI_X86]:
+      - CMAKE_C_FLAGS=-DWITHOUT_CHORBA_SSE
     defines[platform:macos]:
       - CMAKE_OSX_ARCHITECTURES=arm64;x86_64
       - CMAKE_OSX_DEPLOYMENT_TARGET=11.0
