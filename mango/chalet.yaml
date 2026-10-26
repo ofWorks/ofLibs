@@ -18,7 +18,7 @@ externalDependencies:
 
   lcms2:
     repository: https://github.com/mm2/Little-CMS
-    commit: "044b7bbc5938"
+    commit: "1112313b3784"
     # commit: e8b6135
     # repository: https://github.com/ofworks/Little-CMS
     # commit: b6204a0f2057
@@ -44,7 +44,7 @@ externalDependencies:
   lz4:
     repository: https://github.com/lz4/lz4
     kind: git
-    commit: "e5ab519f109a"
+    commit: "a6fc3a2a2c5d"
 
   deflate:
     repository: https://github.com/ebiggers/libdeflate
@@ -54,13 +54,13 @@ externalDependencies:
 
   webp:
     repository: https://github.com/webmproject/libwebp
-    commit: "4fa219123383"
+    commit: "1844042d1ca7"
     # tag: v1.6.0
     kind: git
 
   mango:
     repository: https://github.com/t0rakka/mango
-    commit: "946e897e221f"
+    commit: "3c203ae44de9"
     kind: git
 
 targets:
