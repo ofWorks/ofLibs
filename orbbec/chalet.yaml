@@ -3,7 +3,7 @@ version: "1.0"
 externalDependencies:
   orbbec:
     repository: https://github.com/orbbec/OrbbecSDK_v2
-    commit: "85e94c4ee403"
+    commit: "f5d59930ccb9"
     kind: git
     # tag: v2.9.3
 

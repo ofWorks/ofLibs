@@ -3,7 +3,7 @@ version: "1.0"
 externalDependencies:
   miniaudio:
     repository: https://github.com/mackron/miniaudio
-    commit: "9634bedb5b5a"
+    commit: "877ea4a7c260"
     kind: git
 
 targets:
