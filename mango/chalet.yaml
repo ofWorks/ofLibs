@@ -418,7 +418,10 @@ targets:
       - zlib_ROOT=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install
       - zlib_DIR=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install/lib/cmake/zlib
       - fmt_DIR=${cwd}/${externalBuild:fmt}/ext.fmt/install/lib/cmake/fmt
-      - CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install/include;${cwd}/${externalBuild:zstd}/install/include;${cwd}/${externalBuild:lz4}/install/include;${cwd}/${externalBuild:bzip2}/install/include;${cwd}/${externalBuild:deflate}/install/include
+      # Web builds find these libs through pkg-config, whose .pc files carry the
+      # configure-time prefix (mango/install), not chalet's --prefix ext.*/install.
+      # The headers have to be listed here or mango can't find them (webp/decode.h).
+      - CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install/include;${cwd}/${externalBuild:zstd}/install/include;${cwd}/${externalBuild:lz4}/install/include;${cwd}/${externalBuild:bzip2}/install/include;${cwd}/${externalBuild:deflate}/install/include;${cwd}/${externalBuild:webp}/install/include
         # - CMAKE_CXX_FLAGS="-I${cwd}/${externalBuild:zlib-ng}/install/include -I${cwd}/${externalBuild:zstd}/install/include -I${cwd}/${externalBuild:lz4}/install/include -I${cwd}/${externalBuild:bzip2}/install/include -I${cwd}/${externalBuild:deflate}/install/include"
         # - FMT_ROOT=${cwd}/${externalBuild:fmt}/install
         # - fmt_ROOT=${cwd}/${externalBuild:fmt}/install
