@@ -3,7 +3,7 @@ version: 4.13.0
 externalDependencies:
   opencv:
     repository: https://github.com/opencv/opencv
-    commit: "07666386e2eb"
+    commit: "f1a605c03728"
     kind: git
     # tag: 4.13.0
 

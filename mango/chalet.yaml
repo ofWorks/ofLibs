@@ -44,17 +44,17 @@ externalDependencies:
   lz4:
     repository: https://github.com/lz4/lz4
     kind: git
-    commit: "f0491dba62f3"
+    commit: "1fb6b2129f71"
 
   deflate:
     repository: https://github.com/ebiggers/libdeflate
-    commit: "0758d0a12d34"
+    commit: "119e84abeaca"
     # tag: v1.25
     kind: git
 
   webp:
     repository: https://github.com/webmproject/libwebp
-    commit: "e5bca732d2e3"
+    commit: "646eb3800829"
     # tag: v1.6.0
     kind: git
 
