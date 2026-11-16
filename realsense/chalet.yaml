@@ -50,6 +50,10 @@ targets:
 
       # No curl, no network fetch at configure or run time.
       - CHECK_FOR_UPDATES=OFF
+      # RUM usage-stats upload (default ON upstream) also pulls in bundled
+      # libcurl, which fails against Homebrew OpenSSL 4 (opaque ASN1 structs).
+      - ENABLE_STATS=OFF
+      - ENABLE_AI_ASSISTANT=OFF
       - BUILD_WITH_DDS=OFF
       - BUILD_NETWORK_DEVICE=OFF
       # rosbag2 drags in fastcdr, whose long-double serialization does not
