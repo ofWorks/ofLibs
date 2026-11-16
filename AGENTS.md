@@ -78,6 +78,25 @@ to `readme.md`.
 - The default matrix is repeated in `_build.yml`, `_buildnoemscripten.yml` and
   `_buildwin.yml`. Keep all three in sync.
 
+### Shared dependencies are built from source, not downloaded
+
+Some libs need another ofLibs lib to compile. For example, mango, opencv and assimp need
+zlib-ng, and mango needs fmt. These recipes build the dependency themselves as a
+`kind: chaletProject` target (`location: ../zlib-ng`) and point CMake at its install
+(`ZLIB_ROOT`, `CMAKE_PREFIX_PATH`). The dependency is not put in the dependent lib's zip:
+mango's `.a` files only reference `deflate`/`inflate`/`compress2`, and consumers link zlib from
+`ofLibs_zlib-ng_*.zip`. Shipping it twice would risk duplicate-symbol clashes.
+
+Don't replace these targets with `kind: archive` downloads of ofLibs release zips, even though
+that would be a bit faster:
+- Every lib builds against the commits pinned in the same push, no matter which runner uploads
+  first or whether a release asset is stale or missing.
+- A dependency bump that breaks a dependent lib's API fails that lib's CI in the same push,
+  instead of hiding behind an old release asset.
+
+If build time becomes a problem, cache the dependency's build (e.g. `actions/cache` keyed on its
+pinned commit) instead.
+
 ### Upstream regressions
 
 When a new upstream commit breaks the build:
