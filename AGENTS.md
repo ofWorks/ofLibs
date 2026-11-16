@@ -117,7 +117,11 @@ Don't patch upstream sources here to work around a regression unless asked.
 - **rplidar**: intentionally follows the Braid tip through `# pinned`. Update it by hand.
 - **jolt**: x64 builds use baseline SIMD on purpose. Read the note in `jolt/chalet.yaml`
   before changing any arch or SIMD flags.
-- **mango**: ofWorks forks are pulled by hand, so they aren't pinned.
+- **mango**: ofWorks forks are pulled by hand, so they aren't pinned. The zip also contains
+  mango's codec dependencies (zstd, bzip2, lz4, deflate, lcms2, webp). Turning a codec on or
+  off changes what consumers must link: ofWorks lists these libs explicitly in
+  `ofworks/scripts/templates/chalet/chalet.yaml`, so update that file too. Braid links every
+  lib in the addon folder, so it doesn't need a change.
 
 ## Don'ts
 
