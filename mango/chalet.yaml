@@ -18,7 +18,7 @@ externalDependencies:
 
   lcms2:
     repository: https://github.com/mm2/Little-CMS
-    commit: "780da288c125"
+    commit: "55c4c17b36a5"
     # commit: e8b6135
     # repository: https://github.com/ofworks/Little-CMS
     # commit: b6204a0f2057
@@ -33,7 +33,7 @@ externalDependencies:
     # repository: https://github.com/ofworks/zstd/
     # commit: dfdbc30b693d
     repository: https://github.com/facebook/zstd/
-    commit: 7c2b359
+    commit: "7f02a2899325"
     kind: git
 
   bzip2:
@@ -45,17 +45,17 @@ externalDependencies:
   lz4:
     repository: https://github.com/lz4/lz4
     kind: git
-    commit: "d5c41a3b712a"
+    commit: "6b589e8053bd"
 
   deflate:
     repository: https://github.com/ebiggers/libdeflate
-    commit: "7e66210e92e3"
+    commit: "c7e5386b309a"
     # tag: v1.25
     kind: git
 
   webp:
     repository: https://github.com/webmproject/libwebp
-    commit: "c3fe5bb655e9"
+    commit: "27e559f5b05d"
     # tag: v1.6.0
     kind: git
 
