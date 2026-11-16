@@ -14,7 +14,7 @@ jobs:
     uses: ./.github/workflows/_build.yml
     with:
       lib: syphon
-      version: v1.0
+      version: braid
       # macOS-only: Syphon is a macOS IOSurface/Metal framework.
       platforms: >-
         [

@@ -14,7 +14,7 @@ jobs:
     uses: ./.github/workflows/_build.yml
     with: {
         lib: miniaudio,
-        version: v1.0,
+        version: braid,
         linux_apt: libasound2-dev libpulse-dev libjack-dev,
         # rpi-aarch64 cross-compilation is not set up for audio backend dev libs,
         # so limit to the desktop platforms + emscripten.

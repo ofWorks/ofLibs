@@ -16,7 +16,7 @@ jobs:
     uses: ./.github/workflows/_build.yml
     with: {
         lib: cairo,
-        version: v1.0,
+        version: v2.0,
         meson: true,
         # multistrap: true,
         linux_apt: libpixman-1-dev libpng-dev libfreetype-dev,

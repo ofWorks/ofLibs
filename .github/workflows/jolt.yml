@@ -13,7 +13,7 @@ jobs:
     uses: ./.github/workflows/_build.yml
     with:
       lib: jolt
-      version: v1.0
+      version: braid
       # The three platforms Braid runs on. The old "macOS-only because Braid is
       # macOS-only" reason expired 2026-07-25, when Braid reached T2 on Windows
       # and CI went green on Linux. Still not the default full matrix — rpi and

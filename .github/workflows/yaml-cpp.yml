@@ -13,6 +13,6 @@ jobs:
       contents: write
 
     uses: ./.github/workflows/_build.yml
-    with: { lib: yaml-cpp, version: v1.0 }
+    with: { lib: yaml-cpp, version: "v2.0 braid" }
     secrets: inherit
 # bump 2026-07-24: rebuild on windows-2022 (MSVC 14.4x) runner pin

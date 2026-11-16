@@ -14,7 +14,7 @@ jobs:
     uses: ./.github/workflows/_build.yml
     with: {
         lib: glm,
-        version: v1.0,
+        version: "v2.0 braid",
         # multistrap: true,
         linux_apt: libx11-dev libglu1-mesa-dev libgl1-mesa-dev libwayland-dev libxkbcommon-dev xorg-dev libegl1-mesa-dev libopengl-dev libglx-dev libglvnd-dev,
       }

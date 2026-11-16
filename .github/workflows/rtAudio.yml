@@ -15,7 +15,7 @@ jobs:
     uses: ./.github/workflows/_build.yml
     with: {
         lib: rtAudio,
-        version: v1.0,
+        version: v2.0,
         # multistrap: true,
         linux_apt: jackd libpulse-dev libasound2-dev,
       }

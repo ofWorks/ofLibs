@@ -14,7 +14,7 @@ jobs:
     uses: ./.github/workflows/_build.yml
     with:
       lib: rplidar
-      version: v1.0
+      version: braid
       # macOS-only for now: the build script compiles the macOS arch of the
       # Slamtec SDK (dimitre/rplidar_sdk branch braid).
       platforms: >-
