@@ -33,7 +33,7 @@ externalDependencies:
     # repository: https://github.com/ofworks/zstd/
     # commit: dfdbc30b693d
     repository: https://github.com/facebook/zstd/
-    commit: "7f02a2899325"
+    commit: "cbf6ae94153b"
     kind: git
 
   bzip2:
