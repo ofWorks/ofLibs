@@ -3,7 +3,7 @@ version: "0.0.1"
 externalDependencies:
   poco:
     repository: https://github.com/pocoproject/poco
-    commit: "55701e4afa0e"
+    commit: "5a217e736a0d"
     kind: git
 targets:
   poco:
