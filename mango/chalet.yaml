@@ -416,6 +416,15 @@ targets:
       # unrar compiles. Only unrar references the bare macro; mango itself uses
       # __EMSCRIPTEN__, so this is safe.
       - CMAKE_CXX_FLAGS=-DEMSCRIPTEN=1
+      # Under emscripten, find_library/find_path only search the sysroot, so CMake's
+      # FindZLIB can't see zlib-ng's install. It fails and leaves a normal variable
+      # ZLIB_LIBRARIES=ZLIB_LIBRARY-NOTFOUND. CMake 4.5.0's pkg_check_modules no
+      # longer clears that variable, so it hides the pkg-config result and configure
+      # fails (https://gitlab.kitware.com/cmake/cmake/-/issues/28306, fixed in 4.5.1).
+      # Passing the paths makes FindZLIB succeed outright. Once ubuntu-latest has
+      # CMake >= 4.5.1 these two lines can go.
+      - ZLIB_LIBRARY=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install/lib/libz.a
+      - ZLIB_INCLUDE_DIR=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install/include
       - zlib_ROOT=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install
       - zlib_DIR=${cwd}/${externalBuild:zlib-ng}/ext.zlib-ng/install/lib/cmake/zlib
       - fmt_DIR=${cwd}/${externalBuild:fmt}/ext.fmt/install/lib/cmake/fmt
