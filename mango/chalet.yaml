@@ -33,7 +33,7 @@ externalDependencies:
     # repository: https://github.com/ofworks/zstd/
     # commit: dfdbc30b693d
     repository: https://github.com/facebook/zstd/
-    commit: "439044eeb339"
+    commit: "b022b64ea7d7"
     kind: git
 
   bzip2:
@@ -45,17 +45,17 @@ externalDependencies:
   lz4:
     repository: https://github.com/lz4/lz4
     kind: git
-    commit: "707de205aac1"
+    commit: "6ce67bd6b070"
 
   deflate:
     repository: https://github.com/ebiggers/libdeflate
-    commit: "0079686dd605"
+    commit: "aa5181e82536"
     # tag: v1.25
     kind: git
 
   webp:
     repository: https://github.com/webmproject/libwebp
-    commit: "5eddebf23964"
+    commit: "940c869211dd"
     # tag: v1.6.0
     kind: git
 
